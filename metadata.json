@@ -1,0 +1,8 @@
+{
+  "name": "Chalk · Darts Match Night",
+  "description": "501 match scoring and match reports for darts league and cup nights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

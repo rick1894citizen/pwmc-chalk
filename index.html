@@ -209,13 +209,13 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .statrow .v{font-family:var(--display);font-size:19px;letter-spacing:.03em;color:var(--sisal)}
 .pill{display:inline-block;font-family:var(--cond);font-weight:700;font-size:12px;letter-spacing:.08em;padding:1px 5px;margin-left:5px;background:var(--slate-3);color:var(--chalk-dim)}
 /* ---------- match report ---------- */
-.report{background:var(--rep-bg);padding:12px 12px 20px;position:relative;overflow:hidden}
-.wm{position:absolute;font-family:var(--cond);font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:9px;color:rgba(242,239,228,.35);pointer-events:none;white-space:nowrap}
-.wm-top{top:2px;left:0;right:0;text-align:center}
-.wm-bottom{bottom:2px;left:0;right:0;text-align:center}
+.report{background:var(--rep-bg);padding:14px 14px 20px;position:relative;overflow:hidden}
+.wm{position:absolute;font-family:var(--cond);font-weight:700;letter-spacing:0.25em;text-transform:uppercase;font-size:11.5px;color:rgba(255,255,255,0.58);pointer-events:none;white-space:nowrap;user-select:none;line-height:1}
+.wm-top{top:3px;left:0;right:0;text-align:center}
+.wm-bottom{bottom:3px;left:0;right:0;text-align:center}
 .wm-side{top:0;bottom:0;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;text-orientation:mixed}
-.wm-left{left:1px}
-.wm-right{right:1px}
+.wm-left{left:2px;transform:rotate(180deg)}
+.wm-right{right:2px}
 .rep-head{background:var(--rep-light);color:var(--rep-ink);text-align:center;padding:15px 14px;position:relative;min-height:66px;display:flex;flex-direction:column;justify-content:center}
 .rep-head img{position:absolute;left:14px;top:50%;transform:translateY(-50%);height:40px;width:40px;object-fit:contain}
 .rep-head b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em}
@@ -265,6 +265,111 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .rep-foot .nf{background:transparent;color:var(--chalk);box-shadow:inset 0 0 0 1px #333833}
 .rep-foot .ex{background:var(--rep-green);color:#EAF3ED}
 .rep-note{text-align:center;color:var(--rep-mute);font-size:11.5px;padding-top:12px}
+
+/* ---------- SMD stats page ---------- */
+.smd-wrap{background:var(--rep-bg);padding:14px 12px 30px;position:relative;overflow:hidden;min-height:100%}
+.smd-banner{background:linear-gradient(180deg, #18201A 0%, #121613 100%);border:1px solid #28342C;border-radius:10px;padding:16px 14px;margin-bottom:14px;position:relative}
+.smd-banner h2{font-family:var(--display);font-size:26px;letter-spacing:.02em;text-transform:uppercase;color:#F2EFE4;line-height:1}
+.smd-banner p{font-size:12.5px;color:var(--chalk-dim);margin:6px 0 12px;line-height:1.35}
+.smd-summary-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
+.smd-sum-box{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:7px 8px;text-align:center}
+.smd-sum-box .k{display:block;font-family:var(--cond);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--chalk-dim)}
+.smd-sum-box .v{display:block;font-family:var(--display);font-size:17px;color:#F2EFE4;margin-top:2px}
+.smd-sum-box .sub{font-size:9.5px;color:var(--gold);font-weight:600}
+
+.smd-controls{margin-bottom:14px;display:flex;flex-direction:column;gap:10px}
+.smd-search-bar{position:relative;display:flex;align-items:center}
+.smd-search-bar input{padding-left:36px;padding-right:32px;font-size:14px;height:40px;background:#141714;border:1px solid #2C332D;border-radius:6px;color:#F2EFE4}
+.smd-search-bar .ico{position:absolute;left:12px;color:var(--chalk-dim);pointer-events:none}
+.smd-search-bar .clear-btn{position:absolute;right:10px;color:var(--chalk-dim);font-size:16px;cursor:pointer;padding:4px}
+
+.smd-view-tabs{display:flex;background:#141714;border:1px solid #28302A;border-radius:6px;padding:3px;gap:4px}
+.smd-view-tab{flex:1;padding:7px 10px;font-family:var(--cond);font-weight:700;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--chalk-dim);border-radius:4px;text-align:center;transition:all .15s}
+.smd-view-tab.active{background:var(--slate-3);color:#F2EFE4;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+
+.smd-chips-scroll{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.smd-chips-scroll::-webkit-scrollbar{display:none}
+.smd-chip{white-space:nowrap;padding:6px 11px;background:#171C18;border:1px solid #2A332C;border-radius:20px;font-family:var(--cond);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--chalk-dim);display:flex;align-items:center;gap:4px;cursor:pointer;flex:none;transition:all .12s}
+.smd-chip:active{transform:scale(0.96)}
+.smd-chip.active{background:#2A3930;border-color:var(--wire);color:#F2EFE4}
+.smd-chip .arr{color:var(--gold);font-weight:800;font-size:12px}
+
+/* Tier Heatmap Classes */
+.tier-pill{display:inline-flex;align-items:center;justify-content:center;font-family:var(--cond);font-weight:700;font-size:11.5px;letter-spacing:.04em;padding:3px 7px;border-radius:4px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tier-green{background:rgba(16,185,129,0.18);color:#34d399;border:1px solid rgba(16,185,129,0.38)}
+.tier-yellow{background:rgba(250,204,21,0.18);color:#fde047;border:1px solid rgba(250,204,21,0.38)}
+.tier-orange{background:rgba(245,158,11,0.18);color:#fbbf24;border:1px solid rgba(245,158,11,0.38)}
+.tier-red{background:rgba(239,68,68,0.18);color:#f87171;border:1px solid rgba(239,68,68,0.38)}
+
+.tier-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--cond);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:4px}
+.tier-dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.tier-dot.green{background:#34d399;box-shadow:0 0 6px rgba(52,211,153,.6)}
+.tier-dot.yellow{background:#fde047;box-shadow:0 0 6px rgba(253,224,71,.6)}
+.tier-dot.orange{background:#fbbf24;box-shadow:0 0 6px rgba(251,191,36,.6)}
+.tier-dot.red{background:#f87171;box-shadow:0 0 6px rgba(248,113,113,.6)}
+
+/* Card layout */
+.smd-cards{display:flex;flex-direction:column;gap:10px}
+.smd-card{background:var(--rep-card);border:1px solid var(--rep-line);border-radius:10px;overflow:hidden;transition:border-color .15s}
+.smd-card:hover,.smd-card.expanded{border-color:#3E4E42}
+.smd-card-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#151A16;border-bottom:1px solid var(--rep-line);cursor:pointer}
+.smd-rank{width:34px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:16px;flex:none}
+.smd-rank.gold{background:var(--gold);color:#141614;font-weight:700;box-shadow:0 0 8px rgba(201,162,39,.45)}
+.smd-rank.podium{background:var(--slate-3);color:var(--sisal);border:1px solid var(--wire)}
+.smd-rank.normal{background:#1B221D;color:var(--chalk-dim);border:1px solid #2C352E}
+
+.smd-card-info{flex:1;min-width:0}
+.smd-card-info .name{font-family:var(--cond);font-size:17px;font-weight:700;color:#F2EFE4;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.smd-card-info .record{font-size:12px;color:var(--chalk-dim);margin-top:2px}
+.smd-card-info .record b{color:#F2EFE4;font-weight:600}
+
+.smd-card-stats{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;padding:12px 14px;background:var(--rep-card);cursor:pointer}
+@media (max-width:380px){.smd-card-stats{grid-template-columns:repeat(2, 1fr)}}
+.smd-stat-cell{background:#121613;border:1px solid #222B24;border-radius:6px;padding:7px 8px;display:flex;flex-direction:column;justify-content:space-between;gap:4px}
+.smd-stat-cell .k{font-family:var(--cond);font-size:9.5px;font-weight:600;letter-spacing:.05em;color:var(--chalk-dim);text-transform:uppercase}
+.smd-stat-cell .v-row{display:flex;align-items:baseline;justify-content:space-between;gap:4px}
+.smd-stat-cell .v{font-size:14px;font-weight:700;color:#F2EFE4;font-variant-numeric:tabular-nums}
+
+.smd-drawer{background:#111512;border-top:1px solid #28332A;padding:14px;animation:smdFade .15s ease}
+@keyframes smdFade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.smd-drawer-sect{margin-bottom:12px}
+.smd-drawer-sect:last-child{margin-bottom:0}
+.smd-drawer-title{font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--chalk-dim);margin-bottom:6px}
+.smd-drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.smd-drawer-row{display:flex;justify-content:space-between;padding:5px 8px;background:#171D18;border-radius:4px;font-size:12px}
+.smd-drawer-row span{color:var(--chalk-dim)}
+.smd-drawer-row b{color:#F2EFE4;font-variant-numeric:tabular-nums}
+
+/* AI Season Analysis Box & Badges */
+.smd-ai-box{background:linear-gradient(180deg, #1A221C 0%, #121713 100%);border:1px solid #2A382E;border-left:3px solid var(--gold);border-radius:6px;padding:11px 13px}
+.smd-ai-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.smd-ai-title{font-family:var(--cond);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:5px}
+.smd-ai-tag{font-family:var(--cond);font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(201,162,39,0.15);color:var(--gold);border:1px solid rgba(201,162,39,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap}
+.smd-ai-text{font-size:12.5px;color:#EAE6DA;line-height:1.45;letter-spacing:0.01em}
+.smd-card-ai-badge{display:inline-flex;align-items:center;gap:3px;font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:rgba(201,162,39,0.12);color:var(--gold);border:1px solid rgba(201,162,39,0.25);border-radius:4px;padding:2px 6px;flex:none}
+
+.smd-metric-eval{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.smd-eval-item{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;background:#171D18;border-radius:4px;font-size:12px}
+.smd-eval-item .label{color:#F2EFE4;font-weight:500}
+
+/* Table layout */
+.smd-table-wrap{background:var(--rep-card);border:1px solid var(--rep-line);border-radius:10px;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.smd-table{width:100%;border-collapse:collapse;text-align:left;font-size:12.5px;white-space:nowrap}
+.smd-table th{background:#151A16;padding:10px 8px;font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--chalk-dim);border-bottom:1px solid #2A332C;cursor:pointer;user-select:none}
+.smd-table th.sorted{color:var(--gold);background:#1B221D}
+.smd-table td{padding:9px 8px;border-bottom:1px solid #1E2520;font-variant-numeric:tabular-nums}
+.smd-table tr:hover td{background:#1A211C}
+.smd-table .sticky-col{position:sticky;left:0;background:#151A16;z-index:2;border-right:1px solid #28332A}
+.smd-table tr:hover .sticky-col{background:#1B221D}
+.smd-table .rank-num{font-family:var(--display);font-size:14px;color:var(--chalk-dim)}
+.smd-table .player-name{font-family:var(--cond);font-weight:700;font-size:14px;color:#F2EFE4}
+
+.smd-legend{margin-top:16px;background:#141814;border:1px solid #222A23;border-radius:8px;padding:12px 14px}
+.smd-legend h4{font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--chalk-dim);margin:0 0 8px}
+.smd-legend-grid{display:grid;grid-template-columns:repeat(2, 1fr);gap:8px;font-size:11.5px}
+@media (max-width:440px){.smd-legend-grid{grid-template-columns:1fr}}
+.smd-legend-item{display:flex;align-items:center;gap:6px}
+
 .empty{padding:60px 30px;text-align:center;color:var(--chalk-dim)}
 .empty .display{font-size:26px;color:var(--chalk);margin-bottom:8px}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--chalk);color:var(--slate);padding:11px 18px;border-radius:2px;font-family:var(--cond);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;z-index:90}
@@ -580,7 +685,11 @@ const S = {
   badge: null,
   session: { fixtureId: null, name: null, token: null },  // { fixtureId, name, token } once claimed
   watchId: null,       // set when opened via ?watch=<id> - following a live fixture read-only
-  remoteChannel: null  // active Supabase realtime subscription, if any
+  remoteChannel: null, // active Supabase realtime subscription, if any
+  smdSort: { key: "league", dir: "desc" },
+  smdSearch: "",
+  smdViewMode: "cards",
+  smdExpanded: {}
 };
 
 const app = document.getElementById("app");
@@ -636,7 +745,7 @@ async function syncFixture(fx){
    4. VIEWS
    ======================================================================= */
 function render(){
-  const map = { home:vHome, setup:vSetup, fixture:vFixture, lineup:vLineup, board:vBoard, results:vResults, view:vView, watch:vWatch };
+  const map = { home:vHome, setup:vSetup, fixture:vFixture, lineup:vLineup, board:vBoard, results:vResults, smd:vSmdStats, view:vView, watch:vWatch };
   const fixed = S.view === "board";
   app.classList.toggle("fixed", fixed);
   document.body.classList.toggle("fixed", fixed);
@@ -665,6 +774,7 @@ function vHome(){
     + (live ? '<button class="btn" data-act="resume" data-id="' + live.id + '">Carry on with ' + esc(live.homeTeam) + ' v ' + esc(live.awayTeam) + '</button>' : '')
     + '<button class="btn' + (live ? ' ghost' : '') + '" data-act="new">Start a new fixture</button>'
     + '<button class="btn ghost" data-act="results">Past results' + (S.fixtures.length ? ' <span class="pill">' + S.fixtures.length + '</span>' : '') + '</button>'
+    + '<button class="btn ghost" data-act="smd">SMD Stats <span class="pill" style="background:#B79B5B;color:#141614;font-weight:700">14</span></button>'
     + '<div class="badge-row">'
     + '<span class="badge-edit" data-act="badge">Use a different badge</span>'
     + (S.badge ? '<span class="badge-edit" data-act="badge-clear">Back to club badge</span>' : '')
@@ -886,7 +996,11 @@ function vResults(){
     return bar("Home","Results","") + '<div class="empty"><div class="display">Nothing chalked up yet</div><p>Finished fixtures land here.</p></div>';
   }
   let html = bar("Home", "Results", S.fixtures.length + "");
-  S.fixtures.slice().sort((a,b) => b.savedAt - a.savedAt).forEach(fx => {
+  S.fixtures.slice().sort((a,b) => {
+    const da = a.date ? new Date(a.date + "T12:00:00").getTime() : (a.savedAt || 0);
+    const db = b.date ? new Date(b.date + "T12:00:00").getTime() : (b.savedAt || 0);
+    return (db - da) || ((b.savedAt || 0) - (a.savedAt || 0));
+  }).forEach(fx => {
     const h = matchWonBy(fx,"home"), a = matchWonBy(fx,"away");
     const gh = gallonLegsBy(fx,"home"), ga = gallonLegsBy(fx,"away");
     html += '<button class="card" data-act="show" data-id="' + fx.id + '">'
@@ -896,6 +1010,357 @@ function vResults(){
       + '<div class="ln"><span class="nm ' + (a > h ? "win" : a < h ? "lose" : "") + '">' + esc(fx.awayTeam) + '</span><span class="sc num ' + (a > h ? "win" : "") + '">' + a + '</span></div>'
       + '</button>';
   });
+  return html;
+}
+
+/* =======================================================================
+   4.5. SMD LEAGUE PLAYER STATS
+   ======================================================================= */
+const SMD_STATS_DATA = [
+  { player: "Mason Gamble", played: 19, wins: 19, tons: 103, max180: 3, ld: 16, hf: 92, avg: 65.42, winPct: 100.0, legsW: 57, legsL: 10, legsPct: 85.07 },
+  { player: "Karl Bannister", played: 18, wins: 15, tons: 70, max180: 1, ld: 17, hf: 101, avg: 54.71, winPct: 83.3, legsW: 50, legsL: 16, legsPct: 75.76 },
+  { player: "Mark Colgan", played: 17, wins: 15, tons: 59, max180: 2, ld: 17, hf: 102, avg: 57.71, winPct: 88.2, legsW: 46, legsL: 9, legsPct: 83.64 },
+  { player: "Brandon Gamble", played: 19, wins: 14, tons: 87, max180: 1, ld: 17, hf: 117, avg: 53.37, winPct: 73.7, legsW: 49, legsL: 20, legsPct: 71.01 },
+  { player: "Rick Fox", played: 18, wins: 14, tons: 63, max180: 2, ld: 16, hf: 79, avg: 54.79, winPct: 77.8, legsW: 47, legsL: 23, legsPct: 67.14 },
+  { player: "Steven Bell", played: 18, wins: 14, tons: 62, max180: 3, ld: 18, hf: 158, avg: 50.23, winPct: 77.8, legsW: 47, legsL: 24, legsPct: 66.20 },
+  { player: "Corey Wynne", played: 6, wins: 4, tons: 12, max180: 0, ld: 20, hf: 72, avg: 54.21, winPct: 66.7, legsW: 13, legsL: 8, legsPct: 61.90 },
+  { player: "Chris Bollard", played: 8, wins: 3, tons: 10, max180: 0, ld: 27, hf: 57, avg: 38.62, winPct: 37.5, legsW: 15, legsL: 18, legsPct: 45.45 },
+  { player: "Ryan Mellor", played: 4, wins: 3, tons: 6, max180: 1, ld: 25, hf: 40, avg: 45.06, winPct: 75.0, legsW: 9, legsL: 5, legsPct: 64.29 },
+  { player: "Danny Kendrick", played: 3, wins: 2, tons: 7, max180: 0, ld: 32, hf: 20, avg: 34.90, winPct: 66.7, legsW: 7, legsL: 4, legsPct: 63.64 },
+  { player: "Lewis Abbott", played: 4, wins: 1, tons: 9, max180: 0, ld: 24, hf: 40, avg: 40.37, winPct: 25.0, legsW: 6, legsL: 10, legsPct: 37.50 },
+  { player: "Adam Harral", played: 3, wins: 1, tons: 1, max180: 0, ld: 32, hf: 74, avg: 33.47, winPct: 33.3, legsW: 5, legsL: 7, legsPct: 41.67 },
+  { player: "Jude Rowlands", played: 2, wins: 1, tons: 4, max180: 0, ld: 31, hf: 40, avg: 38.81, winPct: 50.0, legsW: 4, legsL: 3, legsPct: 57.14 },
+  { player: "Jimmy Burgess", played: 1, wins: 0, tons: 2, max180: 0, ld: 28, hf: 20, avg: 49.25, winPct: 0.0, legsW: 1, legsL: 3, legsPct: 25.00 }
+];
+
+const SMD_PLAYER_ANALYSIS = {
+  "Mason Gamble": "Flawless campaign holding a 100% win rate across 19 matches with a division-topping 65.42 average. Paces the team in heavy scoring with 103 tons and 3 maximums, anchored by a best leg of 15 darts.",
+  "Karl Bannister": "Rock-solid reliability near the top of the order with 15 wins and 50 legs secured. Boasts consistent scoring depth with 70 tons and a match-winning 101 high checkout.",
+  "Mark Colgan": "Lethal conversion efficiency with an 88.2% win rate and a 57.71 average across 17 fixtures. Reliable under pressure on key doubles, highlighted by a standout 102 finish and multiple 180s.",
+  "Brandon Gamble": "Powerhouse scorer sitting second in team tons (87) with 14 wins. A dangerous closer who holds the team's second-highest checkout of the season with a clutch 117 checkout.",
+  "Rick Fox": "Elite leg-finishing threat sitting on 14 wins with a strong 54.79 average. Demonstrated top-tier closing pace with a season-best 16-dart leg, two maximum 180s, and high scoring in key singles legs.",
+  "Steven Bell": "The premier big-checkout specialist of the squad, highlighted by a season-best 158 finish. Backed up his 14 victories with heavy scoring, matching the team high of 3 maximum 180s.",
+  "Corey Wynne": "High-impact contributor boasting a 66.7% win rate and a crisp 54.21 average across 6 appearances. Steady setup player with 12 tons and a best leg of 20 darts.",
+  "Chris Bollard": "Key presence across 8 appearances contributing 3 wins and 15 legs to the team board. Solid doubles anchor with a season-best 57 checkout.",
+  "Ryan Mellor": "Dependable middle-order asset claiming 3 wins from 4 matches (75% win rate). Reliable in both singles and gallon pairings with a maximum 180 and a 25-dart leg to his name.",
+  "Danny Kendrick": "Clinical across limited outings with a 66.7% win rate from 3 fixtures. Strong tactical doubles player, proving decisive with a 20-dart leg in clutch league rubbers.",
+  "Lewis Abbott": "Versatile squad player contributing valuable legs in both singles and gallon formats, featuring 9 tons and a season-best 40 checkout.",
+  "Adam Harral": "Doubles and gallon specialist who delivered a standout 74 high finish and a vital 2-leg victory in key match situations.",
+  "Jude Rowlands": "Efficient squad player holding a 50% win rate, delivering 4 tons and reliable scoring across his two appearances.",
+  "Jimmy Burgess": "Combative performer in tight singles action, posting a 49.25 average and 2 tons with steady leg rhythm."
+};
+
+function getMetricTier(metric, val){
+  if (metric === "winPct" || metric === "legsPct"){
+    if (val >= 90) return "green";
+    if (val >= 75) return "yellow";
+    if (val >= 60) return "orange";
+    return "red";
+  }
+  if (metric === "ld"){
+    if (val < 18) return "green";
+    if (val <= 22) return "yellow";
+    if (val <= 26) return "orange";
+    return "red";
+  }
+  if (metric === "hf"){
+    if (val >= 90) return "green";
+    if (val >= 70) return "yellow";
+    if (val >= 40) return "orange";
+    return "red";
+  }
+  if (metric === "avg"){
+    if (val >= 60.0) return "green";
+    if (val >= 54.0) return "yellow";
+    if (val >= 45.0) return "orange";
+    return "red";
+  }
+  return "neutral";
+}
+
+function getPlayerEvaluation(p){
+  const tWin = getMetricTier("winPct", p.winPct);
+  const tLeg = getMetricTier("legsPct", p.legsPct);
+  const tLd  = getMetricTier("ld", p.ld);
+  const tHf  = getMetricTier("hf", p.hf);
+  const tAvg = getMetricTier("avg", p.avg);
+  const tiers = [tWin, tLeg, tLd, tHf, tAvg];
+  const gCount = tiers.filter(t => t === "green").length;
+  const yCount = tiers.filter(t => t === "yellow").length;
+  const oCount = tiers.filter(t => t === "orange").length;
+  const rCount = tiers.filter(t => t === "red").length;
+
+  let ovr = "red";
+  if (gCount >= 3) ovr = "green";
+  else if ((gCount + yCount) >= 3) ovr = "yellow";
+  else if ((gCount + yCount + oCount) >= 3) ovr = "orange";
+
+  const ptsMap = { green: 4, yellow: 3, orange: 2, red: 1 };
+  const score = tiers.reduce((acc, t) => acc + ptsMap[t], 0) + (p.avg / 100) + (p.winPct / 1000);
+
+  return {
+    tWin, tLeg, tLd, tHf, tAvg,
+    gCount, yCount, oCount, rCount,
+    ovr, score
+  };
+}
+
+function vSmdStats(){
+  const search = (S.smdSearch || "").toLowerCase().trim();
+  const sort = S.smdSort || { key: "league", dir: "desc" };
+
+  // Calculate evaluations
+  const list = SMD_STATS_DATA.map(p => {
+    const evalData = getPlayerEvaluation(p);
+    return { ...p, eval: evalData };
+  });
+
+  // Sort list according to exact league ranking & tie-breaker rules
+  list.sort((a, b) => {
+    if (sort.key === "league" || !sort.key){
+      if (b.wins !== a.wins) return sort.dir === "asc" ? (a.wins - b.wins) : (b.wins - a.wins);
+      if (b.legsW !== a.legsW) return sort.dir === "asc" ? (a.legsW - b.legsW) : (b.legsW - a.legsW);
+      if (b.avg !== a.avg) return sort.dir === "asc" ? (a.avg - b.avg) : (b.avg - a.avg);
+      return sort.dir === "asc" ? (b.ld - a.ld) : (a.ld - b.ld);
+    }
+
+    let va, vb;
+    if (sort.key === "ovr"){ va = a.eval.score; vb = b.eval.score; }
+    else if (sort.key === "player"){ return sort.dir === "asc" ? a.player.localeCompare(b.player) : b.player.localeCompare(a.player); }
+    else { va = a[sort.key]; vb = b[sort.key]; }
+
+    if (sort.key === "ld"){
+      // For Least Darts, lower is better when descending rank
+      const diff = sort.dir === "asc" ? (vb - va) : (va - vb);
+      if (diff !== 0) return diff;
+    } else {
+      const diff = sort.dir === "asc" ? (va - vb) : (vb - va);
+      if (diff !== 0) return diff;
+    }
+
+    // Default tie-breakers
+    if (b.wins !== a.wins) return b.wins - a.wins;
+    if (b.legsW !== a.legsW) return b.legsW - a.legsW;
+    if (b.avg !== a.avg) return b.avg - a.avg;
+    return a.ld - b.ld;
+  });
+
+  // Assign tied ranks based on current sort criteria
+  let currentRank = 1;
+  for (let i = 0; i < list.length; i++){
+    if (i > 0){
+      const prev = list[i - 1], curr = list[i];
+      let same = false;
+      if (sort.key === "league" || !sort.key){
+        same = (prev.wins === curr.wins && prev.legsW === curr.legsW && prev.avg === curr.avg && prev.ld === curr.ld);
+      } else if (sort.key === "ovr"){
+        same = (prev.eval.ovr === curr.eval.ovr && Math.abs(prev.eval.score - curr.eval.score) < 0.001);
+      } else if (sort.key === "player"){
+        same = (prev.player === curr.player);
+      } else {
+        same = (prev[sort.key] === curr[sort.key]);
+      }
+
+      if (!same) currentRank = i + 1;
+    }
+    list[i].rank = currentRank;
+  }
+
+  // Count tied frequencies for display (e.g. =4 or T4)
+  const rankCounts = {};
+  list.forEach(p => { rankCounts[p.rank] = (rankCounts[p.rank] || 0) + 1; });
+  list.forEach(p => {
+    p.isTied = rankCounts[p.rank] > 1;
+    p.rankDisplay = p.isTied ? "=" + p.rank : "#" + p.rank;
+  });
+
+  // Filter if search
+  const filtered = search ? list.filter(p => p.player.toLowerCase().includes(search)) : list;
+
+  // Sorting chip configurations
+  const chips = [
+    { key: "league", label: "League Rank" },
+    { key: "wins", label: "Wins" },
+    { key: "legsW", label: "Legs Won" },
+    { key: "avg", label: "3D Avg" },
+    { key: "ld", label: "Least Darts" },
+    { key: "ovr", label: "OVR Tier" },
+    { key: "winPct", label: "Win %" },
+    { key: "hf", label: "High Finish" },
+    { key: "legsPct", label: "Leg %" },
+    { key: "tons", label: "100+ Tons" },
+    { key: "max180", label: "180s" },
+    { key: "played", label: "Played" }
+  ];
+
+  let html = bar("Home", "SMD Stats", "2026") + '<div class="smd-wrap">'
+    + '<div class="wm wm-top">PWMC CHALK APP</div>'
+    + '<div class="wm wm-bottom">PWMC CHALK APP</div>'
+    + '<div class="wm wm-side wm-left">PWMC CHALK APP</div>'
+    + '<div class="wm wm-side wm-right">PWMC CHALK APP</div>';
+
+  // Compute dynamic summary metrics
+  const totalTons = SMD_STATS_DATA.reduce((acc, p) => acc + (p.tons || 0), 0);
+  const total180s = SMD_STATS_DATA.reduce((acc, p) => acc + (p.max180 || 0), 0);
+  const bestHfPlayer = SMD_STATS_DATA.reduce((max, p) => (p.hf > (max.hf || 0) ? p : max), SMD_STATS_DATA[0]);
+
+  // Banner
+  html += '<div class="smd-banner">'
+    + '<h2>SMD Player Stats</h2>'
+    + '<p>South Manchester &amp; District Darts League performance metrics, match records, and color-coded tier heatmaps.</p>'
+    + '<div class="smd-summary-grid">'
+    + '<div class="smd-sum-box"><span class="k">Players</span><span class="v">' + SMD_STATS_DATA.length + '</span><span class="sub">League Roster</span></div>'
+    + '<div class="smd-sum-box"><span class="k">Total Tons</span><span class="v">' + totalTons + '</span><span class="sub">' + total180s + 'x 180s</span></div>'
+    + '<div class="smd-sum-box"><span class="k">Highest Checkout</span><span class="v">' + bestHfPlayer.hf + '</span><span class="sub">' + esc(bestHfPlayer.player) + '</span></div>'
+    + '</div></div>';
+
+  // Controls (Search + View switch + Sort chips)
+  html += '<div class="smd-controls">'
+    + '<div class="smd-search-bar">'
+    + '<span class="ico">&#128269;</span>'
+    + '<input type="text" id="smd-search" placeholder="Search player name..." value="' + esc(S.smdSearch) + '">'
+    + (S.smdSearch ? '<span class="clear-btn" data-act="smd-clear-search">&times;</span>' : '')
+    + '</div>'
+    + '<div class="smd-view-tabs">'
+    + '<button class="smd-view-tab ' + (S.smdViewMode === "cards" ? "active" : "") + '" data-act="smd-viewmode" data-mode="cards">Player Cards</button>'
+    + '<button class="smd-view-tab ' + (S.smdViewMode === "table" ? "active" : "") + '" data-act="smd-viewmode" data-mode="table">Full Table</button>'
+    + '</div>'
+    + '<div class="smd-chips-scroll">';
+
+  chips.forEach(c => {
+    const isAct = sort.key === c.key;
+    const arrow = isAct ? (sort.dir === "asc" ? " &uarr;" : " &darr;") : "";
+    html += '<button class="smd-chip ' + (isAct ? "active" : "") + '" data-act="smd-sort" data-k="' + c.key + '">'
+      + c.label + (arrow ? '<span class="arr">' + arrow + '</span>' : '')
+      + '</button>';
+  });
+  html += '</div></div>';
+
+  if (!filtered.length){
+    html += '<div class="empty"><div class="display">No players found</div><p>Try clearing your search filter.</p></div>';
+  } else if (S.smdViewMode === "cards"){
+    // Mobile-First Cards
+    const anyCollapsed = filtered.some(p => S.smdExpanded[p.player] === false);
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 2px">'
+      + '<span style="font-size:11.5px;color:var(--chalk-dim);font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em">Showing ' + filtered.length + ' players</span>'
+      + '<button class="btn ghost" style="padding:4px 10px;font-size:11px;height:auto;line-height:1;margin:0" data-act="' + (anyCollapsed ? 'smd-expand-all' : 'smd-collapse-all') + '">'
+      + (anyCollapsed ? 'Expand All &#9660;' : 'Collapse All &#9650;')
+      + '</button>'
+      + '</div>'
+      + '<div class="smd-cards">';
+    filtered.forEach(p => {
+      const isExp = S.smdExpanded[p.player] !== false;
+      const rankCls = p.rank === 1 ? "gold" : (p.rank <= 3 ? "podium" : "normal");
+      const ev = p.eval;
+
+      html += '<div class="smd-card ' + (isExp ? "expanded" : "") + '">'
+        + '<div class="smd-card-head" data-act="smd-toggle" data-player="' + esc(p.player) + '">'
+        + '<div class="smd-rank ' + rankCls + '">' + p.rankDisplay + '</div>'
+        + '<div class="smd-card-info">'
+        + '<div class="name">' + esc(p.player) + '</div>'
+        + '<div class="record"><b>' + p.played + 'P</b> &middot; <b>' + p.wins + 'W</b> (' + p.winPct.toFixed(1) + '%) &middot; <b>' + p.legsW + 'Lw</b></div>'
+        + '</div>'
+        + '<div style="display:flex;align-items:center;gap:6px;flex:none">'
+        + '<span class="smd-card-ai-badge">&#10024; AI</span>'
+        + '<span class="tier-badge tier-' + ev.ovr + '"><span class="tier-dot ' + ev.ovr + '"></span>' + ev.ovr.toUpperCase() + '</span>'
+        + '<span style="color:var(--chalk-dim);font-size:16px;margin-left:2px">' + (isExp ? '&#9650;' : '&#9660;') + '</span>'
+        + '</div>'
+        + '</div>'
+        + '<div class="smd-card-stats" data-act="smd-toggle" data-player="' + esc(p.player) + '">'
+        + '<div class="smd-stat-cell"><span class="k">3D Avg</span><div class="v-row"><span class="v">' + p.avg.toFixed(2) + '</span><span class="tier-pill tier-' + ev.tAvg + '">' + ev.tAvg[0].toUpperCase() + '</span></div></div>'
+        + '<div class="smd-stat-cell"><span class="k">Least Darts</span><div class="v-row"><span class="v">' + p.ld + '</span><span class="tier-pill tier-' + ev.tLd + '">' + ev.tLd[0].toUpperCase() + '</span></div></div>'
+        + '<div class="smd-stat-cell"><span class="k">High Finish</span><div class="v-row"><span class="v">' + p.hf + '</span><span class="tier-pill tier-' + ev.tHf + '">' + ev.tHf[0].toUpperCase() + '</span></div></div>'
+        + '<div class="smd-stat-cell"><span class="k">Win Rate</span><div class="v-row"><span class="v">' + p.winPct.toFixed(1) + '%</span><span class="tier-pill tier-' + ev.tWin + '">' + ev.tWin[0].toUpperCase() + '</span></div></div>'
+        + '<div class="smd-stat-cell"><span class="k">Leg Rate</span><div class="v-row"><span class="v">' + p.legsPct.toFixed(1) + '%</span><span class="tier-pill tier-' + ev.tLeg + '">' + ev.tLeg[0].toUpperCase() + '</span></div></div>'
+        + '<div class="smd-stat-cell"><span class="k">Tons / 180s</span><div class="v-row"><span class="v">' + p.tons + '</span><span style="font-size:11px;color:var(--gold);font-weight:700">' + p.max180 + 'x180</span></div></div>'
+        + '</div>';
+
+      if (isExp){
+        const analysisText = SMD_PLAYER_ANALYSIS[p.player] || "Comprehensive match metrics recorded for the 2026 season.";
+        html += '<div class="smd-drawer">'
+          + '<div class="smd-drawer-sect">'
+          + '<div class="smd-ai-box">'
+          + '<div class="smd-ai-head">'
+          + '<div class="smd-ai-title"><span>&#10024;</span> AI Season Performance Analysis</div>'
+          + '<span class="smd-ai-tag">Official Scout Report</span>'
+          + '</div>'
+          + '<div class="smd-ai-text">' + esc(analysisText) + '</div>'
+          + '</div></div>'
+          + '<div class="smd-drawer-sect">'
+          + '<div class="smd-drawer-title">Legs &amp; Match Details</div>'
+          + '<div class="smd-drawer-grid">'
+          + '<div class="smd-drawer-row"><span>Legs Won</span><b>' + p.legsW + '</b></div>'
+          + '<div class="smd-drawer-row"><span>Legs Lost</span><b>' + p.legsL + '</b></div>'
+          + '<div class="smd-drawer-row"><span>Leg Diff</span><b>' + (p.legsW - p.legsL > 0 ? "+" : "") + (p.legsW - p.legsL) + '</b></div>'
+          + '<div class="smd-drawer-row"><span>Tons / Match</span><b>' + (p.played ? (p.tons / p.played).toFixed(1) : "0") + '</b></div>'
+          + '</div></div>'
+          + '<div class="smd-drawer-sect">'
+          + '<div class="smd-drawer-title">Tier Metric Breakdown</div>'
+          + '<div class="smd-metric-eval">'
+          + '<div class="smd-eval-item"><span class="label">Win % (' + p.winPct.toFixed(1) + '%)</span><span class="tier-badge tier-' + ev.tWin + '"><span class="tier-dot ' + ev.tWin + '"></span>' + ev.tWin.toUpperCase() + '</span></div>'
+          + '<div class="smd-eval-item"><span class="label">Leg % (' + p.legsPct.toFixed(1) + '%)</span><span class="tier-badge tier-' + ev.tLeg + '"><span class="tier-dot ' + ev.tLeg + '"></span>' + ev.tLeg.toUpperCase() + '</span></div>'
+          + '<div class="smd-eval-item"><span class="label">Least Darts (' + p.ld + ' darts)</span><span class="tier-badge tier-' + ev.tLd + '"><span class="tier-dot ' + ev.tLd + '"></span>' + ev.tLd.toUpperCase() + '</span></div>'
+          + '<div class="smd-eval-item"><span class="label">High Finish (' + p.hf + ' checkout)</span><span class="tier-badge tier-' + ev.tHf + '"><span class="tier-dot ' + ev.tHf + '"></span>' + ev.tHf.toUpperCase() + '</span></div>'
+          + '<div class="smd-eval-item"><span class="label">3-Dart Avg (' + p.avg.toFixed(2) + ')</span><span class="tier-badge tier-' + ev.tAvg + '"><span class="tier-dot ' + ev.tAvg + '"></span>' + ev.tAvg.toUpperCase() + '</span></div>'
+          + '</div></div>'
+          + '</div>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+  } else {
+    // Full Desktop / Tablet Table
+    html += '<div class="smd-table-wrap"><table class="smd-table"><thead><tr>'
+      + '<th class="sticky-col" data-act="smd-sort" data-k="player">Rank &middot; Player</th>'
+      + '<th data-act="smd-sort" data-k="ovr" class="' + (sort.key === "ovr" ? "sorted" : "") + '">Tier</th>'
+      + '<th data-act="smd-sort" data-k="played" class="' + (sort.key === "played" ? "sorted" : "") + '">P</th>'
+      + '<th data-act="smd-sort" data-k="wins" class="' + (sort.key === "wins" ? "sorted" : "") + '">W</th>'
+      + '<th data-act="smd-sort" data-k="winPct" class="' + (sort.key === "winPct" ? "sorted" : "") + '">Win %</th>'
+      + '<th data-act="smd-sort" data-k="avg" class="' + (sort.key === "avg" ? "sorted" : "") + '">3D Avg</th>'
+      + '<th data-act="smd-sort" data-k="ld" class="' + (sort.key === "ld" ? "sorted" : "") + '">LD</th>'
+      + '<th data-act="smd-sort" data-k="hf" class="' + (sort.key === "hf" ? "sorted" : "") + '">HF</th>'
+      + '<th data-act="smd-sort" data-k="legsW" class="' + (sort.key === "legsW" ? "sorted" : "") + '">Lw</th>'
+      + '<th data-act="smd-sort" data-k="legsL" class="' + (sort.key === "legsL" ? "sorted" : "") + '">Ll</th>'
+      + '<th data-act="smd-sort" data-k="legsPct" class="' + (sort.key === "legsPct" ? "sorted" : "") + '">Leg %</th>'
+      + '<th data-act="smd-sort" data-k="tons" class="' + (sort.key === "tons" ? "sorted" : "") + '">100+</th>'
+      + '<th data-act="smd-sort" data-k="max180" class="' + (sort.key === "max180" ? "sorted" : "") + '">180</th>'
+      + '</tr></thead><tbody>';
+
+    filtered.forEach(p => {
+      const ev = p.eval;
+      const analysis = SMD_PLAYER_ANALYSIS[p.player] || "";
+      html += '<tr>'
+        + '<td class="sticky-col" title="' + esc(analysis) + '"><span class="rank-num">' + p.rankDisplay + '</span> <span class="player-name">' + esc(p.player) + '</span><span class="smd-card-ai-badge" style="margin-left:6px;font-size:9px;padding:1px 4px">&#10024; AI</span></td>'
+        + '<td><span class="tier-badge tier-' + ev.ovr + '"><span class="tier-dot ' + ev.ovr + '"></span>' + ev.ovr.toUpperCase() + '</span></td>'
+        + '<td>' + p.played + '</td>'
+        + '<td><b>' + p.wins + '</b></td>'
+        + '<td><span class="tier-pill tier-' + ev.tWin + '">' + p.winPct.toFixed(1) + '%</span></td>'
+        + '<td><span class="tier-pill tier-' + ev.tAvg + '">' + p.avg.toFixed(2) + '</span></td>'
+        + '<td><span class="tier-pill tier-' + ev.tLd + '">' + p.ld + '</span></td>'
+        + '<td><span class="tier-pill tier-' + ev.tHf + '">' + p.hf + '</span></td>'
+        + '<td>' + p.legsW + '</td>'
+        + '<td>' + p.legsL + '</td>'
+        + '<td><span class="tier-pill tier-' + ev.tLeg + '">' + p.legsPct.toFixed(1) + '%</span></td>'
+        + '<td>' + p.tons + '</td>'
+        + '<td>' + (p.max180 > 0 ? '<b style="color:var(--gold)">' + p.max180 + '</b>' : '-') + '</td>'
+        + '</tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+
+  // Tier Grading Thresholds Legend
+  html += '<div class="smd-legend">'
+    + '<h4>Tier Heatmap Thresholds</h4>'
+    + '<div class="smd-legend-grid">'
+    + '<div class="smd-legend-item"><span class="tier-badge tier-green"><span class="tier-dot green"></span>GREEN</span><span>Avg &ge;60.0 &middot; LD &lt;18 &middot; HF &ge;90 &middot; Win &ge;90% &middot; Leg &ge;90%</span></div>'
+    + '<div class="smd-legend-item"><span class="tier-badge tier-yellow"><span class="tier-dot yellow"></span>YELLOW</span><span>Avg 54.0–59.99 &middot; LD 18–22 &middot; HF 70–89 &middot; Win 75–89.9% &middot; Leg 75–89.9%</span></div>'
+    + '<div class="smd-legend-item"><span class="tier-badge tier-orange"><span class="tier-dot orange"></span>ORANGE</span><span>Avg 45.0–53.99 &middot; LD 23–26 &middot; HF 40–69 &middot; Win 60–74.9% &middot; Leg 60–74.9%</span></div>'
+    + '<div class="smd-legend-item"><span class="tier-badge tier-red"><span class="tier-dot red"></span>RED</span><span>Avg &lt;45.0 &middot; LD 27+ &middot; HF &lt;40 &middot; Win &lt;60% &middot; Leg &lt;60%</span></div>'
+    + '</div>'
+    + '<div style="margin-top:8px;font-size:11px;color:var(--chalk-dim)">* Overall (OVR) grade requires 3 or more individual metrics meeting that tier standard.</div>'
+    + '</div>';
+
+  html += '</div>';
   return html;
 }
 
@@ -1177,15 +1642,15 @@ async function exportImage(fx){
   // Watermark - top/bottom strips plus vertical text up each side, all
   // sitting in the existing 14px margin (P) so nothing else needs to move.
   x.save();
-  x.globalAlpha = 0.5;
-  x.fillStyle = "#5E625E";
-  x.font = "700 9px " + CONDF;
+  x.globalAlpha = 1.0;
+  x.fillStyle = "rgba(255, 255, 255, 0.58)";
+  x.font = "700 11.5px " + CONDF;
   x.textAlign = "center";
-  try { x.letterSpacing = "2px"; } catch(e){}
+  try { x.letterSpacing = "2.75px"; } catch(e){}
   x.fillText("PWMC CHALK APP", W/2, 10);
   x.fillText("PWMC CHALK APP", W/2, H - 4);
-  x.save(); x.translate(9, H/2); x.rotate(-Math.PI/2); x.fillText("PWMC CHALK APP", 0, 0); x.restore();
-  x.save(); x.translate(W - 9, H/2); x.rotate(Math.PI/2); x.fillText("PWMC CHALK APP", 0, 0); x.restore();
+  x.save(); x.translate(8, H/2); x.rotate(-Math.PI/2); x.fillText("PWMC CHALK APP", 0, 0); x.restore();
+  x.save(); x.translate(W - 8, H/2); x.rotate(Math.PI/2); x.fillText("PWMC CHALK APP", 0, 0); x.restore();
   try { x.letterSpacing = "0px"; } catch(e){}
   x.restore();
 
@@ -1229,10 +1694,44 @@ document.addEventListener("click", async (e) => {
 
   if (act === "new"){ S.view = "setup"; render(); return; }
   if (act === "results"){ S.view = "results"; render(); return; }
+  if (act === "smd"){ S.view = "smd"; render(); return; }
   if (act === "preview"){ S.viewing = S.fx; S.view = "view"; render(); return; }
 
+  if (act === "smd-sort"){
+    const key = el.dataset.k;
+    if (S.smdSort.key === key){
+      S.smdSort.dir = S.smdSort.dir === "desc" ? "asc" : "desc";
+    } else {
+      S.smdSort.key = key;
+      S.smdSort.dir = (key === "ld" || key === "player") ? "asc" : "desc";
+    }
+    render(); return;
+  }
+  if (act === "smd-viewmode"){
+    S.smdViewMode = el.dataset.mode;
+    render(); return;
+  }
+  if (act === "smd-toggle"){
+    const p = el.dataset.player;
+    const curr = S.smdExpanded[p] !== false;
+    S.smdExpanded[p] = !curr;
+    render(); return;
+  }
+  if (act === "smd-expand-all"){
+    SMD_STATS_DATA.forEach(p => { S.smdExpanded[p.player] = true; });
+    render(); return;
+  }
+  if (act === "smd-collapse-all"){
+    SMD_STATS_DATA.forEach(p => { S.smdExpanded[p.player] = false; });
+    render(); return;
+  }
+  if (act === "smd-clear-search"){
+    S.smdSearch = "";
+    render(); return;
+  }
+
   if (act === "back"){
-    if (S.view === "setup" || S.view === "results") S.view = "home";
+    if (S.view === "setup" || S.view === "results" || S.view === "smd") S.view = "home";
     else if (S.view === "fixture") S.view = "home";
     else if (S.view === "lineup" || S.view === "board") S.view = "fixture";
     else if (S.view === "view"){
@@ -1459,6 +1958,18 @@ document.addEventListener("click", async (e) => {
     try { await navigator.clipboard.writeText(txt); toast("Copied"); }
     catch(err){ toast("Could not copy"); }
     return;
+  }
+});
+
+document.addEventListener("input", e => {
+  if (e.target && e.target.id === "smd-search"){
+    S.smdSearch = e.target.value;
+    render();
+    const inp = document.getElementById("smd-search");
+    if (inp){
+      inp.focus();
+      inp.setSelectionRange(inp.value.length, inp.value.length);
+    }
   }
 });
 
@@ -1795,29 +2306,32 @@ function buildDemoFixture(){
    figure the same way as any other night: tap its stats grid on the report
    screen. Add a new night by appending another entry to SEEDED_RESULTS.
    ======================================================================= */
-function buildSeededFixture(id, meta, rows){
+function buildSeededFixture(id, meta, rows, unplayed){
   const fx = blankFixture(meta);
   fx.id = id;
 
-  fx.games.forEach((g, gi) => {
-    const row = rows[gi];
-    g.home = row.home; g.away = row.away; g.started = true;
+  if (!unplayed && rows && rows.length){
+    fx.games.forEach((g, gi) => {
+      const row = rows[gi];
+      if (!row) return;
+      g.home = row.home; g.away = row.away; g.started = true;
 
-    let starter = defaultStart(fx, gi);
-    const [homeLegs, awayLegs] = row.legs;
-    const order = Array(homeLegs).fill("home").concat(Array(awayLegs).fill("away"));
-    order.forEach(side => {
-      const leg = newLeg(starter);
-      leg.won = side;
-      g.legs.push(leg);
-      starter = other(starter);
+      let starter = defaultStart(fx, gi);
+      const [homeLegs, awayLegs] = row.legs;
+      const order = Array(homeLegs).fill("home").concat(Array(awayLegs).fill("away"));
+      order.forEach(side => {
+        const leg = newLeg(starter);
+        leg.won = side;
+        g.legs.push(leg);
+        starter = other(starter);
+      });
+
+      g.won = legsWonBy(g,"home") > legsWonBy(g,"away") ? "home" : "away";
+      g.statOverride = { home: row.hs, away: row.as };
     });
 
-    g.won = legsWonBy(g,"home") > legsWonBy(g,"away") ? "home" : "away";
-    g.statOverride = { home: row.hs, away: row.as };
-  });
-
-  fx.finished = true;
+    fx.finished = true;
+  }
   return fx;
 }
 
@@ -1900,8 +2414,83 @@ const SEEDED_RESULTS = [
         hs:{t100:6,t180:0,ld:18,high:73,f9:62.27,avg:59.57},
         as:{t100:8,t180:0,ld:22,high:12,f9:68.20,avg:57.66} }
     ]
+  },
+  {
+    id: "2026-08-19-pwmc-railway-b",
+    meta: {
+      date: "2026-08-19", venue: "Partington WMC", comp: "League - Division 4",
+      homeTeam: "Partington WMC", awayTeam: "Railway Club B",
+      homeSquad: ["Lewis Abbott","Chris Bollard","Rick Fox","Ryan Mellor","Karl Bannister","Mason Gamble","Brandon Gamble","Mark Colgan","Steven Bell"],
+      awaySquad: ["Mandy Haycocks","Sally Corfield","Richard Haycocks","Angela Haycocks","Steven Foster","Ian Fensome","Howard Haycocks"],
+      throwRule: "home"
+    },
+    rows: [
+      { home:["Lewis Abbott","Chris Bollard"], away:["Mandy Haycocks","Sally Corfield"], legs:[2,0],
+        hs:{t100:1,t180:0,ld:36,high:40,f9:37.50,avg:27.83},
+        as:{t100:0,t180:0,ld:null,high:null,f9:37.83,avg:26.83} },
+      { home:["Rick Fox"], away:["Richard Haycocks"], legs:[3,0],
+        hs:{t100:7,t180:1,ld:16,high:18,f9:89.00,avg:56.33},
+        as:{t100:1,t180:0,ld:null,high:null,f9:51.00,avg:45.30} },
+      { home:["Ryan Mellor"], away:["Angela Haycocks"], legs:[3,0],
+        hs:{t100:3,t180:0,ld:26,high:40,f9:50.00,avg:39.21},
+        as:{t100:1,t180:0,ld:null,high:null,f9:52.11,avg:34.45} },
+      { home:["Karl Bannister"], away:["Steven Foster"], legs:[3,1],
+        hs:{t100:4,t180:0,ld:22,high:40,f9:0.00,avg:45.00},
+        as:{t100:2,t180:0,ld:28,high:40,f9:0.00,avg:39.70} },
+      { home:["Mason Gamble"], away:["Ian Fensome"], legs:[3,0],
+        hs:{t100:6,t180:0,ld:19,high:50,f9:77.78,avg:67.30},
+        as:{t100:3,t180:0,ld:null,high:null,f9:58.33,avg:46.82} },
+      { home:["Brandon Gamble"], away:["Howard Haycocks"], legs:[3,1],
+        hs:{t100:7,t180:0,ld:18,high:117,f9:71.33,avg:62.97},
+        as:{t100:2,t180:0,ld:29,high:63,f9:51.92,avg:51.26} },
+      { home:["Mark Colgan"], away:["Mandy Haycocks"], legs:[3,0],
+        hs:{t100:2,t180:1,ld:20,high:52,f9:69.89,avg:68.32},
+        as:{t100:0,t180:0,ld:null,high:null,f9:40.11,avg:40.90} },
+      { home:["Steven Bell"], away:["Sally Corfield"], legs:[3,0],
+        hs:{t100:1,t180:1,ld:25,high:40,f9:50.44,avg:51.83},
+        as:{t100:1,t180:0,ld:null,high:null,f9:47.78,avg:38.55} }
+    ]
+  },
+  {
+    id: "2026-08-26-tsc-b-pwmc",
+    meta: {
+      date: "2026-08-26", venue: "Trafford Social Club", comp: "League - Division 4",
+      homeTeam: "TSC B", awayTeam: "Partington WMC",
+      homeSquad: ["Gaz Collins","Lee Allen","Henry Collins","Dean Koehler","Cameron King","Ray Townhill","Iuliu Jimborean"],
+      awaySquad: ["Adam Harral","Ryan Mellor","Rick Fox","Mark Colgan","Steven Bell","Lewis Abbott","Mason Gamble","Danny Kendrick","Brandon Gamble"],
+      throwRule: "home"
+    },
+    rows: [
+      { home:["Gaz Collins","Lee Allen"], away:["Adam Harral","Ryan Mellor"], legs:[1,2],
+        hs:{t100:2,t180:0,ld:35,high:32,f9:52.22,avg:38.41},
+        as:{t100:2,t180:0,ld:26,high:32,f9:47.44,avg:43.43} },
+      { home:["Henry Collins"], away:["Rick Fox"], legs:[0,3],
+        hs:{t100:3,t180:0,ld:null,high:null,f9:48.22,avg:56.00},
+        as:{t100:5,t180:0,ld:18,high:97,f9:61.67,avg:68.32} },
+      { home:["Dean Koehler"], away:["Mark Colgan"], legs:[0,3],
+        hs:{t100:1,t180:0,ld:null,high:null,f9:54.00,avg:41.57},
+        as:{t100:5,t180:0,ld:26,high:40,f9:64.11,avg:49.55} },
+      { home:["Cameron King"], away:["Steven Bell"], legs:[1,3],
+        hs:{t100:1,t180:0,ld:32,high:28,f9:39.92,avg:42.77},
+        as:{t100:3,t180:0,ld:29,high:32,f9:59.58,avg:45.60} },
+      { home:["Ray Townhill"], away:["Lewis Abbott"], legs:[3,1],
+        hs:{t100:2,t180:0,ld:28,high:40,f9:43.50,avg:38.73},
+        as:{t100:2,t180:0,ld:32,high:20,f9:45.17,avg:39.64} },
+      { home:["Iuliu Jimborean"], away:["Mason Gamble"], legs:[0,3],
+        hs:{t100:0,t180:0,ld:null,high:null,f9:37.89,avg:46.05},
+        as:{t100:4,t180:0,ld:15,high:64,f9:78.44,avg:75.15} },
+      { home:["Gaz Collins"], away:["Danny Kendrick"], legs:[1,3],
+        hs:{t100:2,t180:0,ld:24,high:60,f9:47.67,avg:45.85},
+        as:{t100:1,t180:0,ld:20,high:52,f9:52.00,avg:42.97} },
+      { home:["Lee Allen"], away:["Brandon Gamble"], legs:[1,3],
+        hs:{t100:6,t180:0,ld:20,high:20,f9:76.08,avg:59.80},
+        as:{t100:5,t180:0,ld:20,high:70,f9:77.50,avg:60.61} }
+    ]
   }
 ];
+
+const SEED_VERSION = 3;
+const KEY_SEED_VER = "chalk:seed_ver";
 
 (async function boot(){
   S.fixtures = (await store.get(KEY_FX)) || [];
@@ -1911,14 +2500,57 @@ const SEEDED_RESULTS = [
   S.session = (await store.get(KEY_SESSION)) || { fixtureId: null, name: null, token: null };
   applyIcons();
 
-  let seededAny = false;
-  SEEDED_RESULTS.forEach(seed => {
-    if (!S.fixtures.some(f => f.id === seed.id)){
-      S.fixtures.unshift(buildSeededFixture(seed.id, seed.meta, seed.rows));
-      seededAny = true;
+  const currentSeedVer = (await store.get(KEY_SEED_VER)) || 0;
+  const needsResync = currentSeedVer < SEED_VERSION;
+  let changed = false;
+
+  // Clean up any old placeholder fixture id if present
+  const oldPlaceholderIdx = S.fixtures.findIndex(f => f.id === "2026-08-26-pwmc-trafford-b");
+  if (oldPlaceholderIdx !== -1){
+    S.fixtures.splice(oldPlaceholderIdx, 1);
+    changed = true;
+  }
+
+  // Build fresh seeded fixtures
+  const freshSeeds = SEEDED_RESULTS.map(seed => buildSeededFixture(seed.id, seed.meta, seed.rows, seed.unplayed));
+
+  // Sync seeded fixtures into local cache
+  freshSeeds.forEach(fresh => {
+    const idx = S.fixtures.findIndex(f => f.id === fresh.id || (f.date === fresh.date && ((f.homeTeam === fresh.homeTeam && f.awayTeam === fresh.awayTeam) || (f.date === "2026-08-26"))));
+    if (idx === -1){
+      S.fixtures.push(fresh);
+      changed = true;
+    } else if (needsResync){
+      // Update with fresh dataset
+      S.fixtures[idx] = fresh;
+      changed = true;
     }
   });
-  if (seededAny) await persist();
+
+  // Deduplicate if any fixture had duplicate IDs across upgrades
+  const seenIds = new Set();
+  const deduped = [];
+  S.fixtures.forEach(f => {
+    if (!seenIds.has(f.id)){
+      seenIds.add(f.id);
+      deduped.push(f);
+    } else {
+      changed = true;
+    }
+  });
+  S.fixtures = deduped;
+
+  // Sort fixtures by date descending
+  S.fixtures.sort((a,b) => {
+    const da = a.date ? new Date(a.date + "T12:00:00").getTime() : (a.savedAt || 0);
+    const db = b.date ? new Date(b.date + "T12:00:00").getTime() : (b.savedAt || 0);
+    return (db - da) || ((b.savedAt || 0) - (a.savedAt || 0));
+  });
+
+  if (changed || needsResync){
+    await store.set(KEY_FX, S.fixtures);
+    await store.set(KEY_SEED_VER, SEED_VERSION);
+  }
 
   if (DEMO_MODE){
     let demo = S.fixtures.find(f => f.id === "demo_night");
