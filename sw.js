@@ -1,7 +1,13 @@
 /* Chalk · offline cache
    Bump CACHE when you change index.html, otherwise phones keep the old copy. */
-const CACHE = "chalk-v9";
-const SHELL = ["./", "./index.html", "./icon.png", "./icon-180.png", "./manifest.json"];
+const CACHE = "chalk-v16";
+const SHELL = [
+  "./",
+  "./index.html",
+  "./icon.png",
+  "./icon-180.png",
+  "./manifest.json"
+];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

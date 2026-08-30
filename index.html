@@ -370,10 +370,711 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 @media (max-width:440px){.smd-legend-grid{grid-template-columns:1fr}}
 .smd-legend-item{display:flex;align-items:center;gap:6px}
 
+/* Player Profile View */
+.profile-wrap{padding:14px 12px 36px;max-width:760px;margin:0 auto}
+.profile-hero{background:linear-gradient(180deg, #18221B 0%, #101512 100%);border:1px solid #28362D;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.3);position:relative;overflow:hidden}
+.profile-hero.theme-cyan{
+  border-color: rgba(6, 182, 212, 0.45);
+  box-shadow: 0 4px 24px rgba(6, 182, 212, 0.16), inset 0 1px 0 rgba(103, 232, 249, 0.2);
+  background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.12) 0%, transparent 65%), linear-gradient(180deg, #10242e 0%, #0c151a 100%);
+}
+.profile-hero.theme-emerald{
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.16), inset 0 1px 0 rgba(110, 231, 183, 0.2);
+  background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.12) 0%, transparent 65%), linear-gradient(180deg, #11281c 0%, #0b1710 100%);
+}
+
+.profile-hero-top{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.profile-avatar-frame{
+  width:88px;
+  height:88px;
+  border-radius:16px;
+  overflow:hidden;
+  border:2px solid #334155;
+  background:#0f172a;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+}
+@media (min-width:768px){
+  .profile-avatar-frame{width:104px;height:104px;}
+}
+.profile-avatar-frame.glow-cyan{
+  border-color:rgba(6,182,212,0.6);
+  box-shadow:0 0 20px rgba(6,182,212,0.35), 0 8px 24px rgba(0,0,0,0.6);
+}
+.profile-avatar-frame.glow-emerald{
+  border-color:rgba(34,197,94,0.6);
+  box-shadow:0 0 20px rgba(34,197,94,0.35), 0 8px 24px rgba(0,0,0,0.6);
+}
+.profile-avatar-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.profile-avatar-fallback{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--display);
+  font-size:26px;
+  font-weight:700;
+  color:#94a3b8;
+  background:linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  letter-spacing:1px;
+}
+.profile-avatar{width:56px;height:56px;background:linear-gradient(135deg, #253629 0%, #151F18 100%);border:1px solid #384E3D;border-radius:10px;font-family:var(--display);font-size:22px;color:var(--gold);display:flex;align-items:center;justify-content:center;flex:none;letter-spacing:1px}
+
+.profile-hero-info{flex:1;min-width:0}
+.profile-hero-team{font-size:12px;color:var(--chalk-dim);display:flex;align-items:center;gap:6px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em}
+.team-dot{width:7px;height:7px;border-radius:50%;background:#10B981;display:inline-block;box-shadow:0 0 6px rgba(16,185,129,0.5)}
+.profile-hero-name{font-family:var(--cond);font-size:28px;font-weight:700;color:#F2EFE4;line-height:1.15;margin:2px 0 0;letter-spacing:.02em}
+
+.profile-nickname-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-family:var(--cond);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:4px;
+  margin-top:6px;
+  width:fit-content;
+}
+
+/* SMD Stats view nickname tags & mini avatars */
+.smd-mini-avatar-frame{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  overflow:hidden;
+  border:1.5px solid #334155;
+  background:#0f172a;
+  flex-shrink:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  vertical-align:middle;
+}
+.smd-mini-avatar-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.smd-mini-initials{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--cond);
+  font-size:12px;
+  font-weight:700;
+  color:#94a3b8;
+  background:#1e293b;
+}
+
+.smd-nickname-sub{
+  font-size:12px;
+  font-style:italic;
+  font-family:var(--cond);
+  font-weight:600;
+  letter-spacing:.04em;
+  margin-left:4px;
+}
+
+.smd-nickname-tag{
+  display:inline-flex;
+  align-items:center;
+  font-family:var(--cond);
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:1px 6px;
+  border-radius:3px;
+  margin-left:4px;
+  vertical-align:middle;
+}
+
+.profile-hero-badges{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-top:12px;border-top:1px solid #1E2821}
+.profile-badge-item{display:flex;flex-direction:column;gap:3px}
+.badge-lbl{font-family:var(--cond);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--chalk-dim)}
+.profile-record-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--cond);font-size:12.5px;padding:4px 9px;background:#171E19;border:1px solid #28372C;border-radius:4px;color:#EAE6DA}
+.profile-record-pill b{color:#F2EFE4}
+
+.profile-sect-head{font-family:var(--cond);font-size:12.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--chalk-dim);margin:20px 0 8px;padding:0 2px}
+
+.profile-stats-grid{display:grid;grid-template-columns:repeat(4, 1fr);gap:8px;margin-bottom:16px}
+@media (max-width:640px){.profile-stats-grid{grid-template-columns:repeat(2, 1fr)}}
+.profile-stat-box{background:#131814;border:1px solid #232D25;border-radius:8px;padding:11px 12px;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+.profile-stat-box .k{font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--chalk-dim)}
+.profile-stat-box .v-wrap{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.profile-stat-box .v{font-family:var(--display);font-size:21px;color:#F2EFE4;font-variant-numeric:tabular-nums}
+.profile-stat-box .sub{font-size:10.5px;color:var(--chalk-dim);line-height:1.2}
+
+.profile-ai-card{background:linear-gradient(180deg, #18221B 0%, #111612 100%);border:1px solid #2B3B2F;border-left:4px solid #10B981;border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.profile-ai-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.profile-ai-title{font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#34D399;display:flex;align-items:center;gap:6px}
+.profile-ai-body{font-size:13.5px;color:#EAE6DA;line-height:1.55;letter-spacing:0.01em}
+
+.profile-match-stream{display:flex;flex-direction:column;gap:10px}
+.profile-match-card{background:var(--rep-card);border:1px solid var(--rep-line);border-radius:8px;padding:12px 14px}
+.profile-match-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.profile-match-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11.5px}
+.profile-match-meta .date{font-weight:700;color:#F2EFE4}
+.profile-match-meta .venue{color:var(--chalk-dim)}
+.profile-match-meta .game-tag{font-family:var(--cond);font-weight:700;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;background:#1B231E;border:1px solid #29362C;padding:1px 6px;border-radius:3px;color:var(--gold)}
+.match-res-badge{font-family:var(--cond);font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;white-space:nowrap}
+.match-res-badge.win{background:rgba(16,185,129,0.18);color:#34d399;border:1px solid rgba(16,185,129,0.38)}
+.match-res-badge.lose{background:rgba(239,68,68,0.18);color:#f87171;border:1px solid rgba(239,68,68,0.38)}
+.profile-match-versus{font-size:13.5px;margin-bottom:10px;color:#EAE6DA}
+.profile-match-versus .partner{font-weight:600;color:var(--gold)}
+.profile-match-versus .vs{font-size:11.5px;color:var(--chalk-dim);font-family:var(--cond);text-transform:uppercase}
+.profile-match-versus .opp{font-weight:700;color:#F2EFE4}
+.profile-match-stats-grid{display:grid;grid-template-columns:repeat(6, 1fr);background:#111612;border:1px solid #222B24;border-radius:6px;text-align:center;padding:7px 0}
+.profile-match-stats-grid .stat-col{border-right:1px solid #1E2720}
+.profile-match-stats-grid .stat-col:last-child{border-right:none}
+.profile-match-stats-grid .k{display:block;font-family:var(--cond);font-size:9px;color:var(--chalk-dim);text-transform:uppercase}
+.profile-match-stats-grid .v{display:block;font-size:12.5px;font-weight:600;color:#F2EFE4;margin-top:2px;font-variant-numeric:tabular-nums}
+.profile-match-stats-grid .v.gold{color:var(--gold)}
+.profile-match-stats-grid .v.bold{font-weight:700}
+.profile-match-foot{display:flex;justify-content:flex-end;margin-top:8px}
+.profile-match-btn{padding:4px 10px;font-size:11px;height:auto;line-height:1.2;margin:0}
+
+.profile-empty-card{background:#131814;border:1px solid #232D25;border-radius:8px;padding:24px 18px;text-align:center}
+
+.player-link{cursor:pointer;transition:color .15s, text-decoration .15s;color:inherit}
+.player-link:hover{color:var(--gold)!important;text-decoration:underline}
+.player-name-link{cursor:pointer;color:#F2EFE4;font-family:var(--cond);font-weight:700;font-size:14px;transition:color .15s}
+.player-name-link:hover{color:var(--gold)!important;text-decoration:underline}
+
 .empty{padding:60px 30px;text-align:center;color:var(--chalk-dim)}
 .empty .display{font-size:26px;color:var(--chalk);margin-bottom:8px}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--chalk);color:var(--slate);padding:11px 18px;border-radius:2px;font-family:var(--cond);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;z-index:90}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* --- Theme Toggle & Global Navigation Controls --- */
+.theme-toggle-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  border-radius:6px;
+  background:var(--slate-3);
+  color:var(--chalk);
+  border:1px solid var(--line);
+  cursor:pointer;
+  transition:background .15s, color .15s, transform .1s;
+  padding:0;
+  flex:none;
+}
+.theme-toggle-btn:hover{
+  background:var(--wire);
+  color:#141614;
+}
+.theme-toggle-btn:active{
+  transform:scale(.94);
+}
+.home-top-bar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:12px 16px 0;
+  padding-top:calc(12px + var(--pad-top));
+}
+.bar .rt{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* --- Dynamic PWMC Team Crest Badge --- */
+.pwmc-crest{
+  display:inline-block;
+  vertical-align:middle;
+  border-radius:50%;
+  object-fit:contain;
+  box-shadow:0 1px 3px rgba(0,0,0,0.22);
+  border:1px solid rgba(183,155,91,0.35);
+  flex-shrink:0;
+}
+.team-with-crest{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  vertical-align:middle;
+}
+.team-with-crest.home{
+  justify-content:flex-start;
+}
+.team-with-crest.away{
+  justify-content:flex-end;
+}
+
+/* --- LIGHT MODE PALETTE & SURFACE OVERRIDES --- */
+[data-theme="light"]{
+  --slate:#F8FAFC;
+  --slate-2:#FFFFFF;
+  --slate-3:#E2E8F0;
+  --line:#CBD5E1;
+  --chalk:#0F172A;
+  --chalk-dim:#64748B;
+  --sisal:#92400E;
+  --treble:#DC2626;
+  --double:#16A34A;
+  --wire:#B45309;
+  --gold:#D97706;
+  --rep-bg:#F1F5F9;
+  --rep-card:#FFFFFF;
+  --rep-light:#0F172A;
+  --rep-ink:#FFFFFF;
+  --rep-mute:#64748B;
+  --rep-grey:#94A3B8;
+  --rep-line:#E2E8F0;
+  --rep-green:#15803D;
+}
+[data-theme="light"] body{
+  background-color:#F8FAFC;
+  color:#0F172A;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(15,23,42,.03), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 110%, rgba(15,23,42,.02), transparent 70%);
+}
+[data-theme="light"] .bar{
+  background:#FFFFFF;
+  border-bottom:1px solid #E2E8F0;
+  box-shadow:0 1px 2px rgba(0,0,0,0.03);
+}
+[data-theme="light"] .btn{
+  background:#0F172A;
+  color:#FFFFFF;
+}
+[data-theme="light"] .btn.ghost{
+  background:#FFFFFF;
+  color:#0F172A;
+  box-shadow:inset 0 0 0 1px #CBD5E1;
+}
+[data-theme="light"] .btn.quiet{
+  background:#E2E8F0;
+  color:#0F172A;
+}
+[data-theme="light"] .btn.danger{
+  color:#DC2626;
+  box-shadow:inset 0 0 0 1px #DC2626;
+}
+[data-theme="light"] input[type=text],
+[data-theme="light"] input[type=date],
+[data-theme="light"] select,
+[data-theme="light"] textarea{
+  background:#FFFFFF;
+  color:#0F172A;
+  border-color:#CBD5E1;
+}
+[data-theme="light"] .col.active{
+  background:#F1F5F9;
+}
+[data-theme="light"] .col .sub b{
+  color:#B45309;
+}
+[data-theme="light"] .tape .v{
+  border-bottom:1px dotted #CBD5E1;
+}
+[data-theme="light"] .key{
+  background:#FFFFFF;
+  border-color:#E2E8F0;
+  color:#0F172A;
+  box-shadow:0 1px 2px rgba(0,0,0,0.04);
+}
+[data-theme="light"] .key:active{
+  background:#E2E8F0;
+}
+[data-theme="light"] .key.go{
+  background:#16A34A;
+  border-color:#16A34A;
+  color:#FFFFFF;
+}
+[data-theme="light"] .key.del{
+  color:#DC2626;
+}
+[data-theme="light"] .chip{
+  background:#E2E8F0;
+  color:#0F172A;
+}
+[data-theme="light"] .chip.max{
+  background:#DC2626;
+  color:#FFFFFF;
+}
+[data-theme="light"] .veil{
+  background:rgba(15,23,42,.6);
+}
+[data-theme="light"] .sheet{
+  background:#FFFFFF;
+  border-top-color:var(--wire);
+  box-shadow:0 -4px 20px rgba(0,0,0,0.12);
+  color:#0F172A;
+}
+[data-theme="light"] .card{
+  border-bottom-color:#E2E8F0;
+}
+[data-theme="light"] .card:hover{
+  background:#F8FAFC;
+}
+[data-theme="light"] .card .nm{
+  color:#0F172A;
+}
+[data-theme="light"] .card .sc{
+  color:#0F172A;
+}
+[data-theme="light"] .card .sc.win{
+  color:var(--double);
+}
+[data-theme="light"] .smd-banner{
+  background:linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  border-color:#E2E8F0;
+  box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+[data-theme="light"] .smd-banner h2{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-sum-box{
+  background:#F1F5F9;
+  border-color:#E2E8F0;
+}
+[data-theme="light"] .smd-sum-box .v{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-search-bar input{
+  background:#FFFFFF;
+  border-color:#CBD5E1;
+  color:#0F172A;
+}
+[data-theme="light"] .smd-view-tabs{
+  background:#E2E8F0;
+  border-color:#CBD5E1;
+}
+[data-theme="light"] .smd-view-tab{
+  color:#64748B;
+}
+[data-theme="light"] .smd-view-tab.active{
+  background:#FFFFFF;
+  color:#0F172A;
+  box-shadow:0 1px 2px rgba(0,0,0,0.08);
+}
+[data-theme="light"] .smd-chip{
+  background:#FFFFFF;
+  border-color:#E2E8F0;
+  color:#475569;
+}
+[data-theme="light"] .smd-chip.active{
+  background:#FEF3C7;
+  border-color:#F59E0B;
+  color:#92400E;
+}
+[data-theme="light"] .smd-card{
+  background:#FFFFFF;
+  border-color:#E2E8F0;
+  box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+[data-theme="light"] .smd-card:hover,
+[data-theme="light"] .smd-card.expanded{
+  border-color:#94A3B8;
+}
+[data-theme="light"] .smd-card-head{
+  background:#F8FAFC;
+  border-bottom-color:#E2E8F0;
+}
+[data-theme="light"] .smd-rank.normal{
+  background:#F1F5F9;
+  color:#64748B;
+  border-color:#E2E8F0;
+}
+[data-theme="light"] .smd-card-info .name{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-card-info .record b{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-card-stats{
+  background:#FFFFFF;
+}
+[data-theme="light"] .smd-stat-cell{
+  background:#F8FAFC;
+  border-color:#E2E8F0;
+}
+[data-theme="light"] .smd-stat-cell .v{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-drawer{
+  background:#F8FAFC;
+  border-top-color:#E2E8F0;
+}
+[data-theme="light"] .smd-drawer-row{
+  background:#FFFFFF;
+  border:1px solid #E2E8F0;
+}
+[data-theme="light"] .smd-drawer-row b{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-ai-box{
+  background:linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+  border:1px solid #FDE68A;
+  border-left:3px solid #D97706;
+}
+[data-theme="light"] .smd-ai-text{
+  color:#78350F;
+}
+[data-theme="light"] .smd-eval-item{
+  background:#FFFFFF;
+  border:1px solid #E2E8F0;
+}
+[data-theme="light"] .smd-eval-item .label{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-table-wrap{
+  background:#FFFFFF;
+  border-color:#E2E8F0;
+  box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+[data-theme="light"] .smd-table th{
+  background:#F8FAFC;
+  color:#64748B;
+  border-bottom-color:#E2E8F0;
+}
+[data-theme="light"] .smd-table th.sorted{
+  color:#92400E;
+  background:#FEF3C7;
+}
+[data-theme="light"] .smd-table td{
+  border-bottom-color:#F1F5F9;
+  color:#0F172A;
+}
+[data-theme="light"] .smd-table tr:hover td{
+  background:#F8FAFC;
+}
+[data-theme="light"] .smd-table .sticky-col{
+  background:#FFFFFF;
+  border-right-color:#E2E8F0;
+}
+[data-theme="light"] .smd-table tr:hover .sticky-col{
+  background:#F8FAFC;
+}
+[data-theme="light"] .smd-table .player-name{
+  color:#0F172A;
+}
+[data-theme="light"] .smd-legend{
+  background:#F8FAFC;
+  border-color:#E2E8F0;
+}
+[data-theme="light"] .tier-green{
+  background:#DCFCE7;
+  color:#15803D;
+  border-color:#86EFAC;
+}
+[data-theme="light"] .tier-yellow{
+  background:#FEF9C3;
+  color:#854D0E;
+  border-color:#FDE047;
+}
+[data-theme="light"] .tier-orange{
+  background:#FFEDD5;
+  color:#9A3412;
+  border-color:#FDBA74;
+}
+[data-theme="light"] .tier-red{
+  background:#FEE2E2;
+  color:#991B1B;
+  border-color:#FCA5A5;
+}
+[data-theme="light"] .profile-hero{
+  background:linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  border-color:#E2E8F0;
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
+[data-theme="light"] .profile-hero.theme-cyan{
+  background:radial-gradient(circle at top right, rgba(6, 182, 212, 0.08) 0%, transparent 65%), linear-gradient(180deg, #ECFEFF 0%, #FFFFFF 100%);
+  border-color:rgba(6, 182, 212, 0.4);
+  box-shadow:0 4px 20px rgba(6, 182, 212, 0.12);
+}
+[data-theme="light"] .profile-hero.theme-emerald{
+  background:radial-gradient(circle at top right, rgba(16, 185, 129, 0.08) 0%, transparent 65%), linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 100%);
+  border-color:rgba(16, 185, 129, 0.4);
+  box-shadow:0 4px 20px rgba(16, 185, 129, 0.12);
+}
+[data-theme="light"] .profile-avatar{
+  background:#F1F5F9;
+  border-color:#CBD5E1;
+}
+[data-theme="light"] .profile-hero-name{
+  color:#0F172A;
+}
+[data-theme="light"] .profile-record-pill{
+  background:#F1F5F9;
+  border-color:#E2E8F0;
+  color:#0F172A;
+}
+[data-theme="light"] .profile-record-pill b{
+  color:#0F172A;
+}
+[data-theme="light"] .profile-stat-box{
+  background:#FFFFFF;
+  border-color:#E2E8F0;
+  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+}
+[data-theme="light"] .profile-stat-box .v{
+  color:#0F172A;
+}
+[data-theme="light"] .profile-ai-card{
+  background:linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);
+  border-color:#BBF7D0;
+  border-left:4px solid #10B981;
+}
+[data-theme="light"] .profile-ai-body{
+  color:#14532D;
+}
+[data-theme="light"] .profile-match-card{
+  background:#FFFFFF;
+  border-color:#E2E8F0;
+  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+}
+[data-theme="light"] .profile-match-meta .date{
+  color:#0F172A;
+}
+[data-theme="light"] .profile-match-meta .game-tag{
+  background:#FEF3C7;
+  border-color:#FDE68A;
+  color:#92400E;
+}
+[data-theme="light"] .profile-match-versus{
+  color:#334155;
+}
+[data-theme="light"] .profile-match-versus .opp{
+  color:#0F172A;
+}
+[data-theme="light"] .profile-match-stats-grid{
+  background:#F8FAFC;
+  border-color:#E2E8F0;
+}
+[data-theme="light"] .profile-match-stats-grid .stat-col{
+  border-right-color:#E2E8F0;
+}
+[data-theme="light"] .profile-match-stats-grid .v{
+  color:#0F172A;
+}
+[data-theme="light"] .profile-empty-card{
+  background:#FFFFFF;
+  border-color:#E2E8F0;
+}
+[data-theme="light"] .player-name-link{
+  color:#0F172A;
+}
+[data-theme="light"] .report{
+  background:#F1F5F9;
+}
+[data-theme="light"] .rep-head{
+  background:#0F172A;
+  color:#FFFFFF;
+}
+[data-theme="light"] .rep-head span{
+  color:#94A3B8;
+}
+[data-theme="light"] .rep-score{
+  background:#FFFFFF;
+  border-bottom:1px solid #E2E8F0;
+}
+[data-theme="light"] .rep-score .t{
+  color:#0F172A;
+}
+[data-theme="light"] .rep-score .n{
+  color:#0F172A;
+}
+[data-theme="light"] .rep-score .n.w{
+  color:var(--gold);
+}
+[data-theme="light"] .rep-gallon{
+  background:#F8FAFC;
+  border-top:1px solid #E2E8F0;
+}
+[data-theme="light"] .rep-gallon b{
+  color:#0F172A;
+}
+[data-theme="light"] .gallon-strip{
+  background:#FFFFFF;
+  border-top-color:#E2E8F0;
+}
+[data-theme="light"] .gallon-strip b{
+  color:#0F172A;
+}
+[data-theme="light"] .gcard .gh{
+  background:#0F172A;
+  color:#FFFFFF;
+}
+[data-theme="light"] .half{
+  background:#FFFFFF;
+}
+[data-theme="light"] .half .top .nm b{
+  color:#0F172A;
+}
+[data-theme="light"] .half .top .nm span{
+  color:#64748B;
+}
+[data-theme="light"] .half .top .lg{
+  color:#0F172A;
+}
+[data-theme="light"] .half .stats{
+  border-top-color:#E2E8F0;
+  background:#F8FAFC;
+}
+[data-theme="light"] .half .stats > div{
+  border-right-color:#E2E8F0;
+}
+[data-theme="light"] .half .stats .v{
+  color:#0F172A;
+}
+[data-theme="light"] .half .stats .k{
+  color:#64748B;
+}
+[data-theme="light"] .rep-foot .nf{
+  background:#FFFFFF;
+  color:#0F172A;
+  box-shadow:inset 0 0 0 1px #CBD5E1;
+}
+[data-theme="light"] .wm{
+  color:rgba(15,23,42,0.18);
+}
+[data-theme="light"] .toast{
+  background:#0F172A;
+  color:#FFFFFF;
+}
+[data-theme="light"] .empty .display{
+  color:#0F172A;
+}
+[data-theme="light"] .game{
+  border-bottom-color:#E2E8F0;
+}
+[data-theme="light"] .game .who{
+  color:#0F172A;
+}
+[data-theme="light"] .game.live{
+  background:#F1F5F9;
+}
+[data-theme="light"] .gamelist{
+  border-top-color:#E2E8F0;
+}
+[data-theme="light"] .live-row{
+  border-top-color:#E2E8F0;
+}
 </style>
 </head>
 <body>
@@ -668,12 +1369,14 @@ const sb = (window.supabase && window.supabase.createClient)
   : null;
 
 const KEY_SESSION = "chalk:session";   // this device's current scoring claim, if any
+const KEY_THEME = "chalk:theme";       // user theme preference ('dark' | 'light')
 
 /* =======================================================================
    3. APP STATE
    ======================================================================= */
 const S = {
   view: "home",
+  theme: "dark",
   fixtures: [],
   squads: { home:{team:"", players:[]}, away:{team:"", players:[]} },
   fx: null,
@@ -689,8 +1392,52 @@ const S = {
   smdSort: { key: "league", dir: "desc" },
   smdSearch: "",
   smdViewMode: "cards",
-  smdExpanded: {}
+  smdExpanded: {},
+  selectedPlayer: "Mason Gamble",
+  playerPrevView: "smd"
 };
+
+function applyTheme(){
+  const t = S.theme || "dark";
+  document.documentElement.setAttribute("data-theme", t);
+  if (document.body) document.body.setAttribute("data-theme", t);
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme){
+    metaTheme.setAttribute("content", t === "light" ? "#F8FAFC" : "#1E2A26");
+  }
+}
+
+function themeToggleBtn(){
+  const isLight = S.theme === "light";
+  const icon = isLight
+    ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
+    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+  const title = isLight ? "Switch to Dark mode" : "Switch to Light mode";
+  return '<button class="theme-toggle-btn" data-act="toggle-theme" title="' + title + '" aria-label="' + title + '">' + icon + '</button>';
+}
+
+function isPwmcTeam(name){
+  if (!name) return false;
+  const n = String(name).toLowerCase().trim();
+  return n === "partington wmc" || n === "partington" || n === "pwmc" || n.includes("partington");
+}
+
+function renderTeamWithLogo(teamName, isHome, size){
+  size = size || 24;
+  const isPwmc = isPwmcTeam(teamName);
+  const logoSrc = S.badge || BADGE_DEFAULT;
+  const crestHtml = isPwmc
+    ? ('<img src="' + esc(logoSrc) + '" class="pwmc-crest" alt="PWMC" width="' + size + '" height="' + size + '" style="width:' + size + 'px;height:' + size + 'px;" onerror="this.style.display=\'none\'">')
+    : '';
+  if (isPwmc){
+    if (isHome){
+      return '<span class="team-with-crest home">' + crestHtml + '<span>' + esc(teamName) + '</span></span>';
+    } else {
+      return '<span class="team-with-crest away"><span>' + esc(teamName) + '</span>' + crestHtml + '</span>';
+    }
+  }
+  return '<span class="team-with-crest"><span>' + esc(teamName) + '</span></span>';
+}
 
 const app = document.getElementById("app");
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
@@ -745,7 +1492,8 @@ async function syncFixture(fx){
    4. VIEWS
    ======================================================================= */
 function render(){
-  const map = { home:vHome, setup:vSetup, fixture:vFixture, lineup:vLineup, board:vBoard, results:vResults, smd:vSmdStats, view:vView, watch:vWatch };
+  applyTheme();
+  const map = { home:vHome, setup:vSetup, fixture:vFixture, lineup:vLineup, board:vBoard, results:vResults, smd:vSmdStats, view:vView, watch:vWatch, player:vPlayerProfile };
   const fixed = S.view === "board";
   app.classList.toggle("fixed", fixed);
   document.body.classList.toggle("fixed", fixed);
@@ -765,7 +1513,11 @@ const BOARD_MARK = '<svg class="mark" viewBox="0 0 100 100" aria-hidden="true">'
 
 function vHome(){
   const live = S.fixtures.find(f => !f.finished);
-  return '<div class="hero">'
+  return '<div class="home-top-bar" style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px 0;width:100%;max-width:540px;margin:0 auto;">'
+    + '<span style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--chalk-dim)">PWMC Chalk</span>'
+    + themeToggleBtn()
+    + '</div>'
+    + '<div class="hero">'
     + '<button class="badge-btn" data-act="badge" aria-label="Change the club badge">'
     + '<img class="mark" src="' + (S.badge || BADGE_DEFAULT) + '" alt="Club badge">'
     + '</button>'
@@ -809,7 +1561,7 @@ function bar(back, mid, right){
   return '<div class="bar">'
     + '<button class="back" data-act="back">' + (back ? "&#8592; " + esc(back) : "") + '</button>'
     + '<div class="mid">' + esc(mid) + '</div>'
-    + '<div class="rt">' + right + '</div></div>';
+    + '<div class="rt">' + (right ? '<span style="margin-right:6px">' + right + '</span>' : '') + themeToggleBtn() + '</div></div>';
 }
 
 function vFixture(){
@@ -818,11 +1570,11 @@ function vFixture(){
   const gh = gallonLegsBy(fx,"home"), ga = gallonLegsBy(fx,"away");
   let html = bar("Home", fmtDate(fx.date).replace(/,.*$/, ""), esc(fx.venue || ""));
   html += '<div class="scoreline">'
-    + '<div class="team a">' + esc(fx.homeTeam) + '</div>'
+    + '<div class="team a">' + renderTeamWithLogo(fx.homeTeam, true, 24) + '</div>'
     + '<div style="display:flex;flex-direction:column;align-items:center">'
     + '<div style="display:flex;align-items:baseline;gap:8px"><span class="tally display num">' + h + '</span><span class="sep">/</span><span class="tally display num">' + a + '</span></div>'
     + '<div class="eyebrow" style="font-size:11px">Match</div></div>'
-    + '<div class="team">' + esc(fx.awayTeam) + '</div></div>'
+    + '<div class="team">' + renderTeamWithLogo(fx.awayTeam, false, 24) + '</div></div>'
     + (gallonPlayed(fx)
         ? '<div class="gallon-strip"><span>Gallon</span><b class="num' + (gh > ga ? " w" : "") + '">' + gh + '</b><i>&ndash;</i><b class="num' + (ga > gh ? " w" : "") + '">' + ga + '</b></div>'
         : '');
@@ -878,11 +1630,11 @@ function vWatch(){
 
   let html = bar("Home", "Following live", "");
   html += '<div class="scoreline">'
-    + '<div class="team a">' + esc(fx.homeTeam) + '</div>'
+    + '<div class="team a">' + renderTeamWithLogo(fx.homeTeam, true, 24) + '</div>'
     + '<div style="display:flex;flex-direction:column;align-items:center">'
     + '<div style="display:flex;align-items:baseline;gap:8px"><span class="tally display num">' + h + '</span><span class="sep">/</span><span class="tally display num">' + a + '</span></div>'
     + '<div class="eyebrow" style="font-size:11px">Match</div></div>'
-    + '<div class="team">' + esc(fx.awayTeam) + '</div></div>'
+    + '<div class="team">' + renderTeamWithLogo(fx.awayTeam, false, 24) + '</div></div>'
     + (gallonPlayed(fx)
         ? '<div class="gallon-strip"><span>Gallon</span><b class="num' + (gh > ga ? " w" : "") + '">' + gh + '</b><i>&ndash;</i><b class="num' + (ga > gh ? " w" : "") + '">' + ga + '</b></div>'
         : '');
@@ -1006,16 +1758,31 @@ function vResults(){
     html += '<button class="card" data-act="show" data-id="' + fx.id + '">'
       + '<div class="dt">' + esc(fmtDate(fx.date)) + (fx.venue ? " &middot; " + esc(fx.venue) : "")
       + (gallonPlayed(fx) ? " &middot; gallon " + gh + "&#8211;" + ga : "") + (fx.finished ? "" : " &middot; in progress") + '</div>'
-      + '<div class="ln"><span class="nm ' + (h > a ? "win" : h < a ? "lose" : "") + '">' + esc(fx.homeTeam) + '</span><span class="sc num ' + (h > a ? "win" : "") + '">' + h + '</span></div>'
-      + '<div class="ln"><span class="nm ' + (a > h ? "win" : a < h ? "lose" : "") + '">' + esc(fx.awayTeam) + '</span><span class="sc num ' + (a > h ? "win" : "") + '">' + a + '</span></div>'
+      + '<div class="ln"><span class="nm ' + (h > a ? "win" : h < a ? "lose" : "") + '">' + renderTeamWithLogo(fx.homeTeam, true, 18) + '</span><span class="sc num ' + (h > a ? "win" : "") + '">' + h + '</span></div>'
+      + '<div class="ln"><span class="nm ' + (a > h ? "win" : a < h ? "lose" : "") + '">' + renderTeamWithLogo(fx.awayTeam, false, 18) + '</span><span class="sc num ' + (a > h ? "win" : "") + '">' + a + '</span></div>'
       + '</button>';
   });
   return html;
 }
 
 /* =======================================================================
-   4.5. SMD LEAGUE PLAYER STATS
+   4.5. SMD LEAGUE PLAYER STATS & BRANDING
    ======================================================================= */
+const PLAYER_BRANDING = {};
+const PLAYER_ASSETS = PLAYER_BRANDING;
+window.PLAYER_ASSETS = PLAYER_ASSETS;
+window.PLAYER_BRANDING = PLAYER_BRANDING;
+
+function getPlayerBranding(name){
+  if (!name) return null;
+  for (const [pName, brand] of Object.entries(PLAYER_BRANDING)){
+    if (isSamePlayer(pName, name) || slugify(pName) === slugify(name)){
+      return { ...brand, player: pName };
+    }
+  }
+  return null;
+}
+
 const SMD_STATS_DATA = [
   { player: "Mason Gamble", played: 19, wins: 19, tons: 103, max180: 3, ld: 16, hf: 92, avg: 65.42, winPct: 100.0, legsW: 57, legsL: 10, legsPct: 85.07 },
   { player: "Karl Bannister", played: 18, wins: 15, tons: 70, max180: 1, ld: 17, hf: 101, avg: 54.71, winPct: 83.3, legsW: 50, legsL: 16, legsPct: 75.76 },
@@ -1249,15 +2016,17 @@ function vSmdStats(){
       + '</div>'
       + '<div class="smd-cards">';
     filtered.forEach(p => {
+      const branding = getPlayerBranding(p.player);
       const isExp = S.smdExpanded[p.player] !== false;
       const rankCls = p.rank === 1 ? "gold" : (p.rank <= 3 ? "podium" : "normal");
       const ev = p.eval;
+      const initials = p.player.split(" ").map(n => n[0]).join("");
 
       html += '<div class="smd-card ' + (isExp ? "expanded" : "") + '">'
         + '<div class="smd-card-head" data-act="smd-toggle" data-player="' + esc(p.player) + '">'
         + '<div class="smd-rank ' + rankCls + '">' + p.rankDisplay + '</div>'
         + '<div class="smd-card-info">'
-        + '<div class="name">' + esc(p.player) + '</div>'
+        + '<div class="name">' + esc(p.player) + (branding ? ' <span class="smd-nickname-sub" style="color:' + esc(branding.accentColor || 'var(--gold)') + '">&ldquo;' + esc(branding.nickname) + '&rdquo;</span>' : '') + '</div>'
         + '<div class="record"><b>' + p.played + 'P</b> &middot; <b>' + p.wins + 'W</b> (' + p.winPct.toFixed(1) + '%) &middot; <b>' + p.legsW + 'Lw</b></div>'
         + '</div>'
         + '<div style="display:flex;align-items:center;gap:6px;flex:none">'
@@ -1303,6 +2072,9 @@ function vSmdStats(){
           + '<div class="smd-eval-item"><span class="label">High Finish (' + p.hf + ' checkout)</span><span class="tier-badge tier-' + ev.tHf + '"><span class="tier-dot ' + ev.tHf + '"></span>' + ev.tHf.toUpperCase() + '</span></div>'
           + '<div class="smd-eval-item"><span class="label">3-Dart Avg (' + p.avg.toFixed(2) + ')</span><span class="tier-badge tier-' + ev.tAvg + '"><span class="tier-dot ' + ev.tAvg + '"></span>' + ev.tAvg.toUpperCase() + '</span></div>'
           + '</div></div>'
+          + '<div style="margin-top:10px">'
+          + '<button class="btn" style="width:100%;padding:9px 12px;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px" data-act="player-profile" data-player="' + esc(p.player) + '">View Full ' + esc(p.player) + ' Profile &#8594;</button>'
+          + '</div>'
           + '</div>';
       }
       html += '</div>';
@@ -1328,9 +2100,16 @@ function vSmdStats(){
 
     filtered.forEach(p => {
       const ev = p.eval;
+      const branding = getPlayerBranding(p.player);
       const analysis = SMD_PLAYER_ANALYSIS[p.player] || "";
+      const initials = p.player.split(" ").map(n => n[0]).join("");
+
       html += '<tr>'
-        + '<td class="sticky-col" title="' + esc(analysis) + '"><span class="rank-num">' + p.rankDisplay + '</span> <span class="player-name">' + esc(p.player) + '</span><span class="smd-card-ai-badge" style="margin-left:6px;font-size:9px;padding:1px 4px">&#10024; AI</span></td>'
+        + '<td class="sticky-col" title="' + esc(analysis) + '">'
+        + '<span class="rank-num">' + p.rankDisplay + '</span> <span class="player-name player-name-link" data-act="player-profile" data-player="' + esc(p.player) + '">' + esc(p.player) + '</span>'
+        + (branding ? ' <span class="smd-nickname-tag" style="background:' + esc(branding.accentColor || '#64748b') + '22;border:1px solid ' + esc(branding.accentColor || '#64748b') + '55;color:' + esc(branding.accentColor || '#64748b') + '">&ldquo;' + esc(branding.nickname) + '&rdquo;</span>' : '')
+        + '<span class="smd-card-ai-badge" style="margin-left:6px;font-size:9px;padding:1px 4px" data-act="player-profile" data-player="' + esc(p.player) + '">&#10024; AI</span>'
+        + '</td>'
         + '<td><span class="tier-badge tier-' + ev.ovr + '"><span class="tier-dot ' + ev.ovr + '"></span>' + ev.ovr.toUpperCase() + '</span></td>'
         + '<td>' + p.played + '</td>'
         + '<td><b>' + p.wins + '</b></td>'
@@ -1364,6 +2143,247 @@ function vSmdStats(){
   return html;
 }
 
+function slugify(name){
+  return String(name || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function isSamePlayer(a, b){
+  if (!a || !b) return false;
+  const sa = String(a).toLowerCase().trim().replace(/[^a-z0-9]/g, "");
+  const sb = String(b).toLowerCase().trim().replace(/[^a-z0-9]/g, "");
+  if (sa === sb) return true;
+  const aliases = [
+    ["stevebell", "stevenbell"],
+    ["rickfox", "richardfox"],
+    ["danielkendrick", "dannykendrick"],
+    ["bazoconnor", "barryoconnor"]
+  ];
+  return aliases.some(pair => (sa === pair[0] && sb === pair[1]) || (sa === pair[1] && sb === pair[0]));
+}
+
+function getPlayerBySlugOrName(slugOrName){
+  if (!slugOrName) return null;
+  const clean = String(slugOrName).toLowerCase().replace(/[^a-z0-9]/g, "");
+  return SMD_STATS_DATA.find(p => isSamePlayer(p.player, slugOrName)) ||
+         SMD_STATS_DATA.find(p => p.player.toLowerCase().replace(/[^a-z0-9]/g, "") === clean) ||
+         SMD_STATS_DATA.find(p => slugify(p.player) === slugify(slugOrName)) ||
+         null;
+}
+
+function getPlayerRank(playerName){
+  const sorted = SMD_STATS_DATA.slice().sort((a, b) => {
+    if (b.wins !== a.wins) return b.wins - a.wins;
+    if (b.legsW !== a.legsW) return b.legsW - a.legsW;
+    if (b.avg !== a.avg) return b.avg - a.avg;
+    return a.ld - b.ld;
+  });
+
+  let currentRank = 1;
+  const ranks = {};
+  for (let i = 0; i < sorted.length; i++){
+    if (i > 0){
+      const prev = sorted[i - 1], curr = sorted[i];
+      const same = (prev.wins === curr.wins && prev.legsW === curr.legsW && prev.avg === curr.avg && prev.ld === curr.ld);
+      if (!same) currentRank = i + 1;
+    }
+    ranks[sorted[i].player] = currentRank;
+  }
+  return ranks[playerName] || 1;
+}
+
+function getPlayerMatchLogs(playerName){
+  if (!playerName) return [];
+  const target = playerName.trim();
+  const logs = [];
+
+  const allFx = (S.fixtures || []).slice().sort((a,b) => {
+    const da = a.date ? new Date(a.date + "T12:00:00").getTime() : (a.savedAt || 0);
+    const db = b.date ? new Date(b.date + "T12:00:00").getTime() : (b.savedAt || 0);
+    return (db - da) || ((b.savedAt || 0) - (a.savedAt || 0));
+  });
+
+  allFx.forEach(fx => {
+    if (!fx.games) return;
+    fx.games.forEach((g, gi) => {
+      if (!g.started && !g.won && (!g.legs || !g.legs.length)) return;
+      const homeMatch = (g.home || []).some(n => isSamePlayer(n, target));
+      const awayMatch = (g.away || []).some(n => isSamePlayer(n, target));
+      if (!homeMatch && !awayMatch) return;
+
+      const mySide = homeMatch ? "home" : "away";
+      const oppSide = homeMatch ? "away" : "home";
+      const myTeam = mySide === "home" ? fx.homeTeam : fx.awayTeam;
+      const oppTeam = oppSide === "home" ? fx.homeTeam : fx.awayTeam;
+      const myPartners = g[mySide] || [];
+      const oppPlayers = g[oppSide] || [];
+
+      const myLegs = legsWonBy(g, mySide);
+      const oppLegs = legsWonBy(g, oppSide);
+      const isWon = g.won ? (g.won === mySide) : (myLegs > oppLegs);
+
+      const st = displayStats(g, mySide);
+
+      logs.push({
+        fixture: fx,
+        fixtureId: fx.id,
+        date: fx.date,
+        venue: fx.venue,
+        comp: fx.comp || "League Match",
+        gameIndex: gi,
+        gameTitle: g.title || (g.kind === "doubles" ? "The Gallon (Doubles)" : ("Game " + gi + " (Singles)")),
+        kind: g.kind,
+        isWon,
+        myLegs,
+        oppLegs,
+        mySide,
+        myTeam,
+        oppTeam,
+        myPartners,
+        oppPlayers,
+        stats: {
+          t100: st.t100 || 0,
+          t180: st.t180 || 0,
+          ld: st.ld,
+          high: st.high,
+          f9: st.f9 || 0,
+          avg: st.avg || 0
+        }
+      });
+    });
+  });
+
+  return logs;
+}
+
+function vPlayerProfile(){
+  const playerName = S.selectedPlayer || "Mason Gamble";
+  const p = SMD_STATS_DATA.find(x => x.player.toLowerCase() === playerName.toLowerCase()) || SMD_STATS_DATA[0];
+  const branding = getPlayerBranding(p.player);
+  const ev = getPlayerEvaluation(p);
+  const rank = getPlayerRank(p.player);
+  const rankCls = rank === 1 ? "gold" : (rank <= 3 ? "podium" : "normal");
+
+  const matchLogs = getPlayerMatchLogs(p.player);
+
+  const validF9Logs = matchLogs.filter(m => m.stats && m.stats.f9 > 0);
+  let f9Avg = 0;
+  let f9IsEstimate = false;
+  if (validF9Logs.length > 0){
+    f9Avg = validF9Logs.reduce((acc, m) => acc + m.stats.f9, 0) / validF9Logs.length;
+  } else {
+    f9Avg = p.avg * 1.14;
+    f9IsEstimate = true;
+  }
+
+  const analysisText = SMD_PLAYER_ANALYSIS[p.player] || "Comprehensive match metrics recorded for the 2026 season.";
+  const initials = p.player.split(" ").map(n => n[0]).join("");
+
+  let html = bar("Back to Stats", p.player, '<span class="smd-rank ' + rankCls + '" style="width:26px;height:26px;font-size:12px;display:inline-flex">#' + rank + '</span>');
+  html += '<div class="smd-wrap profile-wrap">'
+    + '<div class="wm wm-top">PWMC CHALK APP</div>'
+    + '<div class="wm wm-bottom">PWMC CHALK APP</div>'
+    + '<div class="wm wm-side wm-left">PWMC CHALK APP</div>'
+    + '<div class="wm wm-side wm-right">PWMC CHALK APP</div>';
+
+  // Section 1: Player Header & Overall Grade
+  const glowClass = branding && branding.badgeGlow ? branding.badgeGlow : '';
+
+  html += '<div class="profile-hero" style="' + (branding && branding.accentColor ? 'border-color:' + esc(branding.accentColor) + '55;' : '') + '">'
+    + '<div class="profile-hero-top">'
+    + '<div class="profile-avatar-frame ' + glowClass + '">'
+    + '<div class="profile-avatar-fallback">' + esc(initials) + '</div>'
+    + '</div>'
+    + '<div class="profile-hero-info">'
+    + '<div class="profile-hero-team"><span class="team-dot"></span>Partington WMC &middot; SMD League 2026</div>'
+    + '<h1 class="profile-hero-name">' + esc(p.player) + '</h1>'
+    + (branding && branding.nickname ? '<div class="profile-nickname-badge" style="background:' + esc(branding.accentColor || '#64748b') + '22;border:1px solid ' + esc(branding.accentColor || '#64748b') + '66;color:' + esc(branding.accentColor || '#64748b') + '">&#127919; &ldquo;' + esc(branding.nickname.toUpperCase()) + '&rdquo;</div>' : '')
+    + '</div>'
+    + '</div>'
+    + '<div class="profile-hero-badges">'
+    + '<div class="profile-badge-item"><span class="smd-rank ' + rankCls + '" style="width:28px;height:28px;font-size:13px;border-radius:4px;display:inline-flex">#' + rank + '</span><span class="badge-lbl">SMD Rank</span></div>'
+    + '<div class="profile-badge-item"><span class="tier-badge tier-' + ev.ovr + '" style="padding:5px 9px;font-size:12px"><span class="tier-dot ' + ev.ovr + '"></span>' + ev.ovr.toUpperCase() + ' GRADE</span><span class="badge-lbl">Overall Tier</span></div>'
+    + '<div class="profile-badge-item"><span class="profile-record-pill"><b>' + p.wins + 'W</b> &ndash; <b>' + (p.played - p.wins) + 'L</b> &middot; ' + p.winPct.toFixed(1) + '%</span><span class="badge-lbl">' + p.played + ' Matches</span></div>'
+    + '</div>'
+    + '</div>';
+
+  // Section 2: Core Performance Dashboard (Grid of Stat Cards)
+  html += '<div class="profile-sect-head">Core Performance Dashboard</div>'
+    + '<div class="profile-stats-grid">'
+    + '<div class="profile-stat-box"><span class="k">3-Dart Average</span><div class="v-wrap"><span class="v">' + p.avg.toFixed(2) + '</span><span class="tier-pill tier-' + ev.tAvg + '">' + ev.tAvg.toUpperCase() + '</span></div><span class="sub">Season scoring standard</span></div>'
+    + '<div class="profile-stat-box"><span class="k">First 9 Average (F9)</span><div class="v-wrap"><span class="v">' + f9Avg.toFixed(2) + '</span><span class="tier-pill tier-' + (f9Avg >= 60 ? "green" : (f9Avg >= 54 ? "yellow" : (f9Avg >= 45 ? "orange" : "red"))) + '">' + (f9IsEstimate ? 'EST' : 'F9') + '</span></div><span class="sub">' + (f9IsEstimate ? 'Estimated opening pace' : validF9Logs.length + ' logged appearances') + '</span></div>'
+    + '<div class="profile-stat-box"><span class="k">Legs Breakdown</span><div class="v-wrap"><span class="v">' + p.legsW + 'W / ' + p.legsL + 'L</span><span class="tier-pill tier-' + ev.tLeg + '">' + p.legsPct.toFixed(1) + '%</span></div><span class="sub">' + (p.legsW + p.legsL) + ' total legs played</span></div>'
+    + '<div class="profile-stat-box"><span class="k">100+ Tons</span><div class="v-wrap"><span class="v">' + p.tons + '</span><span class="tier-pill tier-' + (p.tons >= 50 ? 'green' : (p.tons >= 20 ? 'yellow' : 'orange')) + '">TONS</span></div><span class="sub">' + (p.played ? (p.tons / p.played).toFixed(1) + ' per match' : '-') + '</span></div>'
+    + '<div class="profile-stat-box"><span class="k">180s (Maximums)</span><div class="v-wrap"><span class="v" style="color:var(--gold)">' + (p.max180 > 0 ? p.max180 : '0') + '</span>' + (p.max180 > 0 ? '<span class="smd-card-ai-badge" style="background:rgba(201,162,39,0.2)">MAX</span>' : '<span class="tier-pill tier-orange">-</span>') + '</div><span class="sub">Season maximums</span></div>'
+    + '<div class="profile-stat-box"><span class="k">Least Darts (LD)</span><div class="v-wrap"><span class="v">' + (p.ld ? p.ld + ' Darts' : '-') + '</span><span class="tier-pill tier-' + ev.tLd + '">' + ev.tLd.toUpperCase() + '</span></div><span class="sub">Season best leg</span></div>'
+    + '<div class="profile-stat-box"><span class="k">Highest Finish (HF)</span><div class="v-wrap"><span class="v">' + (p.hf ? p.hf : '-') + '</span><span class="tier-pill tier-' + ev.tHf + '">' + ev.tHf.toUpperCase() + '</span></div><span class="sub">Season checkout peak</span></div>'
+    + '<div class="profile-stat-box"><span class="k">Match Win Rate</span><div class="v-wrap"><span class="v">' + p.winPct.toFixed(1) + '%</span><span class="tier-pill tier-' + ev.tWin + '">' + ev.tWin.toUpperCase() + '</span></div><span class="sub">' + p.wins + ' wins in ' + p.played + ' fixtures</span></div>'
+    + '</div>';
+
+  // Section 3: AI Season Performance Analysis
+  html += '<div class="profile-sect-head">AI Season Performance Analysis</div>'
+    + '<div class="profile-ai-card">'
+    + '<div class="profile-ai-header">'
+    + '<div class="profile-ai-title"><span>&#10024;</span> AI Season Performance Analysis</div>'
+    + '<span class="smd-ai-tag">Official Scout Report</span>'
+    + '</div>'
+    + '<div class="profile-ai-body">' + esc(analysisText) + '</div>'
+    + '</div>';
+
+  // Section 4: Season Match-by-Match History Table / Card Stream
+  html += '<div class="profile-sect-head" style="display:flex;justify-content:space-between;align-items:center">'
+    + '<span>Season Match History (' + matchLogs.length + ')</span>'
+    + '<span style="font-size:11px;color:var(--chalk-dim);font-weight:400;text-transform:none">Individual match cards</span>'
+    + '</div>';
+
+  if (!matchLogs.length){
+    html += '<div class="profile-empty-card">'
+      + '<div style="font-size:14px;font-weight:600;color:#F2EFE4;margin-bottom:4px">No Individual Match Logs in Fixture Archive</div>'
+      + '<p style="font-size:12.5px;color:var(--chalk-dim);line-height:1.4">Match logs will automatically populate here as fixtures are scored or imported into Chalk. Total season figures are confirmed by the official SMD League 2026 scorecard above.</p>'
+      + '</div>';
+  } else {
+    html += '<div class="profile-match-stream">';
+    matchLogs.forEach(m => {
+      const isDoubles = m.kind === "doubles";
+      const oppStr = m.oppPlayers.join(" & ") + (m.oppTeam ? " (" + m.oppTeam + ")" : "");
+      const otherPartners = m.myPartners.filter(x => x.toLowerCase() !== p.player.toLowerCase());
+      const partnerStr = isDoubles && otherPartners.length > 0 ? "w/ " + otherPartners.join(" & ") + " " : "";
+      const resClass = m.isWon ? "win" : "lose";
+      const resText = (m.isWon ? "WON " : "LOST ") + m.myLegs + "–" + m.oppLegs;
+
+      html += '<div class="profile-match-card">'
+        + '<div class="profile-match-head">'
+        + '<div class="profile-match-meta">'
+        + '<span class="date">' + esc(ukDate(m.date)) + '</span>'
+        + '<span class="venue">' + (m.venue ? '@ ' + esc(m.venue) : esc(m.comp)) + '</span>'
+        + '<span class="game-tag">' + esc(m.gameTitle) + '</span>'
+        + '</div>'
+        + '<span class="match-res-badge ' + resClass + '">' + resText + '</span>'
+        + '</div>'
+        + '<div class="profile-match-versus">'
+        + '<span class="partner">' + esc(partnerStr) + '</span>'
+        + '<span class="vs">vs</span> '
+        + '<span class="opp">' + esc(oppStr) + '</span>'
+        + '</div>'
+        + '<div class="profile-match-stats-grid">'
+        + '<div class="stat-col"><span class="k">100+</span><span class="v">' + m.stats.t100 + '</span></div>'
+        + '<div class="stat-col"><span class="k">180s</span><span class="v ' + (m.stats.t180 > 0 ? "gold" : "") + '">' + (m.stats.t180 > 0 ? m.stats.t180 : "-") + '</span></div>'
+        + '<div class="stat-col"><span class="k">LD</span><span class="v">' + (m.stats.ld ? m.stats.ld : "-") + '</span></div>'
+        + '<div class="stat-col"><span class="k">HF</span><span class="v">' + (m.stats.high ? m.stats.high : "-") + '</span></div>'
+        + '<div class="stat-col"><span class="k">F9</span><span class="v">' + (m.stats.f9 ? m.stats.f9.toFixed(1) : "-") + '</span></div>'
+        + '<div class="stat-col"><span class="k">3D Avg</span><span class="v bold">' + (m.stats.avg ? m.stats.avg.toFixed(2) : "-") + '</span></div>'
+        + '</div>'
+        + '<div class="profile-match-foot">'
+        + '<button class="btn ghost profile-match-btn" data-act="view-fixture-report" data-id="' + esc(m.fixtureId) + '">View Match Report &#8594;</button>'
+        + '</div>'
+        + '</div>';
+    });
+    html += '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
 function ukDate(iso){
   if (!iso) return "";
   const p = iso.split("-");
@@ -1386,7 +2406,19 @@ function reportCard(game, n, gi){
     const won = game.won === side;
     const decided = game.won !== null;
     const st = displayStats(game, side);
-    const names = (game[side] || []).join(" & ") || "To be named";
+    const rawNames = game[side] || [];
+    let namesHtml = "To be named";
+    if (rawNames.length){
+      namesHtml = rawNames.map(name => {
+        const found = SMD_STATS_DATA.find(x => isSamePlayer(x.player, name.trim()));
+        if (found){
+          const branding = getPlayerBranding(found.player);
+          const nickTag = branding ? (' <span class="smd-nickname-tag" style="font-size:9.5px;padding:1px 5px;background:' + esc(branding.accentColor || '#64748b') + '22;border:1px solid ' + esc(branding.accentColor || '#64748b') + '55;color:' + esc(branding.accentColor || '#64748b') + '">&ldquo;' + esc(branding.nickname) + '&rdquo;</span>') : '';
+          return '<span class="player-link" data-act="player-profile" data-player="' + esc(found.player) + '" title="View ' + esc(found.player) + ' Profile">' + esc(name.trim()) + nickTag + '</span>';
+        }
+        return esc(name);
+      }).join(" &amp; ");
+    }
     const team = side === "home" ? S.viewing.homeTeam : S.viewing.awayTeam;
     const cols = [
       ["100+", st.t100 || 0],
@@ -1399,7 +2431,7 @@ function reportCard(game, n, gi){
     return '<div class="half">'
       + '<div class="top">'
       + '<span class="bdg ' + (won ? "w" : "l") + '">' + (decided ? (won ? "W" : "L") : "&#183;") + '</span>'
-      + '<span class="nm"><b>' + esc(names) + '</b><span>' + esc(team) + '</span></span>'
+      + '<span class="nm"><b>' + namesHtml + '</b><span>' + esc(team) + '</span></span>'
       + '<span class="lg num">' + legsWonBy(game, side) + '</span>'
       + '</div>'
       + '<button class="stats" data-act="editstats" data-gi="' + gi + '" data-side="' + side + '">'
@@ -1425,16 +2457,17 @@ function vView(){
     + '<div class="wm wm-bottom">PWMC CHALK APP</div>'
     + '<div class="wm wm-side wm-left">PWMC CHALK APP</div>'
     + '<div class="wm wm-side wm-right">PWMC CHALK APP</div>';
-  html += '<div class="rep-head">' + (S.badge ? '<img src="' + S.badge + '" alt="">' : '') + '<b>Match Report' + (fx.comp ? " - " + esc(fx.comp) : "") + '</b>'
+  const repBadge = S.badge || BADGE_DEFAULT;
+  html += '<div class="rep-head"><img src="' + repBadge + '" alt="Club crest"><b>Match Report' + (fx.comp ? " - " + esc(fx.comp) : "") + '</b>'
     + '<span>' + esc(ukDate(fx.date)) + (fx.venue ? " &middot; " + esc(fx.venue) : "") + '</span></div>';
   html += '<div class="rep-score">'
-    + '<span class="t">' + esc(fx.homeTeam) + '</span>'
+    + '<span class="t">' + renderTeamWithLogo(fx.homeTeam, true, 26) + '</span>'
     + '<span class="grp"><span class="nums">'
     + '<span class="n num' + (h > a ? " w" : "") + '">' + h + '</span>'
     + '<span class="dash">&ndash;</span>'
     + '<span class="n num' + (a > h ? " w" : "") + '">' + a + '</span>'
     + '</span><em>Match</em></span>'
-    + '<span class="t">' + esc(fx.awayTeam) + '</span></div>'
+    + '<span class="t">' + renderTeamWithLogo(fx.awayTeam, false, 26) + '</span></div>'
     + (gallonPlayed(fx)
         ? '<div class="rep-gallon"><span>Gallon</span><b class="num' + (gh > ga ? " w" : "") + '">' + gh + '</b><i>&ndash;</i><b class="num' + (ga > gh ? " w" : "") + '">' + ga + '</b></div>'
         : '');
@@ -1679,6 +2712,17 @@ document.addEventListener("click", async (e) => {
   if (!el) return;
   const act = el.dataset.act;
 
+  if (act === "toggle-theme"){
+    S.theme = (S.theme === "light") ? "dark" : "light";
+    try {
+      await store.set(KEY_THEME, S.theme);
+      localStorage.setItem(KEY_THEME, S.theme);
+    } catch(err){}
+    applyTheme();
+    render();
+    return;
+  }
+
   if (act === "badge"){
     const inp = document.getElementById("badge-file");
     if (inp) inp.click();
@@ -1730,13 +2774,47 @@ document.addEventListener("click", async (e) => {
     render(); return;
   }
 
+  if (act === "player-profile"){
+    const pName = el.dataset.player;
+    const found = getPlayerBySlugOrName(pName);
+    if (found){
+      S.selectedPlayer = found.player;
+      S.playerPrevView = (S.view === "player" ? S.playerPrevView : S.view) || "smd";
+      S.view = "player";
+      try { window.location.hash = "#/player/" + slugify(found.player); } catch(e){}
+      render();
+    }
+    return;
+  }
+
+  if (act === "view-fixture-report"){
+    const fxId = el.dataset.id;
+    const targetFx = (S.fixtures || []).find(f => f.id === fxId);
+    if (targetFx){
+      S.viewing = targetFx;
+      S.playerPrevView = "player";
+      S.view = "view";
+      render();
+    }
+    return;
+  }
+
   if (act === "back"){
-    if (S.view === "setup" || S.view === "results" || S.view === "smd") S.view = "home";
+    if (S.view === "player"){
+      S.view = S.playerPrevView || "smd";
+      try { window.location.hash = S.view === "smd" ? "#/smd" : ""; } catch(e){}
+    }
+    else if (S.view === "setup" || S.view === "results" || S.view === "smd") S.view = "home";
     else if (S.view === "fixture") S.view = "home";
     else if (S.view === "lineup" || S.view === "board") S.view = "fixture";
     else if (S.view === "view"){
-      const previewingLive = S.viewing && S.fx && S.viewing.id === S.fx.id && !S.fx.finished;
-      S.view = previewingLive ? "fixture" : "results";
+      if (S.playerPrevView === "player"){
+        S.view = "player";
+        S.playerPrevView = "smd";
+      } else {
+        const previewingLive = S.viewing && S.fx && S.viewing.id === S.fx.id && !S.fx.finished;
+        S.view = previewingLive ? "fixture" : "results";
+      }
     }
     else if (S.view === "watch") S.view = "home";
     render(); return;
@@ -2489,10 +3567,1676 @@ const SEEDED_RESULTS = [
   }
 ];
 
-const SEED_VERSION = 3;
+const MATCHES_DATA = [
+  {
+    "id": "2026-03-04-pwmc-royal-oak",
+    "date": "04/03/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Royal Oak (Cheadle)",
+    "homeScore": 6,
+    "awayScore": 1,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Adam Harral & Mason Gamble",
+      "awayPlayers": "Mason Kelly & Jake Hamand",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": { "tons": 4, "max": "-", "ld": 22, "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Adam Millns",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 23, "hf": 60, "f9": "-", "avg": 48.57 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 27, "hf": 46, "f9": "-", "avg": 42.26 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Brandon Hughes",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": 1, "ld": 18, "hf": 77, "f9": "-", "avg": 60.98 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.61 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Steve Bell",
+        "awayPlayer": "Cameron Brownsell",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 22, "hf": 36, "f9": "-", "avg": 53.63 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 40, "hf": 40, "f9": "-", "avg": 47.41 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Tom Jenkins",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 4, "max": "-", "ld": 26, "hf": 40, "f9": "-", "avg": 51.58 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 68, "f9": "-", "avg": 57.23 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Chris Bollard",
+        "awayPlayer": "Ethan Handley",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 32, "hf": 46, "f9": "-", "avg": 42.00 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 31, "hf": 34, "f9": "-", "avg": 41.83 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Josh Harrison",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 51.29 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 38.32 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Jake Hamand",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 18, "hf": 56, "f9": "-", "avg": 62.16 },
+        "awayStats": { "tons": 4, "max": 1, "ld": 17, "hf": 60, "f9": "-", "avg": 60.57 }
+      }
+    ]
+  },
+  {
+    "id": "2026-03-11-jolly-butcher-pwmc",
+    "date": "11/03/2026",
+    "venue": "Jolly Butcher",
+    "matchType": "Match Report - League",
+    "homeTeam": "Jolly Butcher",
+    "awayTeam": "Partington WMC",
+    "homeScore": 0,
+    "awayScore": 7,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Thomas Watson & Daniel Dibben",
+      "awayPlayers": "Corey Wynne & Lewis Abbott",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Chris McGrory",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 42.70 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 46.80 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Ali Crawford",
+        "awayPlayer": "Steve Bell",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": 24, "hf": 50, "f9": "-", "avg": 48.70 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 25, "hf": 16, "f9": "-", "avg": 51.60 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Gareth Sullivan",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": 33, "hf": 60, "f9": "-", "avg": 39.40 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 25, "hf": 7, "f9": "-", "avg": 45.20 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Tim Dibben",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 28.63 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 40.26 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Liz Sweeney",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 35.05 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 16, "hf": 78, "f9": "-", "avg": 73.92 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Stuart Watson",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": 35, "hf": 4, "f9": "-", "avg": 37.50 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 45.65 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Chenile Mason",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 34.11 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 25, "hf": 76, "f9": "-", "avg": 55.67 }
+      }
+    ]
+  },
+  {
+    "id": "2026-03-18-st-johns-pwmc",
+    "date": "18/03/2026",
+    "venue": "St Johns",
+    "matchType": "Match Report - League",
+    "homeTeam": "St Johns",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Callum Stewart & Tina Stewart",
+      "awayPlayers": "Brandon Gamble & Mark Colgan",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Rhys Palmer",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 26, "hf": 90, "f9": "-", "avg": 47.20 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 20, "hf": 62, "f9": "-", "avg": 52.47 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Lee Stewart",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 25, "hf": 32, "f9": "-", "avg": 35.75 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 36, "hf": 72, "f9": "-", "avg": 34.19 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Darren Oldham",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.88 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 48, "f9": "-", "avg": 61.77 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Harry Hessing",
+        "awayPlayer": "Corey Wynne",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 46.03 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 28, "hf": 20, "f9": "-", "avg": 51.83 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Cody Ratcliff",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.96 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 24, "hf": 68, "f9": "-", "avg": 52.43 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Dan Bell",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": 33, "hf": 4, "f9": "-", "avg": 52.85 },
+        "awayStats": { "tons": 7, "max": "-", "ld": 20, "hf": 42, "f9": "-", "avg": 60.24 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Simon Hessing",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 42.29 },
+        "awayStats": { "tons": 5, "max": "-", "ld": 23, "hf": 102, "f9": "-", "avg": 60.93 }
+      }
+    ]
+  },
+  {
+    "id": "2026-03-25-pwmc-bazzler-b",
+    "date": "25/03/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Bazzler B",
+    "homeScore": 5,
+    "awayScore": 2,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Adam Harrall & Lewis Abbot",
+      "awayPlayers": "Asher Lloyd & Gary Thompson",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Mike Westlake",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 20, "hf": 32, "f9": "-", "avg": 54.99 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 43.65 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Steven Bell",
+        "awayPlayer": "Isaac Robinson",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": 19, "hf": 40, "f9": "-", "avg": 42.53 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 30, "hf": 86, "f9": "-", "avg": 37.23 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Dan Papworth",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 7, "max": "-", "ld": 25, "hf": 24, "f9": "-", "avg": 56.36 },
+        "awayStats": { "tons": 3, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 49.58 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Lee Donnelly",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 21, "hf": 70, "f9": "-", "avg": 53.05 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 40.48 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Luke Robinson",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 23, "hf": 12, "f9": "-", "avg": 57.08 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 40.96 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Connor Doyle",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 21, "hf": 48, "f9": "-", "avg": 59.47 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 32, "hf": 20, "f9": "-", "avg": 46.19 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Gary Thompson",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 4, "max": "-", "ld": 36, "hf": 4, "f9": "-", "avg": 56.03 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 19, "hf": 35, "f9": "-", "avg": 57.79 }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-01-pwmc-fixture-1",
+    "date": "01/04/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Brooklands Tap",
+    "homeScore": 6,
+    "awayScore": 1,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Lewis Abbott & Ryan Mellor",
+      "awayPlayers": "Michael Hamnett & Luke Cummings",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Gerard Gornall",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 24, "hf": 16, "f9": "-", "avg": 53.05 },
+        "awayStats": { "tons": 4, "max": 1, "ld": "-", "hf": "-", "f9": "-", "avg": 55.04 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Eddie Clare",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 19, "hf": 40, "f9": "-", "avg": 58.56 },
+        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 50.64 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Lee Armsden",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 21, "hf": 101, "f9": "-", "avg": 63.51 },
+        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 60.30 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Sonny Miller",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 26, "hf": 68, "f9": "-", "avg": 54.33 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 51.04 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Lewis Lloyd",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 53.42 },
+        "awayStats": { "tons": 6, "max": "-", "ld": 23, "hf": 16, "f9": "-", "avg": 54.55 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Callum Cummings",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 20, "hf": 46, "f9": "-", "avg": 72.73 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 55.25 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Billy Horsefield",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 52.45 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 20, "hf": 59, "f9": "-", "avg": 68.32 }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-08-railway-club-b-pwmc",
+    "date": "08/04/2026",
+    "venue": "Railway Club",
+    "matchType": "Match Report - League",
+    "homeTeam": "Railway Club B",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": {
+      "homePlayers": "-",
+      "awayPlayers": "-",
+      "homeLegs": "-",
+      "awayLegs": "-",
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Les Potts",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.72 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 40, "f9": "-", "avg": 46.97 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Mandy Haycocks",
+        "awayPlayer": "Lewis Abbott",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": 39, "hf": 40, "f9": "-", "avg": 32.28 },
+        "awayStats": { "tons": "-", "max": "-", "ld": 40, "hf": 30, "f9": "-", "avg": 33.13 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Howard Haycocks",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.54 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 54.99 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Angela Haycocks",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 38, "hf": 97, "f9": "-", "avg": 35.41 },
+        "awayStats": { "tons": "-", "max": "-", "ld": 38, "hf": 20, "f9": "-", "avg": 36.49 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Steven Foster",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 42.52 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 20, "hf": 72, "f9": "-", "avg": 66.31 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Sally Corfield",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 34.91 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 17, "hf": 56, "f9": "-", "avg": 66.31 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Richard Haycocks",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 26, "hf": 20, "f9": "-", "avg": 50.32 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 27, "hf": 32, "f9": "-", "avg": 49.57 }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-22-pwmc-tsc-b",
+    "date": "22/04/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Trafford Social Club B",
+    "homeScore": 6,
+    "awayScore": 1,
+    "gallonHomeScore": 1,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Chris Bollard & Adam Harral",
+      "awayPlayers": "Lindsay Rice & Luliu Jimborean",
+      "homeLegs": 1,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Henry Collins",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 21, "hf": 66, "f9": "-", "avg": 61.77 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 49.67 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Lewis Abbott",
+        "awayPlayer": "Ray Townhill",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": 26, "hf": 37, "f9": "-", "avg": 38.92 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 29, "hf": 63, "f9": "-", "avg": 37.35 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Joe McAuley",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 5, "max": 1, "ld": 21, "hf": 80, "f9": "-", "avg": 59.28 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 24, "hf": 42, "f9": "-", "avg": 43.44 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Cameron King",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 24, "hf": 101, "f9": "-", "avg": 52.79 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 29, "hf": 28, "f9": "-", "avg": 47.51 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Lee Allen",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 24, "hf": 40, "f9": "-", "avg": 44.01 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 20, "hf": 8, "f9": "-", "avg": 44.53 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Danny Bannister",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 21, "hf": 38, "f9": "-", "avg": 68.32 },
+        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.86 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Luliu Jimborean",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 19, "hf": 54, "f9": "-", "avg": 70.45 },
+        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.50 }
+      }
+    ]
+  },
+  {
+    "id": "2026-05-13-pwmc-auld-chimp",
+    "date": "13/05/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Auld Chimp",
+    "homeScore": 3,
+    "awayScore": 4,
+    "gallonHomeScore": 1,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Lewis Abbott & Chris Bollard",
+      "awayPlayers": "Luke Pickup & Richard Charlton",
+      "homeLegs": 1,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Ryan Devine",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 5, "max": "-", "ld": 25, "hf": 26, "f9": "-", "avg": 52.20 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 26, "hf": 44, "f9": "-", "avg": 49.61 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Jimmy Burgess",
+        "awayPlayer": "Sonny Kirkbride",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": 28, "hf": 20, "f9": "-", "avg": 49.25 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 20, "hf": 56, "f9": "-", "avg": 55.64 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Will Temple",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 23, "hf": 40, "f9": "-", "avg": 53.68 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 36.89 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Sam Critchley",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 24, "hf": 48, "f9": "-", "avg": 53.25 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 20, "hf": 96, "f9": "-", "avg": 51.30 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Kev Lowes",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 37.23 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 39, "hf": 16, "f9": "-", "avg": 37.20 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Steven Bell",
+        "awayPlayer": "Luke Pickup",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 5, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 50.39 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 26, "hf": 20, "f9": "-", "avg": 53.68 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Adam Harral",
+        "awayPlayer": "Richard Charlton",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.49 },
+        "awayStats": { "tons": 3, "max": 1, "ld": 20, "hf": 40, "f9": "-", "avg": 53.36 }
+      }
+    ]
+  },
+  {
+    "id": "2026-05-20-st-anthonys-c-pwmc",
+    "date": "20/05/2026",
+    "venue": "St Anthonys",
+    "matchType": "Match Report - League",
+    "homeTeam": "St Anthonys C",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "B Hussey & K Evans",
+      "awayPlayers": "Chris Bollard & Mason Gamble",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "M Horrocks",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 54.28 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 79, "f9": "-", "avg": 60.93 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "D Tierney",
+        "awayPlayer": "Lewis Abbott",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 53.62 },
+        "awayStats": { "tons": 5, "max": "-", "ld": 24, "hf": 28, "f9": "-", "avg": 49.83 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "R Horrocks",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 3, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.13 },
+        "awayStats": { "tons": 5, "max": "-", "ld": 26, "hf": 16, "f9": "-", "avg": 47.97 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "E Williamson",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 25, "hf": 40, "f9": "-", "avg": 50.69 },
+        "awayStats": { "tons": 7, "max": "-", "ld": 29, "hf": 30, "f9": "-", "avg": 52.29 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "D Holt",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 51.31 },
+        "awayStats": { "tons": 6, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 59.33 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Josh Clews",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 6, "max": "-", "ld": 31, "hf": 14, "f9": "-", "avg": 51.70 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 69, "f9": "-", "avg": 51.33 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "James Clews",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 3, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 62.00 },
+        "awayStats": { "tons": 6, "max": "-", "ld": 20, "hf": 36, "f9": "-", "avg": 70.45 }
+      }
+    ]
+  },
+  {
+    "id": "2026-05-27-garricks-head-pwmc",
+    "date": "27/05/2026",
+    "venue": "Garricks Head",
+    "matchType": "Match Report - League",
+    "homeTeam": "Garricks Head",
+    "awayTeam": "Partington WMC",
+    "homeScore": 0,
+    "awayScore": 7,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "C Trueman & L Entwisle",
+      "awayPlayers": "Corey Wynne & Adam Harral",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "L Entwisle",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 5, "max": "-", "ld": 26, "hf": 25, "f9": "-", "avg": 55.90 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 21, "hf": 98, "f9": "-", "avg": 56.28 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "V Rice",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.90 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 16, "f9": "-", "avg": 54.53 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "E Partridge",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": 35, "hf": 4, "f9": "-", "avg": 42.79 },
+        "awayStats": { "tons": 5, "max": 1, "ld": 28, "hf": 20, "f9": "-", "avg": 48.44 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "C Trueman",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 6, "max": "-", "ld": 29, "hf": 10, "f9": "-", "avg": 53.02 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 26, "hf": 64, "f9": "-", "avg": 54.62 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "J Wake",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": 28, "hf": 16, "f9": "-", "avg": 39.84 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 27, "hf": 50, "f9": "-", "avg": 40.65 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "D Gilruth",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": 1, "ld": 18, "hf": 100, "f9": "-", "avg": 53.51 },
+        "awayStats": { "tons": 9, "max": "-", "ld": 20, "hf": 48, "f9": "-", "avg": 68.34 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "L Capper",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.96 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 25, "hf": 40, "f9": "-", "avg": 54.33 }
+      }
+    ]
+  },
+  {
+    "id": "2026-06-03-pwmc-old-plough",
+    "date": "03/06/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Old Plough",
+    "homeScore": 4,
+    "awayScore": 3,
+    "gallonHomeScore": 1,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Danny Kendrick & Adam Harral",
+      "awayPlayers": "Reece Newell & Kieran Newell",
+      "homeLegs": 1,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "L Gould",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 23, "hf": 54, "f9": "-", "avg": 63.51 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 54.73 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "D Horridge",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 24, "hf": 40, "f9": "-", "avg": 57.20 },
+        "awayStats": { "tons": "-", "max": "-", "ld": 32, "hf": 64, "f9": "-", "avg": 44.88 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "S Ridings",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 21, "hf": 103, "f9": "-", "avg": 51.62 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 32, "hf": 20, "f9": "-", "avg": 44.13 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Lewis Abbott",
+        "awayPlayer": "C Bradley",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 3, "max": "-", "ld": 31, "hf": 40, "f9": "-", "avg": 39.61 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 23, "hf": 50, "f9": "-", "avg": 40.46 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Chris Bollard",
+        "awayPlayer": "M Melling",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 32.70 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 30, "hf": 40, "f9": "-", "avg": 35.23 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "S Senior",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 4, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 52.45 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 23, "hf": 32, "f9": "-", "avg": 53.58 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Steven Bell",
+        "awayPlayer": "S Wilcox",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 23, "hf": 20, "f9": "-", "avg": 46.21 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 29, "hf": 68, "f9": "-", "avg": 43.36 }
+      }
+    ]
+  },
+  {
+    "id": "2026-06-24-royal-oak-pwmc",
+    "date": "24/06/2026",
+    "venue": "Royal Oak (Cheadle)",
+    "matchType": "Match Report - League",
+    "homeTeam": "Royal Oak (Cheadle)",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Tom Jenkins & Adam Millns",
+      "awayPlayers": "Adam Harral & Karl Bannister",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Ethan Handley",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": 33, "hf": 20, "f9": "-", "avg": 51.27 },
+        "awayStats": { "tons": 6, "max": 1, "ld": 19, "hf": 20, "f9": "-", "avg": 55.08 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Josh Harrison",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.41 },
+        "awayStats": { "tons": 4, "max": 1, "ld": 22, "hf": 58, "f9": "-", "avg": 56.36 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Cam Brownsell",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 21, "hf": 52, "f9": "-", "avg": 51.90 },
+        "awayStats": { "tons": 7, "max": "-", "ld": 31, "hf": 55, "f9": "-", "avg": 50.03 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Brandon Hughes",
+        "awayPlayer": "Corey Wynne",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 23, "hf": 55, "f9": "-", "avg": 49.65 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 28, "hf": 20, "f9": "-", "avg": 48.53 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Adam Millns",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 3, "max": "-", "ld": 43, "hf": 10, "f9": "-", "avg": 36.86 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 17, "hf": 94, "f9": "-", "avg": 45.11 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Tom Jenkins",
+        "awayPlayer": "Danny Kendrick",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": 27, "hf": 69, "f9": "-", "avg": 43.93 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 32, "hf": 20, "f9": "-", "avg": 42.67 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Jake Hamand",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": 32, "hf": 37, "f9": "-", "avg": 48.62 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 20, "hf": 8, "f9": "-", "avg": 51.72 }
+      }
+    ]
+  },
+  {
+    "id": "2026-07-08-pwmc-jolly-butcher",
+    "date": "08/07/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Jolly Butcher",
+    "homeScore": 7,
+    "awayScore": 0,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Corey Wynne & Mark Colgan",
+      "awayPlayers": "Stuart Watson & Chanellie Mason",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Danny Kendrick",
+        "awayPlayer": "Liz Sweeney",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 34, "hf": 10, "f9": "-", "avg": 26.06 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 22.75 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Chris McGon",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 18, "hf": 158, "f9": "-", "avg": 46.01 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.25 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Ali Crawford",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 8, "max": "-", "ld": 17, "hf": 75, "f9": "-", "avg": 64.58 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 36, "hf": 40, "f9": "-", "avg": 46.00 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Adam Harral",
+        "awayPlayer": "Arron Shanagher",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": "-", "max": "-", "ld": 43, "hf": 40, "f9": "-", "avg": 23.54 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 53, "hf": 4, "f9": "-", "avg": 22.95 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Gaz Sullivan",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 24, "hf": 60, "f9": "-", "avg": 52.93 },
+        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.19 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Stuart Watson",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 26, "hf": 64, "f9": "-", "avg": 57.00 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 40.20 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Chanellie Mason",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 24, "hf": 55, "f9": "-", "avg": 53.67 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 38.05 }
+      }
+    ]
+  },
+  {
+    "id": "2026-07-22-pwmc-st-johns",
+    "date": "22/07/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "St Johns",
+    "homeScore": 7,
+    "awayScore": 0,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 1,
+    "gallon": {
+      "homePlayers": "Jude Rowlands & Brandon Gamble",
+      "awayPlayers": "Sue Weston & Lee Stewart",
+      "homeLegs": 2,
+      "awayLegs": 1,
+      "homeWinner": true,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Darren Oldham",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 5, "max": "-", "ld": 19, "hf": 38, "f9": "-", "avg": 50.53 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 38, "hf": 31, "f9": "-", "avg": 36.28 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Callum Stewart",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 21, "hf": 84, "f9": "-", "avg": 60.12 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 34.21 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Simon Hessing",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 26, "hf": 40, "f9": "-", "avg": 42.90 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 36.41 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Mark Lavoie",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 21, "hf": 72, "f9": "-", "avg": 60.02 },
+        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 53.57 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Ryan Mellor",
+        "awayPlayer": "Mike Pascall",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 26, "hf": 30, "f9": "-", "avg": 45.69 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 36, "hf": 40, "f9": "-", "avg": 41.65 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Jude Rowlands",
+        "awayPlayer": "Sue Weston",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 31, "hf": 28, "f9": "-", "avg": 36.36 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 35.41 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Lee Stewart",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 5, "max": "-", "ld": 22, "hf": 24, "f9": "-", "avg": 51.33 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.84 }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-01-pwmc-royal-oak-cup",
+    "date": "01/04/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - Cup",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Royal Oak (Cheadle)",
+    "homeScore": 5,
+    "awayScore": 2,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": {
+      "homePlayers": "-",
+      "awayPlayers": "-",
+      "homeLegs": "-",
+      "awayLegs": "-",
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Adam Harral",
+        "awayPlayer": "Adam Millns",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": "-", "max": "-", "ld": 32, "hf": 74, "f9": "-", "avg": 37.39 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 35, "hf": 39, "f9": "-", "avg": 37.48 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Ethan Handley",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 17, "hf": 72, "f9": "-", "avg": 60.12 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.67 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Brandon Hughes",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 22, "hf": 54, "f9": "-", "avg": 53.07 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 37, "hf": 12, "f9": "-", "avg": 48.83 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Jake Hammand",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 23, "hf": 72, "f9": "-", "avg": 53.68 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 45.26 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Chris Bollard",
+        "awayPlayer": "Cameron Brownsell",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 2, "max": "-", "ld": 35, "hf": 16, "f9": "-", "avg": 41.64 },
+        "awayStats": { "tons": 2, "max": "-", "ld": 21, "hf": 42, "f9": "-", "avg": 44.82 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Aarron Hewitt",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 1, "max": "-", "ld": 24, "hf": 58, "f9": "-", "avg": 56.36 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.60 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Tom Jenkins",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 7, "max": "-", "ld": 20, "hf": 70, "f9": "-", "avg": 63.51 },
+        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.58 }
+      }
+    ]
+  },
+  {
+    "id": "2026-06-10-pwmc-cringlewood-a-cup",
+    "date": "10/06/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - Cup",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Cringlewood A",
+    "homeScore": 4,
+    "awayScore": 3,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": {
+      "homePlayers": "-",
+      "awayPlayers": "-",
+      "homeLegs": "-",
+      "awayLegs": "-",
+      "homeWinner": false,
+      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
+      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Mark H",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 5, "max": "-", "ld": 18, "hf": 58, "f9": "-", "avg": 72.73 },
+        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.79 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Rob L",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 20, "hf": 52, "f9": "-", "avg": 61.69 },
+        "awayStats": { "tons": 6, "max": "-", "ld": 20, "hf": 68, "f9": "-", "avg": 61.22 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Luke M",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 7, "max": "-", "ld": 24, "hf": 20, "f9": "-", "avg": 56.84 },
+        "awayStats": { "tons": 4, "max": "-", "ld": 25, "hf": 48, "f9": "-", "avg": 56.48 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Ellis M",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 5, "max": 1, "ld": 20, "hf": 16, "f9": "-", "avg": 71.77 },
+        "awayStats": { "tons": 6, "max": "-", "ld": 15, "hf": 88, "f9": "-", "avg": 75.49 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "John M",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 2, "max": "-", "ld": 27, "hf": 54, "f9": "-", "avg": 42.60 },
+        "awayStats": { "tons": "-", "max": "-", "ld": 38, "hf": 12, "f9": "-", "avg": 38.43 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Alex M",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 6, "max": "-", "ld": 27, "hf": 16, "f9": "-", "avg": 53.34 },
+        "awayStats": { "tons": 5, "max": "-", "ld": 21, "hf": 80, "f9": "-", "avg": 55.46 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "JT",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 23, "hf": 64, "f9": "-", "avg": 54.41 },
+        "awayStats": { "tons": 1, "max": "-", "ld": 20, "hf": 56, "f9": "-", "avg": 52.57 }
+      }
+    ]
+  },
+  {
+    "id": "2026-07-30-timperley-cc-pwmc-cup",
+    "date": "30/07/2026",
+    "venue": "Timperley CC",
+    "matchType": "Match Report - Cup Game",
+    "homeTeam": "Timperley CC",
+    "awayTeam": "Partington WMC",
+    "homeScore": 5,
+    "awayScore": 2,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": null,
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Andy Pearson",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": { "tons": 4, "max": "-", "ld": 19, "hf": 40, "f9": 0.00, "avg": 66.42 },
+        "awayStats": { "tons": 3, "max": "-", "ld": 17, "hf": 32, "f9": 0.00, "avg": 60.71 }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Gary Sullivan",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 5, "max": 1, "ld": 17, "hf": 40, "f9": 0.00, "avg": 65.35 },
+        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": 0.00, "avg": 57.00 }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Brandon Lawley",
+        "awayPlayer": "Ryan Mellor",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 3, "max": "-", "ld": 18, "hf": 150, "f9": 0.00, "avg": 73.92 },
+        "awayStats": { "tons": 0, "max": "-", "ld": "-", "hf": "-", "f9": 0.00, "avg": 46.75 }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Billy English",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 4, "max": "-", "ld": 26, "hf": 9, "f9": 0.00, "avg": 51.67 },
+        "awayStats": { "tons": 8, "max": "-", "ld": 19, "hf": 54, "f9": 0.00, "avg": 67.48 }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Andy Brownhill",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": { "tons": 5, "max": "-", "ld": 18, "hf": 60, "f9": 0.00, "avg": 62.73 },
+        "awayStats": { "tons": 9, "max": "-", "ld": 21, "hf": 36, "f9": 0.00, "avg": 62.81 }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Liam Green",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": { "tons": 6, "max": "-", "ld": 23, "hf": 20, "f9": 0.00, "avg": 62.62 },
+        "awayStats": { "tons": 4, "max": "-", "ld": "-", "hf": "-", "f9": 0.00, "avg": 53.35 }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Sam McCallister",
+        "awayPlayer": "Steven Bell",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": { "tons": 5, "max": "-", "ld": 23, "hf": 49, "f9": 0.00, "avg": 58.54 },
+        "awayStats": { "tons": 3, "max": 1, "ld": 21, "hf": 41, "f9": 0.00, "avg": 58.75 }
+      }
+    ]
+  }
+];
+window.MATCHES_DATA = MATCHES_DATA;
+
+function matchDataToFixture(m){
+  const toNum = (v, defaultVal = 0) => (v === "-" || v === null || v === undefined) ? defaultVal : (Number(v) || defaultVal);
+  const toNullableNum = (v) => (v === "-" || v === null || v === undefined || Number.isNaN(Number(v))) ? null : Number(v);
+
+  let isoDate = m.date;
+  if (m.date && m.date.includes("/")){
+    const parts = m.date.split("/");
+    if (parts.length === 3){
+      isoDate = parts[2] + "-" + parts[1].padStart(2, "0") + "-" + parts[0].padStart(2, "0");
+    }
+  }
+
+  const gallonHome = (m.gallon && m.gallon.homePlayers && m.gallon.homePlayers !== "-") ? m.gallon.homePlayers.split("&").map(s => s.trim()).filter(Boolean) : [];
+  const gallonAway = (m.gallon && m.gallon.awayPlayers && m.gallon.awayPlayers !== "-") ? m.gallon.awayPlayers.split("&").map(s => s.trim()).filter(Boolean) : [];
+  const gallonHomeLegs = m.gallon ? toNum(m.gallon.homeLegs ?? m.gallonHomeScore ?? 0) : toNum(m.gallonHomeScore ?? 0);
+  const gallonAwayLegs = m.gallon ? toNum(m.gallon.awayLegs ?? m.gallonAwayScore ?? 0) : toNum(m.gallonAwayScore ?? 0);
+
+  const gallonHomeStats = (m.gallon && m.gallon.homeStats) ? {
+    t100: toNum(m.gallon.homeStats.tons),
+    t180: toNum(m.gallon.homeStats.max),
+    ld: toNullableNum(m.gallon.homeStats.ld),
+    high: toNullableNum(m.gallon.homeStats.hf),
+    f9: toNum(m.gallon.homeStats.f9),
+    avg: toNum(m.gallon.homeStats.avg)
+  } : { t100:0, t180:0, ld:null, high:null, f9:0, avg:0 };
+
+  const gallonAwayStats = (m.gallon && m.gallon.awayStats) ? {
+    t100: toNum(m.gallon.awayStats.tons),
+    t180: toNum(m.gallon.awayStats.max),
+    ld: toNullableNum(m.gallon.awayStats.ld),
+    high: toNullableNum(m.gallon.awayStats.hf),
+    f9: toNum(m.gallon.awayStats.f9),
+    avg: toNum(m.gallon.awayStats.avg)
+  } : { t100:0, t180:0, ld:null, high:null, f9:0, avg:0 };
+
+  const rows = [];
+  rows.push({
+    home: gallonHome,
+    away: gallonAway,
+    legs: [gallonHomeLegs, gallonAwayLegs],
+    hs: gallonHomeStats,
+    as: gallonAwayStats
+  });
+
+  (m.games || []).forEach(g => {
+    rows.push({
+      home: [g.homePlayer],
+      away: [g.awayPlayer],
+      legs: [g.homeScore, g.awayScore],
+      hs: {
+        t100: toNum(g.homeStats && g.homeStats.tons),
+        t180: toNum(g.homeStats && g.homeStats.max),
+        ld: toNullableNum(g.homeStats && g.homeStats.ld),
+        high: toNullableNum(g.homeStats && g.homeStats.hf),
+        f9: toNum(g.homeStats && g.homeStats.f9),
+        avg: toNum(g.homeStats && g.homeStats.avg)
+      },
+      as: {
+        t100: toNum(g.awayStats && g.awayStats.tons),
+        t180: toNum(g.awayStats && g.awayStats.max),
+        ld: toNullableNum(g.awayStats && g.awayStats.ld),
+        high: toNullableNum(g.awayStats && g.awayStats.hf),
+        f9: toNum(g.awayStats && g.awayStats.f9),
+        avg: toNum(g.awayStats && g.awayStats.avg)
+      }
+    });
+  });
+
+  const homeSquad = Array.from(new Set(rows.flatMap(r => r.home))).filter(p => p && p !== "-");
+  const awaySquad = Array.from(new Set(rows.flatMap(r => r.away))).filter(p => p && p !== "-");
+
+  const meta = {
+    date: isoDate,
+    venue: m.venue || "Partington WMC",
+    comp: m.matchType || "League",
+    homeTeam: m.homeTeam,
+    awayTeam: m.awayTeam,
+    homeSquad,
+    awaySquad,
+    throwRule: "home"
+  };
+
+  return buildSeededFixture(m.id, meta, rows);
+}
+
+const SEED_VERSION = 11;
 const KEY_SEED_VER = "chalk:seed_ver";
 
 (async function boot(){
+  const savedTheme = (await store.get(KEY_THEME)) || (typeof localStorage !== "undefined" ? localStorage.getItem(KEY_THEME) : null);
+  if (savedTheme === "light" || savedTheme === "dark") S.theme = savedTheme;
+  applyTheme();
+
   S.fixtures = (await store.get(KEY_FX)) || [];
   const sq = await store.get(KEY_SQ);
   if (sq) S.squads = sq;
@@ -2511,8 +5255,11 @@ const KEY_SEED_VER = "chalk:seed_ver";
     changed = true;
   }
 
-  // Build fresh seeded fixtures
-  const freshSeeds = SEEDED_RESULTS.map(seed => buildSeededFixture(seed.id, seed.meta, seed.rows, seed.unplayed));
+  // Build fresh seeded fixtures from SEEDED_RESULTS and MATCHES_DATA
+  const freshSeeds = [
+    ...SEEDED_RESULTS.map(seed => buildSeededFixture(seed.id, seed.meta, seed.rows, seed.unplayed)),
+    ...MATCHES_DATA.map(m => matchDataToFixture(m))
+  ];
 
   // Sync seeded fixtures into local cache
   freshSeeds.forEach(fresh => {
@@ -2575,6 +5322,28 @@ const KEY_SEED_VER = "chalk:seed_ver";
       }
     } catch(e){ toast("No connection - couldn't load the live match"); }
   }
+
+  function handleHash(){
+    const h = window.location.hash || "";
+    if (h.startsWith("#/player/")){
+      const slug = h.replace("#/player/", "");
+      const found = getPlayerBySlugOrName(slug);
+      if (found){
+        S.selectedPlayer = found.player;
+        S.playerPrevView = (S.view !== "player" && S.view) ? S.view : "smd";
+        S.view = "player";
+        render();
+      }
+    } else if (h === "#/smd"){
+      S.view = "smd";
+      render();
+    } else if (h === "#/results"){
+      S.view = "results";
+      render();
+    }
+  }
+  handleHash();
+  window.addEventListener("hashchange", handleHash);
 
   render();
   if (!S.badge){                     // look for a shared logo.png without blocking startup
