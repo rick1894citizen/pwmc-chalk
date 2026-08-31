@@ -210,14 +210,19 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .pill{display:inline-block;font-family:var(--cond);font-weight:700;font-size:12px;letter-spacing:.08em;padding:1px 5px;margin-left:5px;background:var(--slate-3);color:var(--chalk-dim)}
 /* ---------- match report ---------- */
 .report{background:var(--rep-bg);padding:14px 14px 20px;position:relative;overflow:hidden}
-.wm{position:absolute;font-family:var(--cond);font-weight:700;letter-spacing:0.25em;text-transform:uppercase;font-size:11.5px;color:rgba(255,255,255,0.58);pointer-events:none;white-space:nowrap;user-select:none;line-height:1}
+.wm{position:absolute;font-family:var(--cond);font-weight:700;letter-spacing:0.25em;text-transform:uppercase;font-size:11.5px;color:rgba(255,255,255,0.92);pointer-events:none;white-space:nowrap;user-select:none;line-height:1}
 .wm-top{top:3px;left:0;right:0;text-align:center}
 .wm-bottom{bottom:3px;left:0;right:0;text-align:center}
 .wm-side{top:0;bottom:0;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;text-orientation:mixed}
 .wm-left{left:2px;transform:rotate(180deg)}
 .wm-right{right:2px}
-.rep-head{background:var(--rep-light);color:var(--rep-ink);text-align:center;padding:15px 14px;position:relative;min-height:66px;display:flex;flex-direction:column;justify-content:center}
-.rep-head img{position:absolute;left:14px;top:50%;transform:translateY(-50%);height:40px;width:40px;object-fit:contain}
+.rep-head{background:var(--rep-light);color:var(--rep-ink);text-align:center;padding:14px 68px;position:relative;min-height:76px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.rep-head .rep-logo,
+.rep-head img{position:absolute;top:50%;transform:translateY(-50%);height:52px;width:52px;object-fit:contain}
+.rep-head .rep-logo-left,
+.rep-head img:first-child{left:14px}
+.rep-head .rep-logo-right,
+.rep-head img:last-child{right:14px}
 .rep-head b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em}
 .rep-head span{display:block;font-size:12.5px;color:#6B6E6B;margin-top:3px}
 .rep-score{background:var(--rep-card);display:flex;align-items:center;justify-content:center;gap:12px;padding:15px 12px;flex-wrap:wrap}
@@ -249,8 +254,32 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .bdg.w{background:var(--gold);color:var(--rep-ink)}
 .bdg.l{background:var(--rep-grey);color:#E8E8E6}
 .half .nm{flex:1;min-width:0}
-.half .nm b{display:block;font-size:14.5px;font-weight:700;line-height:1.2;overflow-wrap:anywhere}
-.half .nm span{font-size:11px;color:#8A8D8A}
+.half .nm b,
+.half .nm .player-names{
+  display:block;
+  font-family:var(--body);
+  font-size:14.5px;
+  font-weight:700;
+  line-height:1.2;
+  color:#F2EFE4;
+  overflow-wrap:anywhere;
+}
+.half .nm b .player-link,
+.half .nm b .player-name-text,
+.half .nm b span:not(.smd-nickname-tag){
+  font-family:inherit;
+  font-size:14.5px !important;
+  font-weight:700 !important;
+  line-height:1.2;
+  color:inherit !important;
+}
+.half .nm .team-sub{
+  display:block;
+  font-size:11px;
+  font-weight:400;
+  color:#8A8D8A;
+  margin-top:2px;
+}
 .half .lg{font-family:var(--display);font-size:28px;line-height:1;flex:none}
 .stats{display:grid;grid-template-columns:repeat(4,1fr) 1.35fr 1.35fr;border-top:1px solid var(--rep-line);width:100%;text-align:left}
 .stats > div{text-align:center;padding:5px 0 7px;border-right:1px solid var(--rep-line);min-width:0;overflow:hidden}
@@ -2458,8 +2487,14 @@ function vView(){
     + '<div class="wm wm-side wm-left">PWMC CHALK APP</div>'
     + '<div class="wm wm-side wm-right">PWMC CHALK APP</div>';
   const repBadge = S.badge || BADGE_DEFAULT;
-  html += '<div class="rep-head"><img src="' + repBadge + '" alt="Club crest"><b>Match Report' + (fx.comp ? " - " + esc(fx.comp) : "") + '</b>'
-    + '<span>' + esc(ukDate(fx.date)) + (fx.venue ? " &middot; " + esc(fx.venue) : "") + '</span></div>';
+  html += '<div class="rep-head">'
+    + '<img class="rep-logo rep-logo-left" src="' + repBadge + '" alt="PWMC crest">'
+    + '<div class="rep-head-text">'
+    + '<b>Match Report' + (fx.comp ? " - " + esc(fx.comp) : "") + '</b>'
+    + '<span>' + esc(ukDate(fx.date)) + (fx.venue ? " &middot; " + esc(fx.venue) : "") + '</span>'
+    + '</div>'
+    + '<img class="rep-logo rep-logo-right" src="' + repBadge + '" alt="PWMC crest">'
+    + '</div>';
   html += '<div class="rep-score">'
     + '<span class="t">' + renderTeamWithLogo(fx.homeTeam, true, 26) + '</span>'
     + '<span class="grp"><span class="nums">'
@@ -2529,9 +2564,10 @@ async function exportImage(fx){
   const singles = played.filter(g => g.kind === "singles");
 
   const P = 14, W = 580, CW = W - P*2;
+  const HEAD_H = 74;
   const GH = 24, BODY = 52, STATS = 40, UL = 3, CARD = GH + BODY + STATS + UL, GAPY = 10, SECT = 34;
   const GAL = gallonPlayed(fx) ? 28 : 0;
-  let H = P + 66 + 62 + GAL;
+  let H = P + HEAD_H + 62 + GAL;
   if (gallon.length)  H += SECT + gallon.length  * (CARD + GAPY);
   if (singles.length) H += SECT + singles.length * (CARD + GAPY);
   H += 36 + P;
@@ -2562,21 +2598,25 @@ async function exportImage(fx){
   };
 
   let badgeImg = null;
-  if (S.badge) { try { badgeImg = await loadImg(S.badge); } catch(e){} }
+  const badgeSrc = S.badge || BADGE_DEFAULT;
+  if (badgeSrc) { try { badgeImg = await loadImg(badgeSrc); } catch(e){} }
 
   box("#0B0D0B", 0, 0, W, H);
   let y = P;
 
   // header
-  box("#F2F2F0", P, y, CW, 66);
+  box("#F2F2F0", P, y, CW, HEAD_H);
   if (badgeImg && badgeImg.width && badgeImg.height){
-    const bs = 42, k = Math.min(bs / badgeImg.width, bs / badgeImg.height);
+    const bs = 52, k = Math.min(bs / badgeImg.width, bs / badgeImg.height);
     const bw = badgeImg.width * k, bh = badgeImg.height * k;
-    try { x.drawImage(badgeImg, P + 15, y + (66 - bh)/2, bw, bh); } catch(e){}
+    try {
+      x.drawImage(badgeImg, P + 14, y + (HEAD_H - bh)/2, bw, bh);
+      x.drawImage(badgeImg, P + CW - 14 - bw, y + (HEAD_H - bh)/2, bw, bh);
+    } catch(e){}
   }
-  put("Match Report" + (fx.comp ? " - " + fx.comp : ""), W/2, y + 30, "#141614", "700 19px " + BODYF, "center");
-  put(ukDate(fx.date) + (fx.venue ? "  \u00B7  " + fx.venue : ""), W/2, y + 49, "#6B6E6B", "400 13px " + BODYF, "center");
-  y += 66;
+  put("Match Report" + (fx.comp ? " - " + fx.comp : ""), W/2, y + 34, "#141614", "700 19px " + BODYF, "center");
+  put(ukDate(fx.date) + (fx.venue ? "  \u00B7  " + fx.venue : ""), W/2, y + 53, "#6B6E6B", "400 13px " + BODYF, "center");
+  y += HEAD_H;
 
   // scoreline
   const hw = matchWonBy(fx,"home"), aw = matchWonBy(fx,"away");
@@ -2676,7 +2716,7 @@ async function exportImage(fx){
   // sitting in the existing 14px margin (P) so nothing else needs to move.
   x.save();
   x.globalAlpha = 1.0;
-  x.fillStyle = "rgba(255, 255, 255, 0.58)";
+  x.fillStyle = "rgba(255, 255, 255, 0.92)";
   x.font = "700 11.5px " + CONDF;
   x.textAlign = "center";
   try { x.letterSpacing = "2.75px"; } catch(e){}
