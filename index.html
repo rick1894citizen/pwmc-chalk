@@ -588,6 +588,113 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .player-name-link{cursor:pointer;color:#F2EFE4;font-family:var(--cond);font-weight:700;font-size:14px;transition:color .15s}
 .player-name-link:hover{color:var(--gold)!important;text-decoration:underline}
 
+/* --- Automated Match Review & Weekly Insights Card --- */
+.rep-review-card {
+  background: var(--rep-card);
+  border: 1px solid var(--rep-line);
+  border-radius: 10px;
+  margin: 14px 0 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+.rep-review-head {
+  background: var(--rep-light);
+  color: var(--rep-ink);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rep-line);
+}
+.rep-review-head .title {
+  font-family: var(--cond);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.rep-review-head .badge {
+  font-family: var(--cond);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--rep-ink);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.rep-review-body {
+  padding: 14px 16px;
+}
+.rep-review-headline {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #F2EFE4;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+[data-theme="light"] .rep-review-headline {
+  color: #1A1D1A;
+}
+.rep-review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.rep-review-stat {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--rep-line);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+[data-theme="light"] .rep-review-stat {
+  background: #F9FAF8;
+}
+.rep-review-stat .lbl {
+  font-size: 10px;
+  font-family: var(--cond);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rep-mute);
+  margin-bottom: 2px;
+}
+.rep-review-stat .val {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.rep-review-stat .sub {
+  font-size: 11px;
+  color: #A0A3A0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-theme="light"] .rep-review-stat .sub {
+  color: #555855;
+}
+.rep-review-bullets {
+  margin: 0;
+  padding: 0 0 0 16px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #D6D8D5;
+}
+[data-theme="light"] .rep-review-bullets {
+  color: #383B38;
+}
+.rep-review-bullets li {
+  margin-bottom: 6px;
+}
+.rep-review-bullets li:last-child {
+  margin-bottom: 0;
+}
+
 .empty{padding:60px 30px;text-align:center;color:var(--chalk-dim)}
 .empty .display{font-size:26px;color:var(--chalk);margin-bottom:8px}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--chalk);color:var(--slate);padding:11px 18px;border-radius:2px;font-family:var(--cond);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;z-index:90}
@@ -1891,7 +1998,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 60,
           "f9": "-",
-          "avg": 48.57
+          "avg": 49.27
         },
         "awayStats": {
           "tons": 2,
@@ -1915,7 +2022,7 @@ const MATCHES_DATA = [
           "ld": 18,
           "hf": 77,
           "f9": "-",
-          "avg": 60.98
+          "avg": 61.41
         },
         "awayStats": {
           "tons": "-",
@@ -1939,7 +2046,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 36,
           "f9": "-",
-          "avg": 53.63
+          "avg": 53.48
         },
         "awayStats": {
           "tons": 1,
@@ -1963,7 +2070,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 40,
           "f9": "-",
-          "avg": 51.58
+          "avg": 51.06
         },
         "awayStats": {
           "tons": 3,
@@ -1987,7 +2094,7 @@ const MATCHES_DATA = [
           "ld": 32,
           "hf": 46,
           "f9": "-",
-          "avg": 42
+          "avg": 41.27
         },
         "awayStats": {
           "tons": 2,
@@ -2011,7 +2118,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 40,
           "f9": "-",
-          "avg": 51.29
+          "avg": 51.24
         },
         "awayStats": {
           "tons": 1,
@@ -2035,7 +2142,7 @@ const MATCHES_DATA = [
           "ld": 18,
           "hf": 56,
           "f9": "-",
-          "avg": 62.16
+          "avg": 62.38
         },
         "awayStats": {
           "tons": 4,
@@ -2104,7 +2211,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 40,
           "f9": "-",
-          "avg": 46.8
+          "avg": 46.75
         }
       },
       {
@@ -2128,7 +2235,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 16,
           "f9": "-",
-          "avg": 51.6
+          "avg": 51.45
         }
       },
       {
@@ -2152,7 +2259,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 7,
           "f9": "-",
-          "avg": 45.2
+          "avg": 44.47
         }
       },
       {
@@ -2176,7 +2283,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 40,
           "f9": "-",
-          "avg": 40.26
+          "avg": 39.74
         }
       },
       {
@@ -2200,7 +2307,7 @@ const MATCHES_DATA = [
           "ld": 16,
           "hf": 78,
           "f9": "-",
-          "avg": 73.92
+          "avg": 74.14
         }
       },
       {
@@ -2224,7 +2331,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 40,
           "f9": "-",
-          "avg": 45.65
+          "avg": 46.35
         }
       },
       {
@@ -2248,7 +2355,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 76,
           "f9": "-",
-          "avg": 55.67
+          "avg": 56.1
         }
       }
     ]
@@ -2309,7 +2416,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 62,
           "f9": "-",
-          "avg": 52.47
+          "avg": 53.17
         }
       },
       {
@@ -2333,7 +2440,7 @@ const MATCHES_DATA = [
           "ld": 36,
           "hf": 72,
           "f9": "-",
-          "avg": 34.19
+          "avg": 33.46
         }
       },
       {
@@ -2357,7 +2464,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 48,
           "f9": "-",
-          "avg": 61.77
+          "avg": 61.62
         }
       },
       {
@@ -2381,7 +2488,7 @@ const MATCHES_DATA = [
           "ld": 28,
           "hf": 20,
           "f9": "-",
-          "avg": 51.83
+          "avg": 51.39
         }
       },
       {
@@ -2405,7 +2512,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 68,
           "f9": "-",
-          "avg": 52.43
+          "avg": 52.86
         }
       },
       {
@@ -2429,7 +2536,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 42,
           "f9": "-",
-          "avg": 60.24
+          "avg": 60.46
         }
       },
       {
@@ -2453,7 +2560,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 102,
           "f9": "-",
-          "avg": 60.93
+          "avg": 60.88
         }
       }
     ]
@@ -2506,7 +2613,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 32,
           "f9": "-",
-          "avg": 54.99
+          "avg": 54.94
         },
         "awayStats": {
           "tons": 1,
@@ -2530,7 +2637,7 @@ const MATCHES_DATA = [
           "ld": 19,
           "hf": 40,
           "f9": "-",
-          "avg": 42.53
+          "avg": 42.38
         },
         "awayStats": {
           "tons": 1,
@@ -2554,7 +2661,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 24,
           "f9": "-",
-          "avg": 56.36
+          "avg": 56.79
         },
         "awayStats": {
           "tons": 3,
@@ -2578,7 +2685,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 70,
           "f9": "-",
-          "avg": 53.05
+          "avg": 52.53
         },
         "awayStats": {
           "tons": "-",
@@ -2602,7 +2709,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 12,
           "f9": "-",
-          "avg": 57.08
+          "avg": 56.64
         },
         "awayStats": {
           "tons": 1,
@@ -2626,7 +2733,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 48,
           "f9": "-",
-          "avg": 59.47
+          "avg": 59.69
         },
         "awayStats": {
           "tons": 1,
@@ -2650,7 +2757,7 @@ const MATCHES_DATA = [
           "ld": 36,
           "hf": 4,
           "f9": "-",
-          "avg": 56.03
+          "avg": 56.73
         },
         "awayStats": {
           "tons": 3,
@@ -2711,7 +2818,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 16,
           "f9": "-",
-          "avg": 53.05
+          "avg": 52.53
         },
         "awayStats": {
           "tons": 4,
@@ -2735,7 +2842,7 @@ const MATCHES_DATA = [
           "ld": 19,
           "hf": 40,
           "f9": "-",
-          "avg": 58.56
+          "avg": 58.51
         },
         "awayStats": {
           "tons": 2,
@@ -2759,7 +2866,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 101,
           "f9": "-",
-          "avg": 63.51
+          "avg": 63.94
         },
         "awayStats": {
           "tons": 2,
@@ -2783,7 +2890,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 68,
           "f9": "-",
-          "avg": 54.33
+          "avg": 55.03
         },
         "awayStats": {
           "tons": 1,
@@ -2807,7 +2914,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 40,
           "f9": "-",
-          "avg": 53.42
+          "avg": 53.27
         },
         "awayStats": {
           "tons": 6,
@@ -2831,7 +2938,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 46,
           "f9": "-",
-          "avg": 72.73
+          "avg": 72.95
         },
         "awayStats": {
           "tons": 1,
@@ -2855,7 +2962,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": "-",
-          "avg": 52.45
+          "avg": 52.01
         },
         "awayStats": {
           "tons": 4,
@@ -2924,7 +3031,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 40,
           "f9": "-",
-          "avg": 46.97
+          "avg": 46.82
         }
       },
       {
@@ -2948,7 +3055,7 @@ const MATCHES_DATA = [
           "ld": 40,
           "hf": 30,
           "f9": "-",
-          "avg": 33.13
+          "avg": 33.12
         }
       },
       {
@@ -2972,7 +3079,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 40,
           "f9": "-",
-          "avg": 54.99
+          "avg": 54.47
         }
       },
       {
@@ -2996,7 +3103,7 @@ const MATCHES_DATA = [
           "ld": 38,
           "hf": 20,
           "f9": "-",
-          "avg": 36.49
+          "avg": 35.76
         }
       },
       {
@@ -3020,7 +3127,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 72,
           "f9": "-",
-          "avg": 66.31
+          "avg": 66.53
         }
       },
       {
@@ -3044,7 +3151,7 @@ const MATCHES_DATA = [
           "ld": 17,
           "hf": 56,
           "f9": "-",
-          "avg": 66.31
+          "avg": 66.26
         }
       },
       {
@@ -3068,7 +3175,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 32,
           "f9": "-",
-          "avg": 49.57
+          "avg": 50.27
         }
       }
     ]
@@ -3121,7 +3228,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 66,
           "f9": "-",
-          "avg": 61.77
+          "avg": 61.72
         },
         "awayStats": {
           "tons": "-",
@@ -3145,7 +3252,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 37,
           "f9": "-",
-          "avg": 38.92
+          "avg": 38.91
         },
         "awayStats": {
           "tons": 4,
@@ -3169,7 +3276,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 80,
           "f9": "-",
-          "avg": 59.28
+          "avg": 58.76
         },
         "awayStats": {
           "tons": 2,
@@ -3193,7 +3300,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 101,
           "f9": "-",
-          "avg": 52.79
+          "avg": 52.64
         },
         "awayStats": {
           "tons": 3,
@@ -3217,7 +3324,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 40,
           "f9": "-",
-          "avg": 44.01
+          "avg": 44.44
         },
         "awayStats": {
           "tons": 3,
@@ -3241,7 +3348,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 38,
           "f9": "-",
-          "avg": 68.32
+          "avg": 69.02
         },
         "awayStats": {
           "tons": 2,
@@ -3265,7 +3372,7 @@ const MATCHES_DATA = [
           "ld": 19,
           "hf": 54,
           "f9": "-",
-          "avg": 70.45
+          "avg": 70.67
         },
         "awayStats": {
           "tons": 2,
@@ -3326,7 +3433,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 26,
           "f9": "-",
-          "avg": 52.2
+          "avg": 52.9
         },
         "awayStats": {
           "tons": 4,
@@ -3374,7 +3481,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 40,
           "f9": "-",
-          "avg": 53.68
+          "avg": 53.63
         },
         "awayStats": {
           "tons": 1,
@@ -3398,7 +3505,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 48,
           "f9": "-",
-          "avg": 53.25
+          "avg": 53.47
         },
         "awayStats": {
           "tons": 1,
@@ -3422,7 +3529,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": "-",
-          "avg": 37.23
+          "avg": 36.71
         },
         "awayStats": {
           "tons": 2,
@@ -3446,7 +3553,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": "-",
-          "avg": 50.39
+          "avg": 50.24
         },
         "awayStats": {
           "tons": 1,
@@ -3470,7 +3577,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": "-",
-          "avg": 39.49
+          "avg": 39.66
         },
         "awayStats": {
           "tons": 3,
@@ -3539,7 +3646,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 79,
           "f9": "-",
-          "avg": 60.93
+          "avg": 61.63
         }
       },
       {
@@ -3563,7 +3670,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 28,
           "f9": "-",
-          "avg": 49.83
+          "avg": 49.82
         }
       },
       {
@@ -3587,7 +3694,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 16,
           "f9": "-",
-          "avg": 47.97
+          "avg": 47.45
         }
       },
       {
@@ -3611,7 +3718,7 @@ const MATCHES_DATA = [
           "ld": 29,
           "hf": 30,
           "f9": "-",
-          "avg": 52.29
+          "avg": 52.14
         }
       },
       {
@@ -3635,7 +3742,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 40,
           "f9": "-",
-          "avg": 59.33
+          "avg": 59.28
         }
       },
       {
@@ -3659,7 +3766,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 69,
           "f9": "-",
-          "avg": 51.33
+          "avg": 51.76
         }
       },
       {
@@ -3683,7 +3790,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 36,
           "f9": "-",
-          "avg": 70.45
+          "avg": 70.67
         }
       }
     ]
@@ -3744,7 +3851,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 98,
           "f9": "-",
-          "avg": 56.28
+          "avg": 56.71
         }
       },
       {
@@ -3768,7 +3875,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 16,
           "f9": "-",
-          "avg": 54.53
+          "avg": 54.01
         }
       },
       {
@@ -3792,7 +3899,7 @@ const MATCHES_DATA = [
           "ld": 28,
           "hf": 20,
           "f9": "-",
-          "avg": 48.44
+          "avg": 48.29
         }
       },
       {
@@ -3816,7 +3923,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 64,
           "f9": "-",
-          "avg": 54.62
+          "avg": 54.57
         }
       },
       {
@@ -3840,7 +3947,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 50,
           "f9": "-",
-          "avg": 40.65
+          "avg": 39.92
         }
       },
       {
@@ -3864,7 +3971,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 48,
           "f9": "-",
-          "avg": 68.34
+          "avg": 68.56
         }
       },
       {
@@ -3888,7 +3995,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 40,
           "f9": "-",
-          "avg": 54.33
+          "avg": 55.03
         }
       }
     ]
@@ -3941,7 +4048,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 54,
           "f9": "-",
-          "avg": 63.51
+          "avg": 63.73
         },
         "awayStats": {
           "tons": 1,
@@ -3965,7 +4072,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 40,
           "f9": "-",
-          "avg": 57.2
+          "avg": 57.9
         },
         "awayStats": {
           "tons": "-",
@@ -3989,7 +4096,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 103,
           "f9": "-",
-          "avg": 51.62
+          "avg": 51.1
         },
         "awayStats": {
           "tons": 1,
@@ -4013,7 +4120,7 @@ const MATCHES_DATA = [
           "ld": 31,
           "hf": 40,
           "f9": "-",
-          "avg": 39.61
+          "avg": 39.6
         },
         "awayStats": {
           "tons": 4,
@@ -4037,7 +4144,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": "-",
-          "avg": 32.7
+          "avg": 31.97
         },
         "awayStats": {
           "tons": 1,
@@ -4061,7 +4168,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 40,
           "f9": "-",
-          "avg": 52.45
+          "avg": 52.88
         },
         "awayStats": {
           "tons": 4,
@@ -4085,7 +4192,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 20,
           "f9": "-",
-          "avg": 46.21
+          "avg": 46.06
         },
         "awayStats": {
           "tons": 3,
@@ -4154,7 +4261,7 @@ const MATCHES_DATA = [
           "ld": 19,
           "hf": 20,
           "f9": "-",
-          "avg": 55.08
+          "avg": 55.3
         }
       },
       {
@@ -4178,7 +4285,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 58,
           "f9": "-",
-          "avg": 56.36
+          "avg": 57.06
         }
       },
       {
@@ -4202,7 +4309,7 @@ const MATCHES_DATA = [
           "ld": 31,
           "hf": 55,
           "f9": "-",
-          "avg": 50.03
+          "avg": 49.88
         }
       },
       {
@@ -4226,7 +4333,7 @@ const MATCHES_DATA = [
           "ld": 28,
           "hf": 20,
           "f9": "-",
-          "avg": 48.53
+          "avg": 48.09
         }
       },
       {
@@ -4250,7 +4357,7 @@ const MATCHES_DATA = [
           "ld": 17,
           "hf": 94,
           "f9": "-",
-          "avg": 45.11
+          "avg": 44.59
         }
       },
       {
@@ -4274,7 +4381,7 @@ const MATCHES_DATA = [
           "ld": 32,
           "hf": 20,
           "f9": "-",
-          "avg": 42.67
+          "avg": 41.74
         }
       },
       {
@@ -4298,7 +4405,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 8,
           "f9": "-",
-          "avg": 51.72
+          "avg": 52.15
         }
       }
     ]
@@ -4351,7 +4458,7 @@ const MATCHES_DATA = [
           "ld": 34,
           "hf": 10,
           "f9": "-",
-          "avg": 26.06
+          "avg": 25.13
         },
         "awayStats": {
           "tons": "-",
@@ -4375,7 +4482,7 @@ const MATCHES_DATA = [
           "ld": 18,
           "hf": 158,
           "f9": "-",
-          "avg": 46.01
+          "avg": 45.86
         },
         "awayStats": {
           "tons": "-",
@@ -4399,7 +4506,7 @@ const MATCHES_DATA = [
           "ld": 17,
           "hf": 75,
           "f9": "-",
-          "avg": 64.58
+          "avg": 64.8
         },
         "awayStats": {
           "tons": 2,
@@ -4423,7 +4530,7 @@ const MATCHES_DATA = [
           "ld": 43,
           "hf": 40,
           "f9": "-",
-          "avg": 23.54
+          "avg": 23.71
         },
         "awayStats": {
           "tons": 1,
@@ -4447,7 +4554,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 60,
           "f9": "-",
-          "avg": 52.93
+          "avg": 53.36
         },
         "awayStats": {
           "tons": 2,
@@ -4471,7 +4578,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 64,
           "f9": "-",
-          "avg": 57
+          "avg": 56.48
         },
         "awayStats": {
           "tons": "-",
@@ -4495,7 +4602,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 55,
           "f9": "-",
-          "avg": 53.67
+          "avg": 53.62
         },
         "awayStats": {
           "tons": 1,
@@ -4556,7 +4663,7 @@ const MATCHES_DATA = [
           "ld": 19,
           "hf": 38,
           "f9": "-",
-          "avg": 50.53
+          "avg": 50.48
         },
         "awayStats": {
           "tons": 1,
@@ -4575,12 +4682,12 @@ const MATCHES_DATA = [
         "awayScore": 0,
         "homeWinner": true,
         "homeStats": {
-          "tons": 2,
+          "tons": 4,
           "max": "-",
           "ld": 21,
           "hf": 84,
           "f9": "-",
-          "avg": 60.12
+          "avg": 60.34
         },
         "awayStats": {
           "tons": "-",
@@ -4599,12 +4706,12 @@ const MATCHES_DATA = [
         "awayScore": 0,
         "homeWinner": true,
         "homeStats": {
-          "tons": 1,
+          "tons": 2,
           "max": "-",
           "ld": 26,
           "hf": 40,
           "f9": "-",
-          "avg": 42.9
+          "avg": 42.75
         },
         "awayStats": {
           "tons": 1,
@@ -4628,7 +4735,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 72,
           "f9": "-",
-          "avg": 60.02
+          "avg": 60.45
         },
         "awayStats": {
           "tons": 2,
@@ -4652,7 +4759,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 30,
           "f9": "-",
-          "avg": 45.69
+          "avg": 45.37
         },
         "awayStats": {
           "tons": 3,
@@ -4676,7 +4783,7 @@ const MATCHES_DATA = [
           "ld": 31,
           "hf": 28,
           "f9": "-",
-          "avg": 36.36
+          "avg": 36.01
         },
         "awayStats": {
           "tons": 1,
@@ -4700,7 +4807,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 24,
           "f9": "-",
-          "avg": 51.33
+          "avg": 50.81
         },
         "awayStats": {
           "tons": "-",
@@ -4761,7 +4868,7 @@ const MATCHES_DATA = [
           "ld": 32,
           "hf": 74,
           "f9": "-",
-          "avg": 37.39
+          "avg": 37.56
         },
         "awayStats": {
           "tons": 1,
@@ -4785,7 +4892,7 @@ const MATCHES_DATA = [
           "ld": 17,
           "hf": 72,
           "f9": "-",
-          "avg": 60.12
+          "avg": 59.6
         },
         "awayStats": {
           "tons": "-",
@@ -4809,7 +4916,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 54,
           "f9": "-",
-          "avg": 53.07
+          "avg": 53.5
         },
         "awayStats": {
           "tons": 3,
@@ -4833,7 +4940,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 72,
           "f9": "-",
-          "avg": 53.68
+          "avg": 53.24
         },
         "awayStats": {
           "tons": "-",
@@ -4857,7 +4964,7 @@ const MATCHES_DATA = [
           "ld": 35,
           "hf": 16,
           "f9": "-",
-          "avg": 41.64
+          "avg": 40.91
         },
         "awayStats": {
           "tons": 2,
@@ -4881,7 +4988,7 @@ const MATCHES_DATA = [
           "ld": 24,
           "hf": 58,
           "f9": "-",
-          "avg": 56.36
+          "avg": 57.06
         },
         "awayStats": {
           "tons": 1,
@@ -4900,12 +5007,12 @@ const MATCHES_DATA = [
         "awayScore": 0,
         "homeWinner": true,
         "homeStats": {
-          "tons": 7,
+          "tons": 6,
           "max": "-",
           "ld": 20,
           "hf": 70,
           "f9": "-",
-          "avg": 63.51
+          "avg": 63.46
         },
         "awayStats": {
           "tons": "-",
@@ -4966,7 +5073,7 @@ const MATCHES_DATA = [
           "ld": 18,
           "hf": 58,
           "f9": "-",
-          "avg": 72.73
+          "avg": 72.95
         },
         "awayStats": {
           "tons": 1,
@@ -4990,7 +5097,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 52,
           "f9": "-",
-          "avg": 61.69
+          "avg": 61.25
         },
         "awayStats": {
           "tons": 6,
@@ -5009,12 +5116,12 @@ const MATCHES_DATA = [
         "awayScore": 3,
         "homeWinner": false,
         "homeStats": {
-          "tons": 7,
+          "tons": 4,
           "max": "-",
           "ld": 24,
           "hf": 20,
           "f9": "-",
-          "avg": 56.84
+          "avg": 57.27
         },
         "awayStats": {
           "tons": 4,
@@ -5038,7 +5145,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 16,
           "f9": "-",
-          "avg": 71.77
+          "avg": 71.72
         },
         "awayStats": {
           "tons": 6,
@@ -5062,7 +5169,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 54,
           "f9": "-",
-          "avg": 42.6
+          "avg": 42.45
         },
         "awayStats": {
           "tons": "-",
@@ -5086,7 +5193,7 @@ const MATCHES_DATA = [
           "ld": 27,
           "hf": 16,
           "f9": "-",
-          "avg": 53.34
+          "avg": 52.82
         },
         "awayStats": {
           "tons": 5,
@@ -5110,7 +5217,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 64,
           "f9": "-",
-          "avg": 54.41
+          "avg": 55.11
         },
         "awayStats": {
           "tons": 1,
@@ -5157,7 +5264,7 @@ const MATCHES_DATA = [
           "ld": 17,
           "hf": 32,
           "f9": 0,
-          "avg": 60.71
+          "avg": 61.14
         }
       },
       {
@@ -5181,7 +5288,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": 0,
-          "avg": 57
+          "avg": 56.95
         }
       },
       {
@@ -5205,7 +5312,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": 0,
-          "avg": 46.75
+          "avg": 46.43
         }
       },
       {
@@ -5229,7 +5336,7 @@ const MATCHES_DATA = [
           "ld": 19,
           "hf": 54,
           "f9": 0,
-          "avg": 67.48
+          "avg": 67.7
         }
       },
       {
@@ -5253,7 +5360,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 36,
           "f9": 0,
-          "avg": 62.81
+          "avg": 62.29
         }
       },
       {
@@ -5277,7 +5384,7 @@ const MATCHES_DATA = [
           "ld": "-",
           "hf": "-",
           "f9": 0,
-          "avg": 53.35
+          "avg": 54.05
         }
       },
       {
@@ -5301,7 +5408,7 @@ const MATCHES_DATA = [
           "ld": 21,
           "hf": 41,
           "f9": 0,
-          "avg": 58.75
+          "avg": 58.6
         }
       }
     ]
@@ -5357,12 +5464,12 @@ const MATCHES_DATA = [
           "avg": 50.64
         },
         "awayStats": {
-          "tons": 3,
+          "tons": 5,
           "max": "-",
           "ld": 23,
           "hf": 50,
           "f9": 68.33,
-          "avg": 60.12
+          "avg": 59.6
         }
       },
       {
@@ -5386,7 +5493,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 40,
           "f9": 48,
-          "avg": 53.72
+          "avg": 54.42
         }
       },
       {
@@ -5410,7 +5517,7 @@ const MATCHES_DATA = [
           "ld": 31,
           "hf": 40,
           "f9": 47.25,
-          "avg": 41.26
+          "avg": 40.91
         }
       },
       {
@@ -5434,7 +5541,7 @@ const MATCHES_DATA = [
           "ld": 38,
           "hf": 10,
           "f9": 44.75,
-          "avg": 36.74
+          "avg": 35.81
         }
       },
       {
@@ -5458,7 +5565,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 52,
           "f9": 88.33,
-          "avg": 60.12
+          "avg": 60.55
         }
       },
       {
@@ -5482,7 +5589,7 @@ const MATCHES_DATA = [
           "ld": 17,
           "hf": 92,
           "f9": 103.6,
-          "avg": 64.41
+          "avg": 64.63
         }
       },
       {
@@ -5506,7 +5613,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 40,
           "f9": 66.92,
-          "avg": 48.66
+          "avg": 48.34
         }
       }
     ]
@@ -5567,7 +5674,7 @@ const MATCHES_DATA = [
           "ld": 42,
           "hf": 18,
           "f9": 40.58,
-          "avg": 38.95
+          "avg": 38.22
         }
       },
       {
@@ -5591,7 +5698,7 @@ const MATCHES_DATA = [
           "ld": 28,
           "hf": 16,
           "f9": 70.22,
-          "avg": 49.55
+          "avg": 49.5
         }
       },
       {
@@ -5615,7 +5722,7 @@ const MATCHES_DATA = [
           "ld": 29,
           "hf": 40,
           "f9": 54.27,
-          "avg": 51.73
+          "avg": 51.58
         }
       },
       {
@@ -5639,7 +5746,7 @@ const MATCHES_DATA = [
           "ld": 23,
           "hf": 52,
           "f9": 61.6,
-          "avg": 55.67
+          "avg": 56.37
         }
       },
       {
@@ -5658,12 +5765,12 @@ const MATCHES_DATA = [
           "avg": 65.47
         },
         "awayStats": {
-          "tons": 2,
+          "tons": 4,
           "max": 1,
           "ld": 16,
           "hf": 38,
           "f9": 79,
-          "avg": 77.74
+          "avg": 77.96
         }
       },
       {
@@ -5687,7 +5794,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 20,
           "f9": 58.58,
-          "avg": 50.39
+          "avg": 50.82
         }
       },
       {
@@ -5711,7 +5818,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 12,
           "f9": 68.2,
-          "avg": 57.66
+          "avg": 57.14
         }
       }
     ]
@@ -5764,7 +5871,7 @@ const MATCHES_DATA = [
           "ld": 16,
           "hf": 18,
           "f9": 89,
-          "avg": 56.33
+          "avg": 57.03
         },
         "awayStats": {
           "tons": 1,
@@ -5788,7 +5895,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 40,
           "f9": 50,
-          "avg": 39.21
+          "avg": 38.89
         },
         "awayStats": {
           "tons": 1,
@@ -5812,7 +5919,7 @@ const MATCHES_DATA = [
           "ld": 22,
           "hf": 40,
           "f9": "-",
-          "avg": 45
+          "avg": 45.43
         },
         "awayStats": {
           "tons": 2,
@@ -5836,7 +5943,7 @@ const MATCHES_DATA = [
           "ld": 19,
           "hf": 50,
           "f9": 77.78,
-          "avg": 67.3
+          "avg": 67.52
         },
         "awayStats": {
           "tons": 3,
@@ -5860,7 +5967,7 @@ const MATCHES_DATA = [
           "ld": 18,
           "hf": 117,
           "f9": 71.33,
-          "avg": 62.97
+          "avg": 62.45
         },
         "awayStats": {
           "tons": 2,
@@ -5884,7 +5991,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 52,
           "f9": 69.89,
-          "avg": 68.32
+          "avg": 68.27
         },
         "awayStats": {
           "tons": 0,
@@ -5908,7 +6015,7 @@ const MATCHES_DATA = [
           "ld": 25,
           "hf": 40,
           "f9": 50.44,
-          "avg": 51.83
+          "avg": 51.68
         },
         "awayStats": {
           "tons": 1,
@@ -5977,7 +6084,7 @@ const MATCHES_DATA = [
           "ld": 18,
           "hf": 97,
           "f9": 61.67,
-          "avg": 68.32
+          "avg": 69.02
         }
       },
       {
@@ -6001,7 +6108,7 @@ const MATCHES_DATA = [
           "ld": 26,
           "hf": 40,
           "f9": 64.11,
-          "avg": 49.55
+          "avg": 49.5
         }
       },
       {
@@ -6025,7 +6132,7 @@ const MATCHES_DATA = [
           "ld": 29,
           "hf": 32,
           "f9": 59.58,
-          "avg": 45.6
+          "avg": 45.45
         }
       },
       {
@@ -6049,7 +6156,7 @@ const MATCHES_DATA = [
           "ld": 32,
           "hf": 20,
           "f9": 45.17,
-          "avg": 39.64
+          "avg": 39.63
         }
       },
       {
@@ -6073,7 +6180,7 @@ const MATCHES_DATA = [
           "ld": 15,
           "hf": 64,
           "f9": 78.44,
-          "avg": 75.15
+          "avg": 75.37
         }
       },
       {
@@ -6097,7 +6204,7 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 52,
           "f9": 52,
-          "avg": 42.97
+          "avg": 42.04
         }
       },
       {
@@ -6121,19 +6228,33 @@ const MATCHES_DATA = [
           "ld": 20,
           "hf": 70,
           "f9": 77.5,
-          "avg": 60.61
+          "avg": 60.09
         }
       }
     ]
   }
 ];
+
 window.MATCHES_DATA = MATCHES_DATA;
 
 function calculatePlayerStats(matchesData = MATCHES_DATA) {
   const statsMap = {};
 
   (matchesData || []).forEach((match) => {
+    // 1. Ignore incomplete / pending fixtures
+    if (!match || match.isCompleted === false || match.completed === false || match.pending === true) {
+      return;
+    }
+
     match.games?.forEach((game) => {
+      const homeLegs = Number(game.homeScore || 0);
+      const awayLegs = Number(game.awayScore || 0);
+
+      // Skip unplayed 0-0 games
+      if (homeLegs === 0 && awayLegs === 0 && !game.homeWinner && !game.awayWinner) {
+        return;
+      }
+
       // Helper to process a player leg appearance
       const processPlayer = (rawPlayerName, oppTeam, oppPlayer, won, legsFor, legsAgainst, stats) => {
         if (!rawPlayerName || rawPlayerName === "-") return;
@@ -6164,35 +6285,54 @@ function calculatePlayerStats(matchesData = MATCHES_DATA) {
         if (won) p.won += 1;
         else p.lost += 1;
 
-        p.legsFor += Number(legsFor || 0);
-        p.legsAgainst += Number(legsAgainst || 0);
+        const numLegsFor = Number(legsFor || 0);
+        const numLegsAgainst = Number(legsAgainst || 0);
+        p.legsFor += numLegsFor;
+        p.legsAgainst += numLegsAgainst;
 
+        // Clean numeric stats aggregation
         if (stats?.tons && stats.tons !== "-") {
-          p.tons += Number(stats.tons);
+          const t = Number(stats.tons);
+          if (!Number.isNaN(t) && t > 0) p.tons += t;
         }
 
         if (stats?.max && stats.max !== "-") {
-          p.max180s += Number(stats.max);
+          const m = Number(stats.max);
+          if (!Number.isNaN(m) && m > 0) p.max180s += m;
         }
 
-        if (stats?.ld && stats.ld !== "-" && Number(stats.ld) > 0) {
+        // Least Darts (LD): minimum numeric value greater than 0 across winning legs
+        if (won && stats?.ld && stats.ld !== "-") {
           const ldVal = Number(stats.ld);
-          p.leastDarts = p.leastDarts ? Math.min(p.leastDarts, ldVal) : ldVal;
+          if (!Number.isNaN(ldVal) && ldVal > 0) {
+            p.leastDarts = p.leastDarts ? Math.min(p.leastDarts, ldVal) : ldVal;
+          }
         }
 
-        if (stats?.hf && stats.hf !== "-" && Number(stats.hf) > 0) {
-          p.highestFinish = Math.max(p.highestFinish, Number(stats.hf));
+        // Highest Finish (HF): maximum numeric checkout value across all legs
+        if (stats?.hf && stats.hf !== "-") {
+          const hfVal = Number(stats.hf);
+          if (!Number.isNaN(hfVal) && hfVal > 0) {
+            p.highestFinish = Math.max(p.highestFinish, hfVal);
+          }
         }
 
-        const matchLegs = Number(legsFor || 0) + Number(legsAgainst || 0);
-        if (stats?.avg && stats.avg !== "-" && Number(stats.avg) > 0) {
-          p.weightedAvgSum += Number(stats.avg) * matchLegs;
-          p.totalLegsPlayed += matchLegs;
+        // Leg-Weighted Season Average
+        const matchLegs = numLegsFor + numLegsAgainst;
+        if (stats?.avg && stats.avg !== "-") {
+          const avgVal = Number(stats.avg);
+          if (!Number.isNaN(avgVal) && avgVal > 0 && matchLegs > 0) {
+            p.weightedAvgSum += avgVal * matchLegs;
+            p.totalLegsPlayed += matchLegs;
+          }
         }
 
-        if (stats?.f9 && stats.f9 !== "-" && Number(stats.f9) > 0) {
-          p.f9Sum += Number(stats.f9);
-          p.f9Count += 1;
+        if (stats?.f9 && stats.f9 !== "-") {
+          const f9Val = Number(stats.f9);
+          if (!Number.isNaN(f9Val) && f9Val > 0) {
+            p.f9Sum += f9Val;
+            p.f9Count += 1;
+          }
         }
 
         p.matches.push({
@@ -6204,6 +6344,9 @@ function calculatePlayerStats(matchesData = MATCHES_DATA) {
           opponentPlayer: oppPlayer,
           score: `${legsFor} - ${legsAgainst}`,
           result: won ? "W" : "L",
+          legsFor: numLegsFor,
+          legsAgainst: numLegsAgainst,
+          avg: Number(stats?.avg || 0),
           stats
         });
       };
@@ -6235,30 +6378,261 @@ function calculatePlayerStats(matchesData = MATCHES_DATA) {
     });
   });
 
-  return Object.values(statsMap).map((player) => ({
-    ...player,
-    winPct: player.played > 0 ? Number(((player.won / player.played) * 100).toFixed(1)) : 0,
-    legsPct: (player.legsFor + player.legsAgainst) > 0 
-      ? Number(((player.legsFor / (player.legsFor + player.legsAgainst)) * 100).toFixed(1)) 
-      : 0,
-    avg: player.totalLegsPlayed > 0 
-      ? Number((player.weightedAvgSum / player.totalLegsPlayed).toFixed(2)) 
-      : 0,
-    f9Avg: player.f9Count > 0 
-      ? Number((player.f9Sum / player.f9Count).toFixed(2)) 
-      : "-",
-    wins: player.won,
-    legsW: player.legsFor,
-    legsL: player.legsAgainst,
-    max180: player.max180s,
-    ld: player.leastDarts || 0,
-    hf: player.highestFinish || 0
-  })).sort((a, b) => {
+  return Object.values(statsMap).map((player) => {
+    const totalLegs = player.legsFor + player.legsAgainst;
+
+    // Replace simple average with leg-weighted average:
+    let weightedSum = 0;
+    let totalLegsCount = 0;
+
+    const playerMatches = player.matches || [];
+    playerMatches.forEach(match => {
+      const matchLegs = (Number(match.legsFor || 0) + Number(match.legsAgainst || 0)) || (Number(match.score?.split('-')[0] || 0) + Number(match.score?.split('-')[1] || 0));
+      const matchAvg = Number(match.stats?.avg || match.avg || 0);
+      
+      if (matchLegs > 0 && matchAvg > 0) {
+        weightedSum += matchAvg * matchLegs;
+        totalLegsCount += matchLegs;
+      }
+    });
+
+    const computedAverage = totalLegsCount > 0 
+      ? (weightedSum / totalLegsCount).toFixed(2) 
+      : '0.00';
+
+    return {
+      ...player,
+      winPct: player.played > 0 ? Number(((player.won / player.played) * 100).toFixed(1)) : 0,
+      legsPct: totalLegs > 0 ? Number(((player.legsFor / totalLegs) * 100).toFixed(1)) : 0,
+      avg: Number(computedAverage),
+      avgStr: computedAverage,
+      f9Avg: player.f9Count > 0 ? Number((player.f9Sum / player.f9Count).toFixed(2)) : "-",
+      wins: player.won,
+      legsW: player.legsFor,
+      legsL: player.legsAgainst,
+      max180: player.max180s,
+      ld: player.leastDarts || 0,
+      hf: player.highestFinish || 0
+    };
+  }).sort((a, b) => {
     if (b.won !== a.won) return b.won - a.won;
     if (b.legsW !== a.legsW) return b.legsW - a.legsW;
     if (b.avg !== a.avg) return b.avg - a.avg;
-    return a.ld - b.ld;
+    return (a.ld || 99) - (b.ld || 99);
   });
+}
+
+function generateWeeklyReview(match) {
+  if (!match) return null;
+
+  const homeTeam = match.homeTeam || "Home";
+  const awayTeam = match.awayTeam || "Away";
+  const venue = match.venue || "";
+  const date = match.date || "";
+
+  let homeScore = Number(match.homeScore || 0);
+  let awayScore = Number(match.awayScore || 0);
+  const playerStatsList = [];
+
+  const isMatchData = !!match.games && match.games[0] && typeof match.games[0].homePlayer !== "undefined";
+
+  if (isMatchData) {
+    (match.games || []).forEach((g) => {
+      const hScore = Number(g.homeScore || 0);
+      const aScore = Number(g.awayScore || 0);
+      if (hScore === 0 && aScore === 0 && !g.homeWinner && !g.awayWinner) return;
+
+      if (g.homePlayer && g.homePlayer !== "-") {
+        playerStatsList.push({
+          name: g.homePlayer,
+          team: homeTeam,
+          opp: g.awayPlayer,
+          oppTeam: awayTeam,
+          won: g.homeWinner ?? (hScore > aScore),
+          legsWon: hScore,
+          legsLost: aScore,
+          avg: Number(g.homeStats?.avg || 0),
+          tons: (g.homeStats?.tons && g.homeStats.tons !== "-") ? Number(g.homeStats.tons) : 0,
+          max180: (g.homeStats?.max && g.homeStats.max !== "-") ? Number(g.homeStats.max) : 0,
+          ld: (g.homeStats?.ld && g.homeStats.ld !== "-") ? Number(g.homeStats.ld) : null,
+          hf: (g.homeStats?.hf && g.homeStats.hf !== "-") ? Number(g.homeStats.hf) : null
+        });
+      }
+
+      if (g.awayPlayer && g.awayPlayer !== "-") {
+        playerStatsList.push({
+          name: g.awayPlayer,
+          team: awayTeam,
+          opp: g.homePlayer,
+          oppTeam: homeTeam,
+          won: !g.homeWinner && (aScore > hScore || g.homeWinner === false),
+          legsWon: aScore,
+          legsLost: hScore,
+          avg: Number(g.awayStats?.avg || 0),
+          tons: (g.awayStats?.tons && g.awayStats.tons !== "-") ? Number(g.awayStats.tons) : 0,
+          max180: (g.awayStats?.max && g.awayStats.max !== "-") ? Number(g.awayStats.max) : 0,
+          ld: (g.awayStats?.ld && g.awayStats.ld !== "-") ? Number(g.awayStats.ld) : null,
+          hf: (g.awayStats?.hf && g.awayStats.hf !== "-") ? Number(g.awayStats.hf) : null
+        });
+      }
+    });
+  } else if (match.games && Array.isArray(match.games)) {
+    let calcHome = 0;
+    let calcAway = 0;
+
+    match.games.forEach((g) => {
+      const isDoubles = g.kind === "doubles";
+      const hWon = (g.legs || []).filter(l => l.won === "home").length;
+      const aWon = (g.legs || []).filter(l => l.won === "away").length;
+
+      if (!isDoubles) {
+        if (g.won === "home" || hWon > aWon) calcHome++;
+        else if (g.won === "away" || aWon > hWon) calcAway++;
+      }
+
+      const getPlayerStatsFromLegs = (names, side, oppNames) => {
+        if (!names || !names.length) return;
+        const pName = names.join(" & ");
+        let darts = 0, points = 0, tons = 0, max180 = 0, hf = 0, bestLeg = null;
+
+        (g.legs || []).forEach(leg => {
+          (leg.visits || []).forEach(v => {
+            if (v.side === side) {
+              darts += v.darts || 0;
+              if (!v.bust) points += (v.score || 0);
+              if (v.score === 180) max180++;
+              else if (v.score >= 100) tons++;
+              if (v.checkout && v.checkout > hf) hf = v.checkout;
+            }
+          });
+          if (leg.won === side && leg.winDarts) {
+            if (bestLeg === null || leg.winDarts < bestLeg) bestLeg = leg.winDarts;
+          }
+        });
+
+        const avg = darts > 0 ? (points / darts) * 3 : 0;
+        playerStatsList.push({
+          name: pName,
+          team: side === "home" ? homeTeam : awayTeam,
+          opp: oppNames ? oppNames.join(" & ") : "",
+          oppTeam: side === "home" ? awayTeam : homeTeam,
+          won: (side === "home" ? hWon > aWon : aWon > hWon),
+          legsWon: side === "home" ? hWon : aWon,
+          legsLost: side === "home" ? aWon : hWon,
+          avg: Number(avg.toFixed(2)),
+          tons,
+          max180,
+          ld: bestLeg,
+          hf: hf > 0 ? hf : null
+        });
+      };
+
+      getPlayerStatsFromLegs(g.home, "home", g.away);
+      getPlayerStatsFromLegs(g.away, "away", g.home);
+    });
+
+    if (homeScore === 0 && awayScore === 0 && (calcHome > 0 || calcAway > 0)) {
+      homeScore = calcHome;
+      awayScore = calcAway;
+    }
+  }
+
+  const validAvgPlayers = playerStatsList.filter(p => p.avg > 0);
+  validAvgPlayers.sort((a, b) => b.avg - a.avg);
+  const motmPlayer = validAvgPlayers[0] || { name: "-", avg: 0, legsWon: 0 };
+
+  const validOuts = playerStatsList.filter(p => p.hf && p.hf > 0).sort((a, b) => b.hf - a.hf);
+  const highCheckout = validOuts[0] 
+    ? { player: validOuts[0].name, checkout: validOuts[0].hf, team: validOuts[0].team } 
+    : { player: "-", checkout: 0 };
+
+  const validLD = playerStatsList.filter(p => p.won && p.ld && p.ld > 0).sort((a, b) => a.ld - b.ld);
+  const shortestLeg = validLD[0] 
+    ? { player: validLD[0].name, darts: validLD[0].ld, team: validLD[0].team } 
+    : null;
+
+  const isHomePWMC = homeTeam.toLowerCase().includes("partington");
+  const isAwayPWMC = awayTeam.toLowerCase().includes("partington");
+  const pwmcTeam = isHomePWMC ? homeTeam : (isAwayPWMC ? awayTeam : homeTeam);
+  const oppTeam = isHomePWMC ? awayTeam : homeTeam;
+  const pwmcScore = isHomePWMC ? homeScore : (isAwayPWMC ? awayScore : homeScore);
+  const oppScore = isHomePWMC ? awayScore : (isAwayPWMC ? homeScore : awayScore);
+
+  const pwmcPlayers = playerStatsList.filter(p => p.team === pwmcTeam);
+  const teamTons = (pwmcPlayers.length ? pwmcPlayers : playerStatsList).reduce((sum, p) => sum + (p.tons || 0), 0);
+  const team180s = (pwmcPlayers.length ? pwmcPlayers : playerStatsList).reduce((sum, p) => sum + (p.max180 || 0), 0);
+
+  let headline = "";
+  if (isHomePWMC || isAwayPWMC) {
+    if (pwmcScore > oppScore) {
+      headline = isAwayPWMC 
+        ? `PWMC Secure ${pwmcScore}-${oppScore} Victory at ${oppTeam}`
+        : `PWMC Power to ${pwmcScore}-${oppScore} Home Win vs ${oppTeam}`;
+    } else if (pwmcScore === oppScore) {
+      headline = `PWMC Battle to Hard-Fought ${pwmcScore}-${oppScore} Draw against ${oppTeam}`;
+    } else {
+      headline = `PWMC Suffer Tough ${pwmcScore}-${oppScore} Defeat against ${oppTeam}`;
+    }
+  } else {
+    headline = `${homeTeam} ${homeScore} - ${awayScore} ${awayTeam}`;
+  }
+
+  const bullets = [];
+  if (isHomePWMC || isAwayPWMC) {
+    const pwmcWonTies = pwmcPlayers.filter(p => p.won).length;
+    const totalTies = pwmcPlayers.length || 7;
+    if (pwmcScore > oppScore) {
+      bullets.push(`Partington WMC sealed an impressive ${pwmcScore}-${oppScore} victory over ${oppTeam}${venue ? ` at ${venue}` : ""}, taking ${pwmcWonTies} of ${totalTies} individual ties.`);
+    } else if (pwmcScore === oppScore) {
+      bullets.push(`Points were shared in a competitive ${pwmcScore}-${oppScore} draw with ${oppTeam}${venue ? ` at ${venue}` : ""}.`);
+    } else {
+      bullets.push(`Partington WMC were edged out ${pwmcScore}-${oppScore} in a closely contested battle against ${oppTeam}.`);
+    }
+  } else {
+    bullets.push(`${homeTeam} faced ${awayTeam} resulting in a final scoreline of ${homeScore}-${awayScore}.`);
+  }
+
+  if (motmPlayer.avg > 0) {
+    bullets.push(`Man of the Match honours go to ${motmPlayer.name} with an outstanding ${motmPlayer.avg.toFixed(2)} 3-dart average (${motmPlayer.legsWon}-${motmPlayer.legsLost || 0} legs).`);
+  } else {
+    bullets.push(`Standout team performances propelled the lineup across singles games.`);
+  }
+
+  const featParts = [];
+  if (teamTons > 0) featParts.push(`${teamTons}x 100+ tons`);
+  if (team180s > 0) featParts.push(`${team180s}x 180 maximum${team180s > 1 ? "s" : ""}`);
+  if (highCheckout.checkout > 0) featParts.push(`a match-high ${highCheckout.checkout} checkout by ${highCheckout.player}`);
+  if (shortestLeg) featParts.push(`a blistering ${shortestLeg.darts}-dart leg from ${shortestLeg.player}`);
+
+  if (featParts.length) {
+    bullets.push(`Team firepower included ${featParts.join(", ")}.`);
+  } else {
+    bullets.push(`Solid leg management and clinical finishing rounded out the fixture.`);
+  }
+
+  return {
+    headline,
+    motm: {
+      player: motmPlayer.name,
+      name: motmPlayer.name,
+      avg: motmPlayer.avg,
+      legsWon: motmPlayer.legsWon
+    },
+    highCheckout: {
+      player: highCheckout.player,
+      checkout: highCheckout.checkout
+    },
+    crucialLeg: shortestLeg ? {
+      player: shortestLeg.player,
+      darts: shortestLeg.darts
+    } : null,
+    teamHighlights: {
+      tons: teamTons,
+      max180s: team180s,
+      highCheckout: highCheckout.checkout
+    },
+    summaryBulletPoints: bullets
+  };
 }
 
 function getSquadStats(matchesData = MATCHES_DATA) {
@@ -6266,6 +6640,7 @@ function getSquadStats(matchesData = MATCHES_DATA) {
 }
 
 window.calculatePlayerStats = calculatePlayerStats;
+window.generateWeeklyReview = generateWeeklyReview;
 window.getSquadStats = getSquadStats;
 
 if (typeof window !== "undefined") {
@@ -6723,13 +7098,31 @@ function vPlayerProfile(){
 
   const matchLogs = getPlayerMatchLogs(p.player);
 
+  // Compute leg-weighted average for profile card:
+  let weightedSum = 0;
+  let totalLegsCount = 0;
+  const playerMatches = (p && p.matches && p.matches.length) ? p.matches : matchLogs;
+  playerMatches.forEach(match => {
+    const matchLegs = (Number(match.legsFor || 0) + Number(match.legsAgainst || 0)) || (Number(match.myLegs || 0) + Number(match.oppLegs || 0)) || (Number(match.score?.split('-')[0] || 0) + Number(match.score?.split('-')[1] || 0));
+    const matchAvg = Number(match.stats?.avg || match.avg || 0);
+    
+    if (matchLegs > 0 && matchAvg > 0) {
+      weightedSum += matchAvg * matchLegs;
+      totalLegsCount += matchLegs;
+    }
+  });
+
+  const computedAverage = totalLegsCount > 0 
+    ? (weightedSum / totalLegsCount).toFixed(2) 
+    : (p.avg ? p.avg.toFixed(2) : '0.00');
+
   const validF9Logs = matchLogs.filter(m => m.stats && m.stats.f9 > 0);
   let f9Avg = 0;
   let f9IsEstimate = false;
   if (validF9Logs.length > 0){
     f9Avg = validF9Logs.reduce((acc, m) => acc + m.stats.f9, 0) / validF9Logs.length;
   } else {
-    f9Avg = p.avg * 1.14;
+    f9Avg = Number(computedAverage) * 1.14;
     f9IsEstimate = true;
   }
 
@@ -6767,7 +7160,7 @@ function vPlayerProfile(){
   // Section 2: Core Performance Dashboard (Grid of Stat Cards)
   html += '<div class="profile-sect-head">Core Performance Dashboard</div>'
     + '<div class="profile-stats-grid">'
-    + '<div class="profile-stat-box"><span class="k">3-Dart Average</span><div class="v-wrap"><span class="v">' + p.avg.toFixed(2) + '</span><span class="tier-pill tier-' + ev.tAvg + '">' + ev.tAvg.toUpperCase() + '</span></div><span class="sub">Season scoring standard</span></div>'
+    + '<div class="profile-stat-box"><span class="k">3-Dart Average</span><div class="v-wrap"><span class="v">' + computedAverage + '</span><span class="tier-pill tier-' + ev.tAvg + '">' + ev.tAvg.toUpperCase() + '</span></div><span class="sub">Season scoring standard</span></div>'
     + '<div class="profile-stat-box"><span class="k">First 9 Average (F9)</span><div class="v-wrap"><span class="v">' + f9Avg.toFixed(2) + '</span><span class="tier-pill tier-' + (f9Avg >= 60 ? "green" : (f9Avg >= 54 ? "yellow" : (f9Avg >= 45 ? "orange" : "red"))) + '">' + (f9IsEstimate ? 'EST' : 'F9') + '</span></div><span class="sub">' + (f9IsEstimate ? 'Estimated opening pace' : validF9Logs.length + ' logged appearances') + '</span></div>'
     + '<div class="profile-stat-box"><span class="k">Legs Breakdown</span><div class="v-wrap"><span class="v">' + p.legsW + 'W / ' + p.legsL + 'L</span><span class="tier-pill tier-' + ev.tLeg + '">' + p.legsPct.toFixed(1) + '%</span></div><span class="sub">' + (p.legsW + p.legsL) + ' total legs played</span></div>'
     + '<div class="profile-stat-box"><span class="k">100+ Tons</span><div class="v-wrap"><span class="v">' + p.tons + '</span><span class="tier-pill tier-' + (p.tons >= 50 ? 'green' : (p.tons >= 20 ? 'yellow' : 'orange')) + '">TONS</span></div><span class="sub">' + (p.played ? (p.tons / p.played).toFixed(1) + ' per match' : '-') + '</span></div>'
@@ -6935,6 +7328,52 @@ function vView(){
     + (gallonPlayed(fx)
         ? '<div class="rep-gallon"><span>Gallon</span><b class="num' + (gh > ga ? " w" : "") + '">' + gh + '</b><i>&ndash;</i><b class="num' + (ga > gh ? " w" : "") + '">' + ga + '</b></div>'
         : '');
+
+  if (played.length) {
+    const rawMatch = (MATCHES_DATA || []).find(m => m.id === fx.id) || fx;
+    const review = generateWeeklyReview(rawMatch);
+    if (review) {
+      html += '<div class="rep-review-card">'
+        + '<div class="rep-review-head">'
+        + '<span class="title">Match Insights &middot; Weekly Review</span>'
+        + '<span class="badge">Official Review</span>'
+        + '</div>'
+        + '<div class="rep-review-body">'
+        + '<div class="rep-review-headline">' + esc(review.headline) + '</div>'
+        + '<div class="rep-review-grid">'
+        + (review.motm?.avg > 0 ? (
+            '<div class="rep-review-stat">'
+            + '<div class="lbl">Man of the Match</div>'
+            + '<div class="val">' + esc(review.motm.name) + '</div>'
+            + '<div class="sub">' + review.motm.avg.toFixed(2) + ' Avg &middot; ' + review.motm.legsWon + ' Legs</div>'
+            + '</div>'
+          ) : '')
+        + (review.highCheckout?.checkout > 0 ? (
+            '<div class="rep-review-stat">'
+            + '<div class="lbl">Highest Finish</div>'
+            + '<div class="val">' + review.highCheckout.checkout + '</div>'
+            + '<div class="sub">' + esc(review.highCheckout.player) + '</div>'
+            + '</div>'
+          ) : '')
+        + (review.crucialLeg ? (
+            '<div class="rep-review-stat">'
+            + '<div class="lbl">Shortest Leg</div>'
+            + '<div class="val">' + review.crucialLeg.darts + ' Darts</div>'
+            + '<div class="sub">' + esc(review.crucialLeg.player) + '</div>'
+            + '</div>'
+          ) : '')
+        + '<div class="rep-review-stat">'
+        + '<div class="lbl">Team Highlights</div>'
+        + '<div class="val">' + (review.teamHighlights?.tons || 0) + ' Tons</div>'
+        + '<div class="sub">' + (review.teamHighlights?.max180s || 0) + 'x 180s</div>'
+        + '</div>'
+        + '</div>'
+        + '<ul class="rep-review-bullets">'
+        + (review.summaryBulletPoints || []).map(b => '<li>' + esc(b) + '</li>').join('')
+        + '</ul>'
+        + '</div></div>';
+    }
+  }
 
   if (!played.length){
     html += '<div class="rep-note" style="padding:34px 10px">No games played yet.</div>';
