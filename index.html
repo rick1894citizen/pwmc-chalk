@@ -1795,8 +1795,38 @@ function vResults(){
 }
 
 /* =======================================================================
-   4.5. SMD LEAGUE PLAYER STATS & BRANDING
+   4.5. SMD LEAGUE PLAYER STATS & BRANDING (DYNAMIC FROM MATCHES_DATA)
    ======================================================================= */
+function slugify(name){
+  return String(name || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function isSamePlayer(a, b){
+  if (!a || !b) return false;
+  const sa = String(a).toLowerCase().trim().replace(/[^a-z0-9]/g, "");
+  const sb = String(b).toLowerCase().trim().replace(/[^a-z0-9]/g, "");
+  if (sa === sb) return true;
+  const aliases = [
+    ["stebell", "stevenbell"],
+    ["stevebell", "stevenbell"],
+    ["rickfox", "richardfox"],
+    ["danielkendrick", "dannykendrick"],
+    ["bazoconnor", "barryoconnor"]
+  ];
+  return aliases.some(pair => (sa === pair[0] && sb === pair[1]) || (sa === pair[1] && sb === pair[0]));
+}
+
+function canonicalPlayerName(name) {
+  if (!name) return "";
+  const s = String(name).trim();
+  const clean = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (clean === "stebell" || clean === "stevebell" || clean === "stevenbell") return "Steven Bell";
+  if (clean === "rickfox" || clean === "richardfox") return "Rick Fox";
+  if (clean === "danielkendrick" || clean === "dannykendrick") return "Danny Kendrick";
+  if (clean === "bazoconnor" || clean === "barryoconnor") return "Baz O'Connor";
+  return s;
+}
+
 const PLAYER_BRANDING = {};
 const PLAYER_ASSETS = PLAYER_BRANDING;
 window.PLAYER_ASSETS = PLAYER_ASSETS;
@@ -1812,22 +1842,4440 @@ function getPlayerBranding(name){
   return null;
 }
 
-const SMD_STATS_DATA = [
-  { player: "Mason Gamble", played: 19, wins: 19, tons: 103, max180: 3, ld: 16, hf: 92, avg: 65.42, winPct: 100.0, legsW: 57, legsL: 10, legsPct: 85.07 },
-  { player: "Karl Bannister", played: 18, wins: 15, tons: 70, max180: 1, ld: 17, hf: 101, avg: 54.71, winPct: 83.3, legsW: 50, legsL: 16, legsPct: 75.76 },
-  { player: "Mark Colgan", played: 17, wins: 15, tons: 59, max180: 2, ld: 17, hf: 102, avg: 57.71, winPct: 88.2, legsW: 46, legsL: 9, legsPct: 83.64 },
-  { player: "Brandon Gamble", played: 19, wins: 14, tons: 87, max180: 1, ld: 17, hf: 117, avg: 53.37, winPct: 73.7, legsW: 49, legsL: 20, legsPct: 71.01 },
-  { player: "Rick Fox", played: 18, wins: 14, tons: 63, max180: 2, ld: 16, hf: 79, avg: 54.79, winPct: 77.8, legsW: 47, legsL: 23, legsPct: 67.14 },
-  { player: "Steven Bell", played: 18, wins: 14, tons: 62, max180: 3, ld: 18, hf: 158, avg: 50.23, winPct: 77.8, legsW: 47, legsL: 24, legsPct: 66.20 },
-  { player: "Corey Wynne", played: 6, wins: 4, tons: 12, max180: 0, ld: 20, hf: 72, avg: 54.21, winPct: 66.7, legsW: 13, legsL: 8, legsPct: 61.90 },
-  { player: "Chris Bollard", played: 8, wins: 3, tons: 10, max180: 0, ld: 27, hf: 57, avg: 38.62, winPct: 37.5, legsW: 15, legsL: 18, legsPct: 45.45 },
-  { player: "Ryan Mellor", played: 4, wins: 3, tons: 6, max180: 1, ld: 25, hf: 40, avg: 45.06, winPct: 75.0, legsW: 9, legsL: 5, legsPct: 64.29 },
-  { player: "Danny Kendrick", played: 3, wins: 2, tons: 7, max180: 0, ld: 32, hf: 20, avg: 34.90, winPct: 66.7, legsW: 7, legsL: 4, legsPct: 63.64 },
-  { player: "Lewis Abbott", played: 4, wins: 1, tons: 9, max180: 0, ld: 24, hf: 40, avg: 40.37, winPct: 25.0, legsW: 6, legsL: 10, legsPct: 37.50 },
-  { player: "Adam Harral", played: 3, wins: 1, tons: 1, max180: 0, ld: 32, hf: 74, avg: 33.47, winPct: 33.3, legsW: 5, legsL: 7, legsPct: 41.67 },
-  { player: "Jude Rowlands", played: 2, wins: 1, tons: 4, max180: 0, ld: 31, hf: 40, avg: 38.81, winPct: 50.0, legsW: 4, legsL: 3, legsPct: 57.14 },
-  { player: "Jimmy Burgess", played: 1, wins: 0, tons: 2, max180: 0, ld: 28, hf: 20, avg: 49.25, winPct: 0.0, legsW: 1, legsL: 3, legsPct: 25.00 }
+const MATCHES_DATA = [
+  {
+    "id": "2026-03-04-pwmc-royal-oak",
+    "date": "04/03/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Royal Oak (Cheadle)",
+    "homeScore": 6,
+    "awayScore": 1,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Adam Harral & Mason Gamble",
+      "awayPlayers": "Mason Kelly & Jake Hamand",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": {
+        "tons": 4,
+        "max": "-",
+        "ld": 22,
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Adam Millns",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 23,
+          "hf": 60,
+          "f9": "-",
+          "avg": 48.57
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 27,
+          "hf": 46,
+          "f9": "-",
+          "avg": 42.26
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Brandon Hughes",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": 1,
+          "ld": 18,
+          "hf": 77,
+          "f9": "-",
+          "avg": 60.98
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 44.61
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Steve Bell",
+        "awayPlayer": "Cameron Brownsell",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 22,
+          "hf": 36,
+          "f9": "-",
+          "avg": 53.63
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 40,
+          "hf": 40,
+          "f9": "-",
+          "avg": 47.41
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Tom Jenkins",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 26,
+          "hf": 40,
+          "f9": "-",
+          "avg": 51.58
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 22,
+          "hf": 68,
+          "f9": "-",
+          "avg": 57.23
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Chris Bollard",
+        "awayPlayer": "Ethan Handley",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 32,
+          "hf": 46,
+          "f9": "-",
+          "avg": 42
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 31,
+          "hf": 34,
+          "f9": "-",
+          "avg": 41.83
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Josh Harrison",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 27,
+          "hf": 40,
+          "f9": "-",
+          "avg": 51.29
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 38.32
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Jake Hamand",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 18,
+          "hf": 56,
+          "f9": "-",
+          "avg": 62.16
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": 1,
+          "ld": 17,
+          "hf": 60,
+          "f9": "-",
+          "avg": 60.57
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-03-11-jolly-butcher-pwmc",
+    "date": "11/03/2026",
+    "venue": "Jolly Butcher",
+    "matchType": "Match Report - League",
+    "homeTeam": "Jolly Butcher",
+    "awayTeam": "Partington WMC",
+    "homeScore": 0,
+    "awayScore": 7,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Thomas Watson & Daniel Dibben",
+      "awayPlayers": "Corey Wynne & Lewis Abbott",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Chris McGrory",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 42.7
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 27,
+          "hf": 40,
+          "f9": "-",
+          "avg": 46.8
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Ali Crawford",
+        "awayPlayer": "Steve Bell",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 24,
+          "hf": 50,
+          "f9": "-",
+          "avg": 48.7
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 25,
+          "hf": 16,
+          "f9": "-",
+          "avg": 51.6
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Gareth Sullivan",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 33,
+          "hf": 60,
+          "f9": "-",
+          "avg": 39.4
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 25,
+          "hf": 7,
+          "f9": "-",
+          "avg": 45.2
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Tim Dibben",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 28.63
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 22,
+          "hf": 40,
+          "f9": "-",
+          "avg": 40.26
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Liz Sweeney",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 35.05
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 16,
+          "hf": 78,
+          "f9": "-",
+          "avg": 73.92
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Stuart Watson",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 35,
+          "hf": 4,
+          "f9": "-",
+          "avg": 37.5
+        },
+        "awayStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": 27,
+          "hf": 40,
+          "f9": "-",
+          "avg": 45.65
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Chenile Mason",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 34.11
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 25,
+          "hf": 76,
+          "f9": "-",
+          "avg": 55.67
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-03-18-st-johns-pwmc",
+    "date": "18/03/2026",
+    "venue": "St Johns",
+    "matchType": "Match Report - League",
+    "homeTeam": "St Johns",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Callum Stewart & Tina Stewart",
+      "awayPlayers": "Brandon Gamble & Mark Colgan",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Rhys Palmer",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 26,
+          "hf": 90,
+          "f9": "-",
+          "avg": 47.2
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 20,
+          "hf": 62,
+          "f9": "-",
+          "avg": 52.47
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Lee Stewart",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 25,
+          "hf": 32,
+          "f9": "-",
+          "avg": 35.75
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 36,
+          "hf": 72,
+          "f9": "-",
+          "avg": 34.19
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Darren Oldham",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 39.88
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 22,
+          "hf": 48,
+          "f9": "-",
+          "avg": 61.77
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Harry Hessing",
+        "awayPlayer": "Corey Wynne",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 46.03
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 28,
+          "hf": 20,
+          "f9": "-",
+          "avg": 51.83
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Cody Ratcliff",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 44.96
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 24,
+          "hf": 68,
+          "f9": "-",
+          "avg": 52.43
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Dan Bell",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 33,
+          "hf": 4,
+          "f9": "-",
+          "avg": 52.85
+        },
+        "awayStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 20,
+          "hf": 42,
+          "f9": "-",
+          "avg": 60.24
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Simon Hessing",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 42.29
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 23,
+          "hf": 102,
+          "f9": "-",
+          "avg": 60.93
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-03-25-pwmc-bazzler-b",
+    "date": "25/03/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Bazzler B",
+    "homeScore": 5,
+    "awayScore": 2,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Adam Harrall & Lewis Abbot",
+      "awayPlayers": "Asher Lloyd & Gary Thompson",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Mike Westlake",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 20,
+          "hf": 32,
+          "f9": "-",
+          "avg": 54.99
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 43.65
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Steven Bell",
+        "awayPlayer": "Isaac Robinson",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 19,
+          "hf": 40,
+          "f9": "-",
+          "avg": 42.53
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 30,
+          "hf": 86,
+          "f9": "-",
+          "avg": 37.23
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Dan Papworth",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 25,
+          "hf": 24,
+          "f9": "-",
+          "avg": 56.36
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 49.58
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Lee Donnelly",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 21,
+          "hf": 70,
+          "f9": "-",
+          "avg": 53.05
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 40.48
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Luke Robinson",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 23,
+          "hf": 12,
+          "f9": "-",
+          "avg": 57.08
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 40.96
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Connor Doyle",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 21,
+          "hf": 48,
+          "f9": "-",
+          "avg": 59.47
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 32,
+          "hf": 20,
+          "f9": "-",
+          "avg": 46.19
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Gary Thompson",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 36,
+          "hf": 4,
+          "f9": "-",
+          "avg": 56.03
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 19,
+          "hf": 35,
+          "f9": "-",
+          "avg": 57.79
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-01-pwmc-fixture-1",
+    "date": "01/04/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Brooklands Tap",
+    "homeScore": 6,
+    "awayScore": 1,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Lewis Abbott & Ryan Mellor",
+      "awayPlayers": "Michael Hamnett & Luke Cummings",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Gerard Gornall",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 24,
+          "hf": 16,
+          "f9": "-",
+          "avg": 53.05
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": 1,
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 55.04
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Eddie Clare",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 19,
+          "hf": 40,
+          "f9": "-",
+          "avg": 58.56
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 50.64
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Lee Armsden",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 21,
+          "hf": 101,
+          "f9": "-",
+          "avg": 63.51
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 60.3
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Sonny Miller",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 26,
+          "hf": 68,
+          "f9": "-",
+          "avg": 54.33
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 51.04
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Lewis Lloyd",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 22,
+          "hf": 40,
+          "f9": "-",
+          "avg": 53.42
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 23,
+          "hf": 16,
+          "f9": "-",
+          "avg": 54.55
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Callum Cummings",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 20,
+          "hf": 46,
+          "f9": "-",
+          "avg": 72.73
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 55.25
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Billy Horsefield",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 52.45
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 20,
+          "hf": 59,
+          "f9": "-",
+          "avg": 68.32
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-08-railway-club-b-pwmc",
+    "date": "08/04/2026",
+    "venue": "Railway Club",
+    "matchType": "Match Report - League",
+    "homeTeam": "Railway Club B",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": {
+      "homePlayers": "-",
+      "awayPlayers": "-",
+      "homeLegs": "-",
+      "awayLegs": "-",
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Les Potts",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 41.72
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 23,
+          "hf": 40,
+          "f9": "-",
+          "avg": 46.97
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Mandy Haycocks",
+        "awayPlayer": "Lewis Abbott",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 39,
+          "hf": 40,
+          "f9": "-",
+          "avg": 32.28
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 40,
+          "hf": 30,
+          "f9": "-",
+          "avg": 33.13
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Howard Haycocks",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 41.54
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 22,
+          "hf": 40,
+          "f9": "-",
+          "avg": 54.99
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Angela Haycocks",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 38,
+          "hf": 97,
+          "f9": "-",
+          "avg": 35.41
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 38,
+          "hf": 20,
+          "f9": "-",
+          "avg": 36.49
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Steven Foster",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 42.52
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 20,
+          "hf": 72,
+          "f9": "-",
+          "avg": 66.31
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Sally Corfield",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 34.91
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 17,
+          "hf": 56,
+          "f9": "-",
+          "avg": 66.31
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Richard Haycocks",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 26,
+          "hf": 20,
+          "f9": "-",
+          "avg": 50.32
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 27,
+          "hf": 32,
+          "f9": "-",
+          "avg": 49.57
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-22-pwmc-tsc-b",
+    "date": "22/04/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Trafford Social Club B",
+    "homeScore": 6,
+    "awayScore": 1,
+    "gallonHomeScore": 1,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Chris Bollard & Adam Harral",
+      "awayPlayers": "Lindsay Rice & Luliu Jimborean",
+      "homeLegs": 1,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Henry Collins",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 21,
+          "hf": 66,
+          "f9": "-",
+          "avg": 61.77
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 49.67
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Lewis Abbott",
+        "awayPlayer": "Ray Townhill",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 26,
+          "hf": 37,
+          "f9": "-",
+          "avg": 38.92
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 29,
+          "hf": 63,
+          "f9": "-",
+          "avg": 37.35
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Joe McAuley",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 5,
+          "max": 1,
+          "ld": 21,
+          "hf": 80,
+          "f9": "-",
+          "avg": 59.28
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 24,
+          "hf": 42,
+          "f9": "-",
+          "avg": 43.44
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Cameron King",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 24,
+          "hf": 101,
+          "f9": "-",
+          "avg": 52.79
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 29,
+          "hf": 28,
+          "f9": "-",
+          "avg": 47.51
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Lee Allen",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 24,
+          "hf": 40,
+          "f9": "-",
+          "avg": 44.01
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 20,
+          "hf": 8,
+          "f9": "-",
+          "avg": 44.53
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Danny Bannister",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 21,
+          "hf": 38,
+          "f9": "-",
+          "avg": 68.32
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 47.86
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Luliu Jimborean",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 19,
+          "hf": 54,
+          "f9": "-",
+          "avg": 70.45
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 47.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-05-13-pwmc-auld-chimp",
+    "date": "13/05/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Auld Chimp",
+    "homeScore": 3,
+    "awayScore": 4,
+    "gallonHomeScore": 1,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Lewis Abbott & Chris Bollard",
+      "awayPlayers": "Luke Pickup & Richard Charlton",
+      "homeLegs": 1,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Ryan Devine",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 25,
+          "hf": 26,
+          "f9": "-",
+          "avg": 52.2
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 26,
+          "hf": 44,
+          "f9": "-",
+          "avg": 49.61
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Jimmy Burgess",
+        "awayPlayer": "Sonny Kirkbride",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 28,
+          "hf": 20,
+          "f9": "-",
+          "avg": 49.25
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 20,
+          "hf": 56,
+          "f9": "-",
+          "avg": 55.64
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Will Temple",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 23,
+          "hf": 40,
+          "f9": "-",
+          "avg": 53.68
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 36.89
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Sam Critchley",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 24,
+          "hf": 48,
+          "f9": "-",
+          "avg": 53.25
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 20,
+          "hf": 96,
+          "f9": "-",
+          "avg": 51.3
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Kev Lowes",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 37.23
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 39,
+          "hf": 16,
+          "f9": "-",
+          "avg": 37.2
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Steven Bell",
+        "awayPlayer": "Luke Pickup",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 50.39
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 26,
+          "hf": 20,
+          "f9": "-",
+          "avg": 53.68
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Adam Harral",
+        "awayPlayer": "Richard Charlton",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 39.49
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": 1,
+          "ld": 20,
+          "hf": 40,
+          "f9": "-",
+          "avg": 53.36
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-05-20-st-anthonys-c-pwmc",
+    "date": "20/05/2026",
+    "venue": "St Anthonys",
+    "matchType": "Match Report - League",
+    "homeTeam": "St Anthonys C",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "B Hussey & K Evans",
+      "awayPlayers": "Chris Bollard & Mason Gamble",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "M Horrocks",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 54.28
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 23,
+          "hf": 79,
+          "f9": "-",
+          "avg": 60.93
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "D Tierney",
+        "awayPlayer": "Lewis Abbott",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 27,
+          "hf": 40,
+          "f9": "-",
+          "avg": 53.62
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 24,
+          "hf": 28,
+          "f9": "-",
+          "avg": 49.83
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "R Horrocks",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 47.13
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 26,
+          "hf": 16,
+          "f9": "-",
+          "avg": 47.97
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "E Williamson",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 25,
+          "hf": 40,
+          "f9": "-",
+          "avg": 50.69
+        },
+        "awayStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 29,
+          "hf": 30,
+          "f9": "-",
+          "avg": 52.29
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "D Holt",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 51.31
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 22,
+          "hf": 40,
+          "f9": "-",
+          "avg": 59.33
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Josh Clews",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 31,
+          "hf": 14,
+          "f9": "-",
+          "avg": 51.7
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 23,
+          "hf": 69,
+          "f9": "-",
+          "avg": 51.33
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "James Clews",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 62
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 20,
+          "hf": 36,
+          "f9": "-",
+          "avg": 70.45
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-05-27-garricks-head-pwmc",
+    "date": "27/05/2026",
+    "venue": "Garricks Head",
+    "matchType": "Match Report - League",
+    "homeTeam": "Garricks Head",
+    "awayTeam": "Partington WMC",
+    "homeScore": 0,
+    "awayScore": 7,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "C Trueman & L Entwisle",
+      "awayPlayers": "Corey Wynne & Adam Harral",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "L Entwisle",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 26,
+          "hf": 25,
+          "f9": "-",
+          "avg": 55.9
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 21,
+          "hf": 98,
+          "f9": "-",
+          "avg": 56.28
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "V Rice",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 44.9
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 23,
+          "hf": 16,
+          "f9": "-",
+          "avg": 54.53
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "E Partridge",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 35,
+          "hf": 4,
+          "f9": "-",
+          "avg": 42.79
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": 1,
+          "ld": 28,
+          "hf": 20,
+          "f9": "-",
+          "avg": 48.44
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "C Trueman",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 29,
+          "hf": 10,
+          "f9": "-",
+          "avg": 53.02
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 26,
+          "hf": 64,
+          "f9": "-",
+          "avg": 54.62
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "J Wake",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 28,
+          "hf": 16,
+          "f9": "-",
+          "avg": 39.84
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 27,
+          "hf": 50,
+          "f9": "-",
+          "avg": 40.65
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "D Gilruth",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": 1,
+          "ld": 18,
+          "hf": 100,
+          "f9": "-",
+          "avg": 53.51
+        },
+        "awayStats": {
+          "tons": 9,
+          "max": "-",
+          "ld": 20,
+          "hf": 48,
+          "f9": "-",
+          "avg": 68.34
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "L Capper",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 41.96
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 25,
+          "hf": 40,
+          "f9": "-",
+          "avg": 54.33
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-06-03-pwmc-old-plough",
+    "date": "03/06/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Old Plough",
+    "homeScore": 4,
+    "awayScore": 3,
+    "gallonHomeScore": 1,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Danny Kendrick & Adam Harral",
+      "awayPlayers": "Reece Newell & Kieran Newell",
+      "homeLegs": 1,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "L Gould",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 23,
+          "hf": 54,
+          "f9": "-",
+          "avg": 63.51
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 54.73
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "D Horridge",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 24,
+          "hf": 40,
+          "f9": "-",
+          "avg": 57.2
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 32,
+          "hf": 64,
+          "f9": "-",
+          "avg": 44.88
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "S Ridings",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 21,
+          "hf": 103,
+          "f9": "-",
+          "avg": 51.62
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 32,
+          "hf": 20,
+          "f9": "-",
+          "avg": 44.13
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Lewis Abbott",
+        "awayPlayer": "C Bradley",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 31,
+          "hf": 40,
+          "f9": "-",
+          "avg": 39.61
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 23,
+          "hf": 50,
+          "f9": "-",
+          "avg": 40.46
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Chris Bollard",
+        "awayPlayer": "M Melling",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 32.7
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 30,
+          "hf": 40,
+          "f9": "-",
+          "avg": 35.23
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "S Senior",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 27,
+          "hf": 40,
+          "f9": "-",
+          "avg": 52.45
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 23,
+          "hf": 32,
+          "f9": "-",
+          "avg": 53.58
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Steven Bell",
+        "awayPlayer": "S Wilcox",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 23,
+          "hf": 20,
+          "f9": "-",
+          "avg": 46.21
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 29,
+          "hf": 68,
+          "f9": "-",
+          "avg": 43.36
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-06-24-royal-oak-pwmc",
+    "date": "24/06/2026",
+    "venue": "Royal Oak (Cheadle)",
+    "matchType": "Match Report - League",
+    "homeTeam": "Royal Oak (Cheadle)",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Tom Jenkins & Adam Millns",
+      "awayPlayers": "Adam Harral & Karl Bannister",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Ethan Handley",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 33,
+          "hf": 20,
+          "f9": "-",
+          "avg": 51.27
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": 1,
+          "ld": 19,
+          "hf": 20,
+          "f9": "-",
+          "avg": 55.08
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Josh Harrison",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 39.41
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": 1,
+          "ld": 22,
+          "hf": 58,
+          "f9": "-",
+          "avg": 56.36
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Cam Brownsell",
+        "awayPlayer": "Ste Bell",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 21,
+          "hf": 52,
+          "f9": "-",
+          "avg": 51.9
+        },
+        "awayStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 31,
+          "hf": 55,
+          "f9": "-",
+          "avg": 50.03
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Brandon Hughes",
+        "awayPlayer": "Corey Wynne",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 23,
+          "hf": 55,
+          "f9": "-",
+          "avg": 49.65
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 28,
+          "hf": 20,
+          "f9": "-",
+          "avg": 48.53
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Adam Millns",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 43,
+          "hf": 10,
+          "f9": "-",
+          "avg": 36.86
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 17,
+          "hf": 94,
+          "f9": "-",
+          "avg": 45.11
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Tom Jenkins",
+        "awayPlayer": "Danny Kendrick",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 27,
+          "hf": 69,
+          "f9": "-",
+          "avg": 43.93
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 32,
+          "hf": 20,
+          "f9": "-",
+          "avg": 42.67
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Jake Hamand",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 32,
+          "hf": 37,
+          "f9": "-",
+          "avg": 48.62
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 20,
+          "hf": 8,
+          "f9": "-",
+          "avg": 51.72
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-07-08-pwmc-jolly-butcher",
+    "date": "08/07/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Jolly Butcher",
+    "homeScore": 7,
+    "awayScore": 0,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Corey Wynne & Mark Colgan",
+      "awayPlayers": "Stuart Watson & Chanellie Mason",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Danny Kendrick",
+        "awayPlayer": "Liz Sweeney",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 34,
+          "hf": 10,
+          "f9": "-",
+          "avg": 26.06
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 22.75
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Chris McGon",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 18,
+          "hf": 158,
+          "f9": "-",
+          "avg": 46.01
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 39.25
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Ali Crawford",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 8,
+          "max": "-",
+          "ld": 17,
+          "hf": 75,
+          "f9": "-",
+          "avg": 64.58
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 36,
+          "hf": 40,
+          "f9": "-",
+          "avg": 46
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Adam Harral",
+        "awayPlayer": "Arron Shanagher",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 43,
+          "hf": 40,
+          "f9": "-",
+          "avg": 23.54
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 53,
+          "hf": 4,
+          "f9": "-",
+          "avg": 22.95
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Gaz Sullivan",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 24,
+          "hf": 60,
+          "f9": "-",
+          "avg": 52.93
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 41.19
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Stuart Watson",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 26,
+          "hf": 64,
+          "f9": "-",
+          "avg": 57
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 40.2
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Chanellie Mason",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 24,
+          "hf": 55,
+          "f9": "-",
+          "avg": 53.67
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 38.05
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-07-22-pwmc-st-johns",
+    "date": "22/07/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "St Johns",
+    "homeScore": 7,
+    "awayScore": 0,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 1,
+    "gallon": {
+      "homePlayers": "Jude Rowlands & Brandon Gamble",
+      "awayPlayers": "Sue Weston & Lee Stewart",
+      "homeLegs": 2,
+      "awayLegs": 1,
+      "homeWinner": true,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Darren Oldham",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 19,
+          "hf": 38,
+          "f9": "-",
+          "avg": 50.53
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 38,
+          "hf": 31,
+          "f9": "-",
+          "avg": 36.28
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Callum Stewart",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 21,
+          "hf": 84,
+          "f9": "-",
+          "avg": 60.12
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 34.21
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "Simon Hessing",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 26,
+          "hf": 40,
+          "f9": "-",
+          "avg": 42.9
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 36.41
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Mark Lavoie",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 21,
+          "hf": 72,
+          "f9": "-",
+          "avg": 60.02
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 53.57
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Ryan Mellor",
+        "awayPlayer": "Mike Pascall",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 26,
+          "hf": 30,
+          "f9": "-",
+          "avg": 45.69
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 36,
+          "hf": 40,
+          "f9": "-",
+          "avg": 41.65
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Jude Rowlands",
+        "awayPlayer": "Sue Weston",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 31,
+          "hf": 28,
+          "f9": "-",
+          "avg": 36.36
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 35.41
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Lee Stewart",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 22,
+          "hf": 24,
+          "f9": "-",
+          "avg": 51.33
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 44.84
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-04-01-pwmc-royal-oak-cup",
+    "date": "01/04/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - Cup",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Royal Oak (Cheadle)",
+    "homeScore": 5,
+    "awayScore": 2,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": {
+      "homePlayers": "-",
+      "awayPlayers": "-",
+      "homeLegs": "-",
+      "awayLegs": "-",
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Adam Harral",
+        "awayPlayer": "Adam Millns",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 32,
+          "hf": 74,
+          "f9": "-",
+          "avg": 37.39
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 35,
+          "hf": 39,
+          "f9": "-",
+          "avg": 37.48
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Ethan Handley",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 17,
+          "hf": 72,
+          "f9": "-",
+          "avg": 60.12
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 47.67
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Brandon Hughes",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 22,
+          "hf": 54,
+          "f9": "-",
+          "avg": 53.07
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 37,
+          "hf": 12,
+          "f9": "-",
+          "avg": 48.83
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Jake Hammand",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 23,
+          "hf": 72,
+          "f9": "-",
+          "avg": 53.68
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 45.26
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Chris Bollard",
+        "awayPlayer": "Cameron Brownsell",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 35,
+          "hf": 16,
+          "f9": "-",
+          "avg": 41.64
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 21,
+          "hf": 42,
+          "f9": "-",
+          "avg": 44.82
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Aarron Hewitt",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 24,
+          "hf": 58,
+          "f9": "-",
+          "avg": 56.36
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 44.6
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Tom Jenkins",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 20,
+          "hf": 70,
+          "f9": "-",
+          "avg": 63.51
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 44.58
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-06-10-pwmc-cringlewood-a-cup",
+    "date": "10/06/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - Cup",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Cringlewood A",
+    "homeScore": 4,
+    "awayScore": 3,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": {
+      "homePlayers": "-",
+      "awayPlayers": "-",
+      "homeLegs": "-",
+      "awayLegs": "-",
+      "homeWinner": false,
+      "homeStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      },
+      "awayStats": {
+        "tons": "-",
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": "-",
+        "avg": "-"
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Mark H",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 18,
+          "hf": 58,
+          "f9": "-",
+          "avg": 72.73
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": "-",
+          "avg": 41.79
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Corey Wynne",
+        "awayPlayer": "Rob L",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 20,
+          "hf": 52,
+          "f9": "-",
+          "avg": 61.69
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 20,
+          "hf": 68,
+          "f9": "-",
+          "avg": 61.22
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Luke M",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 24,
+          "hf": 20,
+          "f9": "-",
+          "avg": 56.84
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 25,
+          "hf": 48,
+          "f9": "-",
+          "avg": 56.48
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Ellis M",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 5,
+          "max": 1,
+          "ld": 20,
+          "hf": 16,
+          "f9": "-",
+          "avg": 71.77
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 15,
+          "hf": 88,
+          "f9": "-",
+          "avg": 75.49
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Ste Bell",
+        "awayPlayer": "John M",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 27,
+          "hf": 54,
+          "f9": "-",
+          "avg": 42.6
+        },
+        "awayStats": {
+          "tons": "-",
+          "max": "-",
+          "ld": 38,
+          "hf": 12,
+          "f9": "-",
+          "avg": 38.43
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Alex M",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 27,
+          "hf": 16,
+          "f9": "-",
+          "avg": 53.34
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 21,
+          "hf": 80,
+          "f9": "-",
+          "avg": 55.46
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "JT",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 23,
+          "hf": 64,
+          "f9": "-",
+          "avg": 54.41
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 20,
+          "hf": 56,
+          "f9": "-",
+          "avg": 52.57
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-07-30-timperley-cc-pwmc-cup",
+    "date": "30/07/2026",
+    "venue": "Timperley CC",
+    "matchType": "Match Report - Cup Game",
+    "homeTeam": "Timperley CC",
+    "awayTeam": "Partington WMC",
+    "homeScore": 5,
+    "awayScore": 2,
+    "gallonHomeScore": "-",
+    "gallonAwayScore": "-",
+    "gallon": null,
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Andy Pearson",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 19,
+          "hf": 40,
+          "f9": 0,
+          "avg": 66.42
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 17,
+          "hf": 32,
+          "f9": 0,
+          "avg": 60.71
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Gary Sullivan",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 5,
+          "max": 1,
+          "ld": 17,
+          "hf": 40,
+          "f9": 0,
+          "avg": 65.35
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 0,
+          "avg": 57
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Brandon Lawley",
+        "awayPlayer": "Ryan Mellor",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 18,
+          "hf": 150,
+          "f9": 0,
+          "avg": 73.92
+        },
+        "awayStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 0,
+          "avg": 46.75
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Billy English",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 26,
+          "hf": 9,
+          "f9": 0,
+          "avg": 51.67
+        },
+        "awayStats": {
+          "tons": 8,
+          "max": "-",
+          "ld": 19,
+          "hf": 54,
+          "f9": 0,
+          "avg": 67.48
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Andy Brownhill",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 18,
+          "hf": 60,
+          "f9": 0,
+          "avg": 62.73
+        },
+        "awayStats": {
+          "tons": 9,
+          "max": "-",
+          "ld": 21,
+          "hf": 36,
+          "f9": 0,
+          "avg": 62.81
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Liam Green",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 23,
+          "hf": 20,
+          "f9": 0,
+          "avg": 62.62
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 0,
+          "avg": 53.35
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Sam McCallister",
+        "awayPlayer": "Steven Bell",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 23,
+          "hf": 49,
+          "f9": 0,
+          "avg": 58.54
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": 1,
+          "ld": 21,
+          "hf": 41,
+          "f9": 0,
+          "avg": 58.75
+        }
+      }
+    ]
+  },
+  {
+    "id": "match_2026-08-05_bazzlerb_partington",
+    "date": "05/08/2026",
+    "venue": "Flixton cricket club",
+    "matchType": "Match Report - League",
+    "homeTeam": "Bazzler B",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Connor Doyle & Luke Robinson",
+      "awayPlayers": "Mason Gamble & Ryan Mellor",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": 0,
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": 44.33,
+        "avg": 35.43
+      },
+      "awayStats": {
+        "tons": 0,
+        "max": "-",
+        "ld": 26,
+        "hf": 16,
+        "f9": 57,
+        "avg": 43.57
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Isaac Robinson",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 57.56,
+          "avg": 50.64
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 23,
+          "hf": 50,
+          "f9": 68.33,
+          "avg": 60.12
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Ian Moore",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 26,
+          "hf": 16,
+          "f9": 50.2,
+          "avg": 47.2
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 22,
+          "hf": 40,
+          "f9": 48,
+          "avg": 53.72
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Dan Papworth",
+        "awayPlayer": "Jude Rowlands",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": 28,
+          "hf": 60,
+          "f9": 48.83,
+          "avg": 43.3
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 31,
+          "hf": 40,
+          "f9": 47.25,
+          "avg": 41.26
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Mike Westlake",
+        "awayPlayer": "Danny Kendrick",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": 26,
+          "hf": 86,
+          "f9": 36.92,
+          "avg": 39.54
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 38,
+          "hf": 10,
+          "f9": 44.75,
+          "avg": 36.74
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Gary Thompson",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 44.67,
+          "avg": 51.12
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 23,
+          "hf": 52,
+          "f9": 88.33,
+          "avg": 60.12
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Connor Doyle",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 0,
+          "max": 1,
+          "ld": "-",
+          "hf": "-",
+          "f9": 62,
+          "avg": 46.5
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": 1,
+          "ld": 17,
+          "hf": 92,
+          "f9": 103.6,
+          "avg": 64.41
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Luke Robinson",
+        "awayPlayer": "Ryan Mellor",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 28,
+          "hf": 40,
+          "f9": 49.42,
+          "avg": 40.96
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": 1,
+          "ld": 26,
+          "hf": 40,
+          "f9": 66.92,
+          "avg": 48.66
+        }
+      }
+    ]
+  },
+  {
+    "id": "match_2026-08-12_brooklandstap_partington",
+    "date": "12/08/2026",
+    "venue": "Brooklands Tap",
+    "matchType": "Match Report - League",
+    "homeTeam": "Brooklands Tap",
+    "awayTeam": "Partington WMC",
+    "homeScore": 2,
+    "awayScore": 5,
+    "gallonHomeScore": 0,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Eddie Clare & Billy Horsefield",
+      "awayPlayers": "Karl Bannister & Brandon Gamble",
+      "homeLegs": 0,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": 2,
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": 81.5,
+        "avg": 57
+      },
+      "awayStats": {
+        "tons": 3,
+        "max": "-",
+        "ld": 24,
+        "hf": 60,
+        "f9": 63.33,
+        "avg": 58.94
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Lewis Lloyd",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 20,
+          "hf": 76,
+          "f9": 70.75,
+          "avg": 46.56
+        },
+        "awayStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": 42,
+          "hf": 18,
+          "f9": 40.58,
+          "avg": 38.95
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Michael Hamnett",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 36.22,
+          "avg": 43.13
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 28,
+          "hf": 16,
+          "f9": 70.22,
+          "avg": 49.55
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Jamie Williams",
+        "awayPlayer": "Steven Bell",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 25,
+          "hf": 40,
+          "f9": 62.67,
+          "avg": 51.82
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 29,
+          "hf": 40,
+          "f9": 54.27,
+          "avg": 51.73
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Gerard Gornall",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": 1,
+          "ld": 25,
+          "hf": 16,
+          "f9": 70.87,
+          "avg": 50.54
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 23,
+          "hf": 52,
+          "f9": 61.6,
+          "avg": 55.67
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Lee Armsden",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": 1,
+          "ld": "-",
+          "hf": "-",
+          "f9": 56.78,
+          "avg": 65.47
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": 1,
+          "ld": 16,
+          "hf": 38,
+          "f9": 79,
+          "avg": 77.74
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Sonny Miller",
+        "awayPlayer": "Karl Bannister",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 29,
+          "hf": 20,
+          "f9": 60.5,
+          "avg": 42.98
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 25,
+          "hf": 20,
+          "f9": 58.58,
+          "avg": 50.39
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Billy Horsefield",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 3,
+        "awayScore": 2,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 18,
+          "hf": 73,
+          "f9": 62.27,
+          "avg": 59.57
+        },
+        "awayStats": {
+          "tons": 8,
+          "max": "-",
+          "ld": 22,
+          "hf": 12,
+          "f9": 68.2,
+          "avg": 57.66
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-08-19-pwmc-railway-b",
+    "date": "19/08/2026",
+    "venue": "Partington WMC",
+    "matchType": "Match Report - League",
+    "homeTeam": "Partington WMC",
+    "awayTeam": "Railway Club B",
+    "homeScore": 7,
+    "awayScore": 0,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Lewis Abbott & Chris Bollard",
+      "awayPlayers": "Mandy Haycocks & Sally Corfield",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": {
+        "tons": 1,
+        "max": "-",
+        "ld": 36,
+        "hf": 40,
+        "f9": 37.5,
+        "avg": 27.83
+      },
+      "awayStats": {
+        "tons": 0,
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": 37.83,
+        "avg": 26.83
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Rick Fox",
+        "awayPlayer": "Richard Haycocks",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 7,
+          "max": 1,
+          "ld": 16,
+          "hf": 18,
+          "f9": 89,
+          "avg": 56.33
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 51,
+          "avg": 45.3
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Ryan Mellor",
+        "awayPlayer": "Angela Haycocks",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 26,
+          "hf": 40,
+          "f9": 50,
+          "avg": 39.21
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 52.11,
+          "avg": 34.45
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Karl Bannister",
+        "awayPlayer": "Steven Foster",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 22,
+          "hf": 40,
+          "f9": "-",
+          "avg": 45
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 28,
+          "hf": 40,
+          "f9": "-",
+          "avg": 39.7
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Mason Gamble",
+        "awayPlayer": "Ian Fensome",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 19,
+          "hf": 50,
+          "f9": 77.78,
+          "avg": 67.3
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 58.33,
+          "avg": 46.82
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Brandon Gamble",
+        "awayPlayer": "Howard Haycocks",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 7,
+          "max": "-",
+          "ld": 18,
+          "hf": 117,
+          "f9": 71.33,
+          "avg": 62.97
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 29,
+          "hf": 63,
+          "f9": 51.92,
+          "avg": 51.26
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Mark Colgan",
+        "awayPlayer": "Mandy Haycocks",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": 1,
+          "ld": 20,
+          "hf": 52,
+          "f9": 69.89,
+          "avg": 68.32
+        },
+        "awayStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 40.11,
+          "avg": 40.9
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Steven Bell",
+        "awayPlayer": "Sally Corfield",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 1,
+          "max": 1,
+          "ld": 25,
+          "hf": 40,
+          "f9": 50.44,
+          "avg": 51.83
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 47.78,
+          "avg": 38.55
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-08-26-tsc-b-pwmc",
+    "date": "26/08/2026",
+    "venue": "Trafford Social Club",
+    "matchType": "Match Report - League",
+    "homeTeam": "TSC B",
+    "awayTeam": "Partington WMC",
+    "homeScore": 1,
+    "awayScore": 6,
+    "gallonHomeScore": 1,
+    "gallonAwayScore": 2,
+    "gallon": {
+      "homePlayers": "Gaz Collins & Lee Allen",
+      "awayPlayers": "Adam Harral & Ryan Mellor",
+      "homeLegs": 1,
+      "awayLegs": 2,
+      "homeWinner": false,
+      "homeStats": {
+        "tons": 2,
+        "max": "-",
+        "ld": 35,
+        "hf": 32,
+        "f9": 52.22,
+        "avg": 38.41
+      },
+      "awayStats": {
+        "tons": 2,
+        "max": "-",
+        "ld": 26,
+        "hf": 32,
+        "f9": 47.44,
+        "avg": 43.43
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Henry Collins",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 48.22,
+          "avg": 56
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 18,
+          "hf": 97,
+          "f9": 61.67,
+          "avg": 68.32
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Dean Koehler",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 54,
+          "avg": 41.57
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 26,
+          "hf": 40,
+          "f9": 64.11,
+          "avg": 49.55
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Cameron King",
+        "awayPlayer": "Steven Bell",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 32,
+          "hf": 28,
+          "f9": 39.92,
+          "avg": 42.77
+        },
+        "awayStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 29,
+          "hf": 32,
+          "f9": 59.58,
+          "avg": 45.6
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Ray Townhill",
+        "awayPlayer": "Lewis Abbott",
+        "homeScore": 3,
+        "awayScore": 1,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 28,
+          "hf": 40,
+          "f9": 43.5,
+          "avg": 38.73
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 32,
+          "hf": 20,
+          "f9": 45.17,
+          "avg": 39.64
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Iuliu Jimborean",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 37.89,
+          "avg": 46.05
+        },
+        "awayStats": {
+          "tons": 4,
+          "max": "-",
+          "ld": 15,
+          "hf": 64,
+          "f9": 78.44,
+          "avg": 75.15
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Gaz Collins",
+        "awayPlayer": "Danny Kendrick",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 24,
+          "hf": 60,
+          "f9": 47.67,
+          "avg": 45.85
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 20,
+          "hf": 52,
+          "f9": 52,
+          "avg": 42.97
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Lee Allen",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 20,
+          "hf": 20,
+          "f9": 76.08,
+          "avg": 59.8
+        },
+        "awayStats": {
+          "tons": 5,
+          "max": "-",
+          "ld": 20,
+          "hf": 70,
+          "f9": 77.5,
+          "avg": 60.61
+        }
+      }
+    ]
+  }
 ];
+window.MATCHES_DATA = MATCHES_DATA;
+
+function calculatePlayerStats(matchesData = MATCHES_DATA) {
+  const statsMap = {};
+
+  (matchesData || []).forEach((match) => {
+    match.games?.forEach((game) => {
+      // Helper to process a player leg appearance
+      const processPlayer = (rawPlayerName, oppTeam, oppPlayer, won, legsFor, legsAgainst, stats) => {
+        if (!rawPlayerName || rawPlayerName === "-") return;
+        const playerName = canonicalPlayerName(rawPlayerName);
+
+        if (!statsMap[playerName]) {
+          statsMap[playerName] = {
+            player: playerName,
+            played: 0,
+            won: 0,
+            lost: 0,
+            legsFor: 0,
+            legsAgainst: 0,
+            tons: 0,
+            max180s: 0,
+            leastDarts: null,
+            highestFinish: 0,
+            weightedAvgSum: 0,
+            totalLegsPlayed: 0,
+            f9Sum: 0,
+            f9Count: 0,
+            matches: []
+          };
+        }
+
+        const p = statsMap[playerName];
+        p.played += 1;
+        if (won) p.won += 1;
+        else p.lost += 1;
+
+        p.legsFor += Number(legsFor || 0);
+        p.legsAgainst += Number(legsAgainst || 0);
+
+        if (stats?.tons && stats.tons !== "-") {
+          p.tons += Number(stats.tons);
+        }
+
+        if (stats?.max && stats.max !== "-") {
+          p.max180s += Number(stats.max);
+        }
+
+        if (stats?.ld && stats.ld !== "-" && Number(stats.ld) > 0) {
+          const ldVal = Number(stats.ld);
+          p.leastDarts = p.leastDarts ? Math.min(p.leastDarts, ldVal) : ldVal;
+        }
+
+        if (stats?.hf && stats.hf !== "-" && Number(stats.hf) > 0) {
+          p.highestFinish = Math.max(p.highestFinish, Number(stats.hf));
+        }
+
+        const matchLegs = Number(legsFor || 0) + Number(legsAgainst || 0);
+        if (stats?.avg && stats.avg !== "-" && Number(stats.avg) > 0) {
+          p.weightedAvgSum += Number(stats.avg) * matchLegs;
+          p.totalLegsPlayed += matchLegs;
+        }
+
+        if (stats?.f9 && stats.f9 !== "-" && Number(stats.f9) > 0) {
+          p.f9Sum += Number(stats.f9);
+          p.f9Count += 1;
+        }
+
+        p.matches.push({
+          matchId: match.id,
+          date: match.date,
+          venue: match.venue,
+          matchType: match.matchType,
+          opponentTeam: oppTeam,
+          opponentPlayer: oppPlayer,
+          score: `${legsFor} - ${legsAgainst}`,
+          result: won ? "W" : "L",
+          stats
+        });
+      };
+
+      const isHomePartington = match.homeTeam === "Partington WMC";
+      const isAwayPartington = match.awayTeam === "Partington WMC";
+
+      if (isHomePartington) {
+        processPlayer(
+          game.homePlayer, 
+          match.awayTeam,
+          game.awayPlayer,
+          game.homeWinner, 
+          game.homeScore, 
+          game.awayScore, 
+          game.homeStats
+        );
+      } else if (isAwayPartington) {
+        processPlayer(
+          game.awayPlayer, 
+          match.homeTeam,
+          game.homePlayer,
+          !game.homeWinner, 
+          game.awayScore, 
+          game.homeScore, 
+          game.awayStats
+        );
+      }
+    });
+  });
+
+  return Object.values(statsMap).map((player) => ({
+    ...player,
+    winPct: player.played > 0 ? Number(((player.won / player.played) * 100).toFixed(1)) : 0,
+    legsPct: (player.legsFor + player.legsAgainst) > 0 
+      ? Number(((player.legsFor / (player.legsFor + player.legsAgainst)) * 100).toFixed(1)) 
+      : 0,
+    avg: player.totalLegsPlayed > 0 
+      ? Number((player.weightedAvgSum / player.totalLegsPlayed).toFixed(2)) 
+      : 0,
+    f9Avg: player.f9Count > 0 
+      ? Number((player.f9Sum / player.f9Count).toFixed(2)) 
+      : "-",
+    wins: player.won,
+    legsW: player.legsFor,
+    legsL: player.legsAgainst,
+    max180: player.max180s,
+    ld: player.leastDarts || 0,
+    hf: player.highestFinish || 0
+  })).sort((a, b) => {
+    if (b.won !== a.won) return b.won - a.won;
+    if (b.legsW !== a.legsW) return b.legsW - a.legsW;
+    if (b.avg !== a.avg) return b.avg - a.avg;
+    return a.ld - b.ld;
+  });
+}
+
+function getSquadStats(matchesData = MATCHES_DATA) {
+  return calculatePlayerStats(matchesData);
+}
+
+window.calculatePlayerStats = calculatePlayerStats;
+window.getSquadStats = getSquadStats;
+
+if (typeof window !== "undefined") {
+  Object.defineProperty(window, 'SMD_STATS_DATA', {
+    get: function() {
+      return getSquadStats(MATCHES_DATA);
+    },
+    configurable: true
+  });
+}
 
 const SMD_PLAYER_ANALYSIS = {
   "Mason Gamble": "Flawless campaign holding a 100% win rate across 19 matches with a division-topping 65.42 average. Paces the team in heavy scoring with 103 tons and 3 maximums, anchored by a best leg of 15 darts.",
@@ -1904,9 +6352,10 @@ function getPlayerEvaluation(p){
 function vSmdStats(){
   const search = (S.smdSearch || "").toLowerCase().trim();
   const sort = S.smdSort || { key: "league", dir: "desc" };
+  const squadStats = getSquadStats(MATCHES_DATA);
 
   // Calculate evaluations
-  const list = SMD_STATS_DATA.map(p => {
+  const list = squadStats.map(p => {
     const evalData = getPlayerEvaluation(p);
     return { ...p, eval: evalData };
   });
@@ -1996,16 +6445,16 @@ function vSmdStats(){
     + '<div class="wm wm-side wm-right">PWMC CHALK APP</div>';
 
   // Compute dynamic summary metrics
-  const totalTons = SMD_STATS_DATA.reduce((acc, p) => acc + (p.tons || 0), 0);
-  const total180s = SMD_STATS_DATA.reduce((acc, p) => acc + (p.max180 || 0), 0);
-  const bestHfPlayer = SMD_STATS_DATA.reduce((max, p) => (p.hf > (max.hf || 0) ? p : max), SMD_STATS_DATA[0]);
+  const totalTons = squadStats.reduce((acc, p) => acc + (p.tons || 0), 0);
+  const total180s = squadStats.reduce((acc, p) => acc + (p.max180 || 0), 0);
+  const bestHfPlayer = squadStats.reduce((max, p) => ((p.hf || 0) > (max.hf || 0) ? p : max), squadStats[0] || {});
 
   // Banner
   html += '<div class="smd-banner">'
     + '<h2>SMD Player Stats</h2>'
     + '<p>South Manchester &amp; District Darts League performance metrics, match records, and color-coded tier heatmaps.</p>'
     + '<div class="smd-summary-grid">'
-    + '<div class="smd-sum-box"><span class="k">Players</span><span class="v">' + SMD_STATS_DATA.length + '</span><span class="sub">League Roster</span></div>'
+    + '<div class="smd-sum-box"><span class="k">Players</span><span class="v">' + squadStats.length + '</span><span class="sub">League Roster</span></div>'
     + '<div class="smd-sum-box"><span class="k">Total Tons</span><span class="v">' + totalTons + '</span><span class="sub">' + total180s + 'x 180s</span></div>'
     + '<div class="smd-sum-box"><span class="k">Highest Checkout</span><span class="v">' + bestHfPlayer.hf + '</span><span class="sub">' + esc(bestHfPlayer.player) + '</span></div>'
     + '</div></div>';
@@ -2172,41 +6621,20 @@ function vSmdStats(){
   return html;
 }
 
-function slugify(name){
-  return String(name || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}
-
-function isSamePlayer(a, b){
-  if (!a || !b) return false;
-  const sa = String(a).toLowerCase().trim().replace(/[^a-z0-9]/g, "");
-  const sb = String(b).toLowerCase().trim().replace(/[^a-z0-9]/g, "");
-  if (sa === sb) return true;
-  const aliases = [
-    ["stevebell", "stevenbell"],
-    ["rickfox", "richardfox"],
-    ["danielkendrick", "dannykendrick"],
-    ["bazoconnor", "barryoconnor"]
-  ];
-  return aliases.some(pair => (sa === pair[0] && sb === pair[1]) || (sa === pair[1] && sb === pair[0]));
-}
+// slugify and isSamePlayer defined in section 4.5
 
 function getPlayerBySlugOrName(slugOrName){
   if (!slugOrName) return null;
+  const squad = getSquadStats(MATCHES_DATA);
   const clean = String(slugOrName).toLowerCase().replace(/[^a-z0-9]/g, "");
-  return SMD_STATS_DATA.find(p => isSamePlayer(p.player, slugOrName)) ||
-         SMD_STATS_DATA.find(p => p.player.toLowerCase().replace(/[^a-z0-9]/g, "") === clean) ||
-         SMD_STATS_DATA.find(p => slugify(p.player) === slugify(slugOrName)) ||
+  return squad.find(p => isSamePlayer(p.player, slugOrName)) ||
+         squad.find(p => p.player.toLowerCase().replace(/[^a-z0-9]/g, "") === clean) ||
+         squad.find(p => slugify(p.player) === slugify(slugOrName)) ||
          null;
 }
 
 function getPlayerRank(playerName){
-  const sorted = SMD_STATS_DATA.slice().sort((a, b) => {
-    if (b.wins !== a.wins) return b.wins - a.wins;
-    if (b.legsW !== a.legsW) return b.legsW - a.legsW;
-    if (b.avg !== a.avg) return b.avg - a.avg;
-    return a.ld - b.ld;
-  });
-
+  const sorted = getSquadStats(MATCHES_DATA);
   let currentRank = 1;
   const ranks = {};
   for (let i = 0; i < sorted.length; i++){
@@ -2217,7 +6645,7 @@ function getPlayerRank(playerName){
     }
     ranks[sorted[i].player] = currentRank;
   }
-  return ranks[playerName] || 1;
+  return ranks[canonicalPlayerName(playerName)] || ranks[playerName] || 1;
 }
 
 function getPlayerMatchLogs(playerName){
@@ -2286,7 +6714,8 @@ function getPlayerMatchLogs(playerName){
 
 function vPlayerProfile(){
   const playerName = S.selectedPlayer || "Mason Gamble";
-  const p = SMD_STATS_DATA.find(x => x.player.toLowerCase() === playerName.toLowerCase()) || SMD_STATS_DATA[0];
+  const squad = getSquadStats(MATCHES_DATA);
+  const p = squad.find(x => isSamePlayer(x.player, playerName)) || squad[0];
   const branding = getPlayerBranding(p.player);
   const ev = getPlayerEvaluation(p);
   const rank = getPlayerRank(p.player);
@@ -2439,7 +6868,7 @@ function reportCard(game, n, gi){
     let namesHtml = "To be named";
     if (rawNames.length){
       namesHtml = rawNames.map(name => {
-        const found = SMD_STATS_DATA.find(x => isSamePlayer(x.player, name.trim()));
+        const found = getSquadStats(MATCHES_DATA).find(x => isSamePlayer(x.player, name.trim()));
         if (found){
           const branding = getPlayerBranding(found.player);
           const nickTag = branding ? (' <span class="smd-nickname-tag" style="font-size:9.5px;padding:1px 5px;background:' + esc(branding.accentColor || '#64748b') + '22;border:1px solid ' + esc(branding.accentColor || '#64748b') + '55;color:' + esc(branding.accentColor || '#64748b') + '">&ldquo;' + esc(branding.nickname) + '&rdquo;</span>') : '';
@@ -2802,11 +7231,11 @@ document.addEventListener("click", async (e) => {
     render(); return;
   }
   if (act === "smd-expand-all"){
-    SMD_STATS_DATA.forEach(p => { S.smdExpanded[p.player] = true; });
+    getSquadStats(MATCHES_DATA).forEach(p => { S.smdExpanded[p.player] = true; });
     render(); return;
   }
   if (act === "smd-collapse-all"){
-    SMD_STATS_DATA.forEach(p => { S.smdExpanded[p.player] = false; });
+    getSquadStats(MATCHES_DATA).forEach(p => { S.smdExpanded[p.player] = false; });
     render(); return;
   }
   if (act === "smd-clear-search"){
@@ -3453,1737 +7882,7 @@ function buildSeededFixture(id, meta, rows, unplayed){
   return fx;
 }
 
-const SEEDED_RESULTS = [
-  {
-    id: "match_2026-08-05_bazzlerb_partington",
-    meta: {
-      date: "2026-08-05", venue: "Flixton cricket club", comp: "League - Division 4",
-      homeTeam: "Bazzler B", awayTeam: "Partington WMC",
-      homeSquad: ["Connor Doyle","Luke Robinson","Isaac Robinson","Ian Moore","Dan Papworth","Mike Westlake","Gary Thompson"],
-      awaySquad: ["Mason Gamble","Ryan Mellor","Brandon Gamble","Rick Fox","Jude Rowlands","Danny Kendrick","Karl Bannister"],
-      throwRule: "home"
-    },
-    // This report was originally generated by this app's own (buggy)
-    // counting, so its displayed "100+" already had 140s and 180s folded
-    // in. t100 here is corrected as (original 100+) minus (original 180s) -
-    // not plus the old 140+ figure, which would double them back in. t180
-    // is untouched, since that counter was always an exact match.
-    rows: [
-      { home:["Connor Doyle","Luke Robinson"], away:["Mason Gamble","Ryan Mellor"], legs:[0,2],
-        hs:{t100:0,t180:0,ld:null,high:null,f9:44.33,avg:35.43},
-        as:{t100:0,t180:0,ld:26,high:16,f9:57.00,avg:43.57} },
-      { home:["Isaac Robinson"], away:["Brandon Gamble"], legs:[0,3],
-        hs:{t100:1,t180:0,ld:null,high:null,f9:57.56,avg:50.64},
-        as:{t100:3,t180:0,ld:23,high:50,f9:68.33,avg:60.12} },
-      { home:["Ian Moore"], away:["Rick Fox"], legs:[2,3],
-        hs:{t100:3,t180:0,ld:26,high:16,f9:50.20,avg:47.20},
-        as:{t100:3,t180:0,ld:22,high:40,f9:48.00,avg:53.72} },
-      { home:["Dan Papworth"], away:["Jude Rowlands"], legs:[3,1],
-        hs:{t100:0,t180:0,ld:28,high:60,f9:48.83,avg:43.30},
-        as:{t100:2,t180:0,ld:31,high:40,f9:47.25,avg:41.26} },
-      { home:["Mike Westlake"], away:["Danny Kendrick"], legs:[3,1],
-        hs:{t100:0,t180:0,ld:26,high:86,f9:36.92,avg:39.54},
-        as:{t100:2,t180:0,ld:38,high:10,f9:44.75,avg:36.74} },
-      { home:["Gary Thompson"], away:["Karl Bannister"], legs:[0,3],
-        hs:{t100:2,t180:0,ld:null,high:null,f9:44.67,avg:51.12},
-        as:{t100:5,t180:0,ld:23,high:52,f9:88.33,avg:60.12} },
-      { home:["Connor Doyle"], away:["Mason Gamble"], legs:[0,3],
-        hs:{t100:0,t180:1,ld:null,high:null,f9:62.00,avg:46.50},
-        as:{t100:5,t180:1,ld:17,high:92,f9:103.6,avg:64.41} },
-      { home:["Luke Robinson"], away:["Ryan Mellor"], legs:[1,3],
-        hs:{t100:1,t180:0,ld:28,high:40,f9:49.42,avg:40.96},
-        as:{t100:2,t180:1,ld:26,high:40,f9:66.92,avg:48.66} }
-    ]
-  },
-  {
-    id: "match_2026-08-12_brooklandstap_partington",
-    meta: {
-      date: "2026-08-12", venue: "Brooklands Tap", comp: "League - Division 4",
-      homeTeam: "Brooklands Tap", awayTeam: "Partington WMC",
-      homeSquad: ["Eddie Clare","Billy Horsefield","Lewis Lloyd","Michael Hamnett","Jamie Williams","Gerard Gornall","Lee Armsden","Sonny Miller"],
-      awaySquad: ["Karl Bannister","Brandon Gamble","Chris Bollard","Mark Colgan","Steven Bell","Rick Fox","Mason Gamble"],
-      throwRule: "home"
-    },
-    // This report already had the 100+/180 fix in place, so these figures
-    // are taken straight from the report - no back-correction needed.
-    rows: [
-      { home:["Eddie Clare","Billy Horsefield"], away:["Karl Bannister","Brandon Gamble"], legs:[0,2],
-        hs:{t100:2,t180:0,ld:null,high:null,f9:81.50,avg:57.00},
-        as:{t100:3,t180:0,ld:24,high:60,f9:63.33,avg:58.94} },
-      { home:["Lewis Lloyd"], away:["Chris Bollard"], legs:[3,1],
-        hs:{t100:3,t180:0,ld:20,high:76,f9:70.75,avg:46.56},
-        as:{t100:0,t180:0,ld:42,high:18,f9:40.58,avg:38.95} },
-      { home:["Michael Hamnett"], away:["Mark Colgan"], legs:[0,3],
-        hs:{t100:0,t180:0,ld:null,high:null,f9:36.22,avg:43.13},
-        as:{t100:3,t180:0,ld:28,high:16,f9:70.22,avg:49.55} },
-      { home:["Jamie Williams"], away:["Steven Bell"], legs:[2,3],
-        hs:{t100:7,t180:0,ld:25,high:40,f9:62.67,avg:51.82},
-        as:{t100:4,t180:0,ld:29,high:40,f9:54.27,avg:51.73} },
-      { home:["Gerard Gornall"], away:["Rick Fox"], legs:[2,3],
-        hs:{t100:3,t180:1,ld:25,high:16,f9:70.87,avg:50.54},
-        as:{t100:4,t180:0,ld:23,high:52,f9:61.60,avg:55.67} },
-      { home:["Lee Armsden"], away:["Mason Gamble"], legs:[0,3],
-        hs:{t100:2,t180:1,ld:null,high:null,f9:56.78,avg:65.47},
-        as:{t100:2,t180:1,ld:16,high:38,f9:79.00,avg:77.74} },
-      { home:["Sonny Miller"], away:["Karl Bannister"], legs:[1,3],
-        hs:{t100:3,t180:0,ld:29,high:20,f9:60.50,avg:42.98},
-        as:{t100:4,t180:0,ld:25,high:20,f9:58.58,avg:50.39} },
-      { home:["Billy Horsefield"], away:["Brandon Gamble"], legs:[3,2],
-        hs:{t100:6,t180:0,ld:18,high:73,f9:62.27,avg:59.57},
-        as:{t100:8,t180:0,ld:22,high:12,f9:68.20,avg:57.66} }
-    ]
-  },
-  {
-    id: "2026-08-19-pwmc-railway-b",
-    meta: {
-      date: "2026-08-19", venue: "Partington WMC", comp: "League - Division 4",
-      homeTeam: "Partington WMC", awayTeam: "Railway Club B",
-      homeSquad: ["Lewis Abbott","Chris Bollard","Rick Fox","Ryan Mellor","Karl Bannister","Mason Gamble","Brandon Gamble","Mark Colgan","Steven Bell"],
-      awaySquad: ["Mandy Haycocks","Sally Corfield","Richard Haycocks","Angela Haycocks","Steven Foster","Ian Fensome","Howard Haycocks"],
-      throwRule: "home"
-    },
-    rows: [
-      { home:["Lewis Abbott","Chris Bollard"], away:["Mandy Haycocks","Sally Corfield"], legs:[2,0],
-        hs:{t100:1,t180:0,ld:36,high:40,f9:37.50,avg:27.83},
-        as:{t100:0,t180:0,ld:null,high:null,f9:37.83,avg:26.83} },
-      { home:["Rick Fox"], away:["Richard Haycocks"], legs:[3,0],
-        hs:{t100:7,t180:1,ld:16,high:18,f9:89.00,avg:56.33},
-        as:{t100:1,t180:0,ld:null,high:null,f9:51.00,avg:45.30} },
-      { home:["Ryan Mellor"], away:["Angela Haycocks"], legs:[3,0],
-        hs:{t100:3,t180:0,ld:26,high:40,f9:50.00,avg:39.21},
-        as:{t100:1,t180:0,ld:null,high:null,f9:52.11,avg:34.45} },
-      { home:["Karl Bannister"], away:["Steven Foster"], legs:[3,1],
-        hs:{t100:4,t180:0,ld:22,high:40,f9:0.00,avg:45.00},
-        as:{t100:2,t180:0,ld:28,high:40,f9:0.00,avg:39.70} },
-      { home:["Mason Gamble"], away:["Ian Fensome"], legs:[3,0],
-        hs:{t100:6,t180:0,ld:19,high:50,f9:77.78,avg:67.30},
-        as:{t100:3,t180:0,ld:null,high:null,f9:58.33,avg:46.82} },
-      { home:["Brandon Gamble"], away:["Howard Haycocks"], legs:[3,1],
-        hs:{t100:7,t180:0,ld:18,high:117,f9:71.33,avg:62.97},
-        as:{t100:2,t180:0,ld:29,high:63,f9:51.92,avg:51.26} },
-      { home:["Mark Colgan"], away:["Mandy Haycocks"], legs:[3,0],
-        hs:{t100:2,t180:1,ld:20,high:52,f9:69.89,avg:68.32},
-        as:{t100:0,t180:0,ld:null,high:null,f9:40.11,avg:40.90} },
-      { home:["Steven Bell"], away:["Sally Corfield"], legs:[3,0],
-        hs:{t100:1,t180:1,ld:25,high:40,f9:50.44,avg:51.83},
-        as:{t100:1,t180:0,ld:null,high:null,f9:47.78,avg:38.55} }
-    ]
-  },
-  {
-    id: "2026-08-26-tsc-b-pwmc",
-    meta: {
-      date: "2026-08-26", venue: "Trafford Social Club", comp: "League - Division 4",
-      homeTeam: "TSC B", awayTeam: "Partington WMC",
-      homeSquad: ["Gaz Collins","Lee Allen","Henry Collins","Dean Koehler","Cameron King","Ray Townhill","Iuliu Jimborean"],
-      awaySquad: ["Adam Harral","Ryan Mellor","Rick Fox","Mark Colgan","Steven Bell","Lewis Abbott","Mason Gamble","Danny Kendrick","Brandon Gamble"],
-      throwRule: "home"
-    },
-    rows: [
-      { home:["Gaz Collins","Lee Allen"], away:["Adam Harral","Ryan Mellor"], legs:[1,2],
-        hs:{t100:2,t180:0,ld:35,high:32,f9:52.22,avg:38.41},
-        as:{t100:2,t180:0,ld:26,high:32,f9:47.44,avg:43.43} },
-      { home:["Henry Collins"], away:["Rick Fox"], legs:[0,3],
-        hs:{t100:3,t180:0,ld:null,high:null,f9:48.22,avg:56.00},
-        as:{t100:5,t180:0,ld:18,high:97,f9:61.67,avg:68.32} },
-      { home:["Dean Koehler"], away:["Mark Colgan"], legs:[0,3],
-        hs:{t100:1,t180:0,ld:null,high:null,f9:54.00,avg:41.57},
-        as:{t100:5,t180:0,ld:26,high:40,f9:64.11,avg:49.55} },
-      { home:["Cameron King"], away:["Steven Bell"], legs:[1,3],
-        hs:{t100:1,t180:0,ld:32,high:28,f9:39.92,avg:42.77},
-        as:{t100:3,t180:0,ld:29,high:32,f9:59.58,avg:45.60} },
-      { home:["Ray Townhill"], away:["Lewis Abbott"], legs:[3,1],
-        hs:{t100:2,t180:0,ld:28,high:40,f9:43.50,avg:38.73},
-        as:{t100:2,t180:0,ld:32,high:20,f9:45.17,avg:39.64} },
-      { home:["Iuliu Jimborean"], away:["Mason Gamble"], legs:[0,3],
-        hs:{t100:0,t180:0,ld:null,high:null,f9:37.89,avg:46.05},
-        as:{t100:4,t180:0,ld:15,high:64,f9:78.44,avg:75.15} },
-      { home:["Gaz Collins"], away:["Danny Kendrick"], legs:[1,3],
-        hs:{t100:2,t180:0,ld:24,high:60,f9:47.67,avg:45.85},
-        as:{t100:1,t180:0,ld:20,high:52,f9:52.00,avg:42.97} },
-      { home:["Lee Allen"], away:["Brandon Gamble"], legs:[1,3],
-        hs:{t100:6,t180:0,ld:20,high:20,f9:76.08,avg:59.80},
-        as:{t100:5,t180:0,ld:20,high:70,f9:77.50,avg:60.61} }
-    ]
-  }
-];
-
-const MATCHES_DATA = [
-  {
-    "id": "2026-03-04-pwmc-royal-oak",
-    "date": "04/03/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Royal Oak (Cheadle)",
-    "homeScore": 6,
-    "awayScore": 1,
-    "gallonHomeScore": 2,
-    "gallonAwayScore": 0,
-    "gallon": {
-      "homePlayers": "Adam Harral & Mason Gamble",
-      "awayPlayers": "Mason Kelly & Jake Hamand",
-      "homeLegs": 2,
-      "awayLegs": 0,
-      "homeWinner": true,
-      "homeStats": { "tons": 4, "max": "-", "ld": 22, "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "Adam Millns",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 23, "hf": 60, "f9": "-", "avg": 48.57 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 27, "hf": 46, "f9": "-", "avg": 42.26 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Brandon Hughes",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": 1, "ld": 18, "hf": 77, "f9": "-", "avg": 60.98 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.61 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Steve Bell",
-        "awayPlayer": "Cameron Brownsell",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 22, "hf": 36, "f9": "-", "avg": 53.63 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 40, "hf": 40, "f9": "-", "avg": 47.41 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Tom Jenkins",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 4, "max": "-", "ld": 26, "hf": 40, "f9": "-", "avg": 51.58 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 68, "f9": "-", "avg": 57.23 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Chris Bollard",
-        "awayPlayer": "Ethan Handley",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 32, "hf": 46, "f9": "-", "avg": 42.00 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 31, "hf": 34, "f9": "-", "avg": 41.83 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Josh Harrison",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 51.29 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 38.32 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Jake Hamand",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 18, "hf": 56, "f9": "-", "avg": 62.16 },
-        "awayStats": { "tons": 4, "max": 1, "ld": 17, "hf": 60, "f9": "-", "avg": 60.57 }
-      }
-    ]
-  },
-  {
-    "id": "2026-03-11-jolly-butcher-pwmc",
-    "date": "11/03/2026",
-    "venue": "Jolly Butcher",
-    "matchType": "Match Report - League",
-    "homeTeam": "Jolly Butcher",
-    "awayTeam": "Partington WMC",
-    "homeScore": 0,
-    "awayScore": 7,
-    "gallonHomeScore": 0,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "Thomas Watson & Daniel Dibben",
-      "awayPlayers": "Corey Wynne & Lewis Abbott",
-      "homeLegs": 0,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Chris McGrory",
-        "awayPlayer": "Mark Colgan",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 42.70 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 46.80 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Ali Crawford",
-        "awayPlayer": "Steve Bell",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": 24, "hf": 50, "f9": "-", "avg": 48.70 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 25, "hf": 16, "f9": "-", "avg": 51.60 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Gareth Sullivan",
-        "awayPlayer": "Chris Bollard",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": 33, "hf": 60, "f9": "-", "avg": 39.40 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 25, "hf": 7, "f9": "-", "avg": 45.20 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Tim Dibben",
-        "awayPlayer": "Brandon Gamble",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 28.63 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 40.26 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Liz Sweeney",
-        "awayPlayer": "Mason Gamble",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 35.05 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 16, "hf": 78, "f9": "-", "avg": 73.92 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Stuart Watson",
-        "awayPlayer": "Rick Fox",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": 35, "hf": 4, "f9": "-", "avg": 37.50 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 45.65 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Chenile Mason",
-        "awayPlayer": "Karl Bannister",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 34.11 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 25, "hf": 76, "f9": "-", "avg": 55.67 }
-      }
-    ]
-  },
-  {
-    "id": "2026-03-18-st-johns-pwmc",
-    "date": "18/03/2026",
-    "venue": "St Johns",
-    "matchType": "Match Report - League",
-    "homeTeam": "St Johns",
-    "awayTeam": "Partington WMC",
-    "homeScore": 2,
-    "awayScore": 5,
-    "gallonHomeScore": 0,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "Callum Stewart & Tina Stewart",
-      "awayPlayers": "Brandon Gamble & Mark Colgan",
-      "homeLegs": 0,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Rhys Palmer",
-        "awayPlayer": "Rick Fox",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 26, "hf": 90, "f9": "-", "avg": 47.20 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 20, "hf": 62, "f9": "-", "avg": 52.47 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Lee Stewart",
-        "awayPlayer": "Chris Bollard",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 25, "hf": 32, "f9": "-", "avg": 35.75 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 36, "hf": 72, "f9": "-", "avg": 34.19 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Darren Oldham",
-        "awayPlayer": "Ste Bell",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.88 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 48, "f9": "-", "avg": 61.77 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Harry Hessing",
-        "awayPlayer": "Corey Wynne",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 46.03 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 28, "hf": 20, "f9": "-", "avg": 51.83 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Cody Ratcliff",
-        "awayPlayer": "Karl Bannister",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.96 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 24, "hf": 68, "f9": "-", "avg": 52.43 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Dan Bell",
-        "awayPlayer": "Mason Gamble",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": 33, "hf": 4, "f9": "-", "avg": 52.85 },
-        "awayStats": { "tons": 7, "max": "-", "ld": 20, "hf": 42, "f9": "-", "avg": 60.24 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Simon Hessing",
-        "awayPlayer": "Mark Colgan",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 42.29 },
-        "awayStats": { "tons": 5, "max": "-", "ld": 23, "hf": 102, "f9": "-", "avg": 60.93 }
-      }
-    ]
-  },
-  {
-    "id": "2026-03-25-pwmc-bazzler-b",
-    "date": "25/03/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Bazzler B",
-    "homeScore": 5,
-    "awayScore": 2,
-    "gallonHomeScore": 0,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "Adam Harrall & Lewis Abbot",
-      "awayPlayers": "Asher Lloyd & Gary Thompson",
-      "homeLegs": 0,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Mike Westlake",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 20, "hf": 32, "f9": "-", "avg": 54.99 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 43.65 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Steven Bell",
-        "awayPlayer": "Isaac Robinson",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": 19, "hf": 40, "f9": "-", "avg": 42.53 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 30, "hf": 86, "f9": "-", "avg": 37.23 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Dan Papworth",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 7, "max": "-", "ld": 25, "hf": 24, "f9": "-", "avg": 56.36 },
-        "awayStats": { "tons": 3, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 49.58 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Lee Donnelly",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 21, "hf": 70, "f9": "-", "avg": 53.05 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 40.48 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Corey Wynne",
-        "awayPlayer": "Luke Robinson",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 23, "hf": 12, "f9": "-", "avg": 57.08 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 40.96 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Connor Doyle",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 21, "hf": 48, "f9": "-", "avg": 59.47 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 32, "hf": 20, "f9": "-", "avg": 46.19 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "Gary Thompson",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 4, "max": "-", "ld": 36, "hf": 4, "f9": "-", "avg": 56.03 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 19, "hf": 35, "f9": "-", "avg": 57.79 }
-      }
-    ]
-  },
-  {
-    "id": "2026-04-01-pwmc-fixture-1",
-    "date": "01/04/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Brooklands Tap",
-    "homeScore": 6,
-    "awayScore": 1,
-    "gallonHomeScore": 2,
-    "gallonAwayScore": 0,
-    "gallon": {
-      "homePlayers": "Lewis Abbott & Ryan Mellor",
-      "awayPlayers": "Michael Hamnett & Luke Cummings",
-      "homeLegs": 2,
-      "awayLegs": 0,
-      "homeWinner": true,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Gerard Gornall",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 24, "hf": 16, "f9": "-", "avg": 53.05 },
-        "awayStats": { "tons": 4, "max": 1, "ld": "-", "hf": "-", "f9": "-", "avg": 55.04 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Eddie Clare",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 19, "hf": 40, "f9": "-", "avg": 58.56 },
-        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 50.64 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Lee Armsden",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 21, "hf": 101, "f9": "-", "avg": 63.51 },
-        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 60.30 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "Sonny Miller",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 26, "hf": 68, "f9": "-", "avg": 54.33 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 51.04 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Ste Bell",
-        "awayPlayer": "Lewis Lloyd",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 53.42 },
-        "awayStats": { "tons": 6, "max": "-", "ld": 23, "hf": 16, "f9": "-", "avg": 54.55 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Callum Cummings",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 20, "hf": 46, "f9": "-", "avg": 72.73 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 55.25 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Corey Wynne",
-        "awayPlayer": "Billy Horsefield",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 52.45 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 20, "hf": 59, "f9": "-", "avg": 68.32 }
-      }
-    ]
-  },
-  {
-    "id": "2026-04-08-railway-club-b-pwmc",
-    "date": "08/04/2026",
-    "venue": "Railway Club",
-    "matchType": "Match Report - League",
-    "homeTeam": "Railway Club B",
-    "awayTeam": "Partington WMC",
-    "homeScore": 2,
-    "awayScore": 5,
-    "gallonHomeScore": "-",
-    "gallonAwayScore": "-",
-    "gallon": {
-      "homePlayers": "-",
-      "awayPlayers": "-",
-      "homeLegs": "-",
-      "awayLegs": "-",
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Les Potts",
-        "awayPlayer": "Ste Bell",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.72 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 40, "f9": "-", "avg": 46.97 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Mandy Haycocks",
-        "awayPlayer": "Lewis Abbott",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": 39, "hf": 40, "f9": "-", "avg": 32.28 },
-        "awayStats": { "tons": "-", "max": "-", "ld": 40, "hf": 30, "f9": "-", "avg": 33.13 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Howard Haycocks",
-        "awayPlayer": "Brandon Gamble",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.54 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 54.99 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Angela Haycocks",
-        "awayPlayer": "Chris Bollard",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 38, "hf": 97, "f9": "-", "avg": 35.41 },
-        "awayStats": { "tons": "-", "max": "-", "ld": 38, "hf": 20, "f9": "-", "avg": 36.49 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Steven Foster",
-        "awayPlayer": "Mason Gamble",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 42.52 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 20, "hf": 72, "f9": "-", "avg": 66.31 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Sally Corfield",
-        "awayPlayer": "Mark Colgan",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 34.91 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 17, "hf": 56, "f9": "-", "avg": 66.31 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Richard Haycocks",
-        "awayPlayer": "Rick Fox",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 26, "hf": 20, "f9": "-", "avg": 50.32 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 27, "hf": 32, "f9": "-", "avg": 49.57 }
-      }
-    ]
-  },
-  {
-    "id": "2026-04-22-pwmc-tsc-b",
-    "date": "22/04/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Trafford Social Club B",
-    "homeScore": 6,
-    "awayScore": 1,
-    "gallonHomeScore": 1,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "Chris Bollard & Adam Harral",
-      "awayPlayers": "Lindsay Rice & Luliu Jimborean",
-      "homeLegs": 1,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Henry Collins",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 21, "hf": 66, "f9": "-", "avg": 61.77 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 49.67 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Lewis Abbott",
-        "awayPlayer": "Ray Townhill",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": 26, "hf": 37, "f9": "-", "avg": 38.92 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 29, "hf": 63, "f9": "-", "avg": 37.35 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Joe McAuley",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 5, "max": 1, "ld": 21, "hf": 80, "f9": "-", "avg": 59.28 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 24, "hf": 42, "f9": "-", "avg": 43.44 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Ste Bell",
-        "awayPlayer": "Cameron King",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 24, "hf": 101, "f9": "-", "avg": 52.79 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 29, "hf": 28, "f9": "-", "avg": 47.51 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Lee Allen",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 24, "hf": 40, "f9": "-", "avg": 44.01 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 20, "hf": 8, "f9": "-", "avg": 44.53 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "Danny Bannister",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 21, "hf": 38, "f9": "-", "avg": 68.32 },
-        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.86 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Luliu Jimborean",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 19, "hf": 54, "f9": "-", "avg": 70.45 },
-        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.50 }
-      }
-    ]
-  },
-  {
-    "id": "2026-05-13-pwmc-auld-chimp",
-    "date": "13/05/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Auld Chimp",
-    "homeScore": 3,
-    "awayScore": 4,
-    "gallonHomeScore": 1,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "Lewis Abbott & Chris Bollard",
-      "awayPlayers": "Luke Pickup & Richard Charlton",
-      "homeLegs": 1,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "Ryan Devine",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 5, "max": "-", "ld": 25, "hf": 26, "f9": "-", "avg": 52.20 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 26, "hf": 44, "f9": "-", "avg": 49.61 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Jimmy Burgess",
-        "awayPlayer": "Sonny Kirkbride",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": 28, "hf": 20, "f9": "-", "avg": 49.25 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 20, "hf": 56, "f9": "-", "avg": 55.64 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Will Temple",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 23, "hf": 40, "f9": "-", "avg": 53.68 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 36.89 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Sam Critchley",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 24, "hf": 48, "f9": "-", "avg": 53.25 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 20, "hf": 96, "f9": "-", "avg": 51.30 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Kev Lowes",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 37.23 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 39, "hf": 16, "f9": "-", "avg": 37.20 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Steven Bell",
-        "awayPlayer": "Luke Pickup",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 5, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 50.39 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 26, "hf": 20, "f9": "-", "avg": 53.68 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Adam Harral",
-        "awayPlayer": "Richard Charlton",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.49 },
-        "awayStats": { "tons": 3, "max": 1, "ld": 20, "hf": 40, "f9": "-", "avg": 53.36 }
-      }
-    ]
-  },
-  {
-    "id": "2026-05-20-st-anthonys-c-pwmc",
-    "date": "20/05/2026",
-    "venue": "St Anthonys",
-    "matchType": "Match Report - League",
-    "homeTeam": "St Anthonys C",
-    "awayTeam": "Partington WMC",
-    "homeScore": 2,
-    "awayScore": 5,
-    "gallonHomeScore": 0,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "B Hussey & K Evans",
-      "awayPlayers": "Chris Bollard & Mason Gamble",
-      "homeLegs": 0,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "M Horrocks",
-        "awayPlayer": "Rick Fox",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 54.28 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 79, "f9": "-", "avg": 60.93 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "D Tierney",
-        "awayPlayer": "Lewis Abbott",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 53.62 },
-        "awayStats": { "tons": 5, "max": "-", "ld": 24, "hf": 28, "f9": "-", "avg": 49.83 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "R Horrocks",
-        "awayPlayer": "Brandon Gamble",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 3, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.13 },
-        "awayStats": { "tons": 5, "max": "-", "ld": 26, "hf": 16, "f9": "-", "avg": 47.97 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "E Williamson",
-        "awayPlayer": "Ste Bell",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 25, "hf": 40, "f9": "-", "avg": 50.69 },
-        "awayStats": { "tons": 7, "max": "-", "ld": 29, "hf": 30, "f9": "-", "avg": 52.29 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "D Holt",
-        "awayPlayer": "Mark Colgan",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 51.31 },
-        "awayStats": { "tons": 6, "max": "-", "ld": 22, "hf": 40, "f9": "-", "avg": 59.33 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Josh Clews",
-        "awayPlayer": "Karl Bannister",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 6, "max": "-", "ld": 31, "hf": 14, "f9": "-", "avg": 51.70 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 69, "f9": "-", "avg": 51.33 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "James Clews",
-        "awayPlayer": "Mason Gamble",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 3, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 62.00 },
-        "awayStats": { "tons": 6, "max": "-", "ld": 20, "hf": 36, "f9": "-", "avg": 70.45 }
-      }
-    ]
-  },
-  {
-    "id": "2026-05-27-garricks-head-pwmc",
-    "date": "27/05/2026",
-    "venue": "Garricks Head",
-    "matchType": "Match Report - League",
-    "homeTeam": "Garricks Head",
-    "awayTeam": "Partington WMC",
-    "homeScore": 0,
-    "awayScore": 7,
-    "gallonHomeScore": 2,
-    "gallonAwayScore": 0,
-    "gallon": {
-      "homePlayers": "C Trueman & L Entwisle",
-      "awayPlayers": "Corey Wynne & Adam Harral",
-      "homeLegs": 2,
-      "awayLegs": 0,
-      "homeWinner": true,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "L Entwisle",
-        "awayPlayer": "Karl Bannister",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 5, "max": "-", "ld": 26, "hf": 25, "f9": "-", "avg": 55.90 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 21, "hf": 98, "f9": "-", "avg": 56.28 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "V Rice",
-        "awayPlayer": "Brandon Gamble",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.90 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 23, "hf": 16, "f9": "-", "avg": 54.53 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "E Partridge",
-        "awayPlayer": "Ste Bell",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": 35, "hf": 4, "f9": "-", "avg": 42.79 },
-        "awayStats": { "tons": 5, "max": 1, "ld": 28, "hf": 20, "f9": "-", "avg": 48.44 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "C Trueman",
-        "awayPlayer": "Mark Colgan",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 6, "max": "-", "ld": 29, "hf": 10, "f9": "-", "avg": 53.02 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 26, "hf": 64, "f9": "-", "avg": 54.62 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "J Wake",
-        "awayPlayer": "Chris Bollard",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": 28, "hf": 16, "f9": "-", "avg": 39.84 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 27, "hf": 50, "f9": "-", "avg": 40.65 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "D Gilruth",
-        "awayPlayer": "Mason Gamble",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": 1, "ld": 18, "hf": 100, "f9": "-", "avg": 53.51 },
-        "awayStats": { "tons": 9, "max": "-", "ld": 20, "hf": 48, "f9": "-", "avg": 68.34 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "L Capper",
-        "awayPlayer": "Rick Fox",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.96 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 25, "hf": 40, "f9": "-", "avg": 54.33 }
-      }
-    ]
-  },
-  {
-    "id": "2026-06-03-pwmc-old-plough",
-    "date": "03/06/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Old Plough",
-    "homeScore": 4,
-    "awayScore": 3,
-    "gallonHomeScore": 1,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "Danny Kendrick & Adam Harral",
-      "awayPlayers": "Reece Newell & Kieran Newell",
-      "homeLegs": 1,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "L Gould",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 23, "hf": 54, "f9": "-", "avg": 63.51 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 54.73 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "D Horridge",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 24, "hf": 40, "f9": "-", "avg": 57.20 },
-        "awayStats": { "tons": "-", "max": "-", "ld": 32, "hf": 64, "f9": "-", "avg": 44.88 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "S Ridings",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 21, "hf": 103, "f9": "-", "avg": 51.62 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 32, "hf": 20, "f9": "-", "avg": 44.13 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Lewis Abbott",
-        "awayPlayer": "C Bradley",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 3, "max": "-", "ld": 31, "hf": 40, "f9": "-", "avg": 39.61 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 23, "hf": 50, "f9": "-", "avg": 40.46 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Chris Bollard",
-        "awayPlayer": "M Melling",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 32.70 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 30, "hf": 40, "f9": "-", "avg": 35.23 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "S Senior",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 4, "max": "-", "ld": 27, "hf": 40, "f9": "-", "avg": 52.45 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 23, "hf": 32, "f9": "-", "avg": 53.58 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Steven Bell",
-        "awayPlayer": "S Wilcox",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 23, "hf": 20, "f9": "-", "avg": 46.21 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 29, "hf": 68, "f9": "-", "avg": 43.36 }
-      }
-    ]
-  },
-  {
-    "id": "2026-06-24-royal-oak-pwmc",
-    "date": "24/06/2026",
-    "venue": "Royal Oak (Cheadle)",
-    "matchType": "Match Report - League",
-    "homeTeam": "Royal Oak (Cheadle)",
-    "awayTeam": "Partington WMC",
-    "homeScore": 2,
-    "awayScore": 5,
-    "gallonHomeScore": 0,
-    "gallonAwayScore": 2,
-    "gallon": {
-      "homePlayers": "Tom Jenkins & Adam Millns",
-      "awayPlayers": "Adam Harral & Karl Bannister",
-      "homeLegs": 0,
-      "awayLegs": 2,
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Ethan Handley",
-        "awayPlayer": "Mason Gamble",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": 33, "hf": 20, "f9": "-", "avg": 51.27 },
-        "awayStats": { "tons": 6, "max": 1, "ld": 19, "hf": 20, "f9": "-", "avg": 55.08 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Josh Harrison",
-        "awayPlayer": "Rick Fox",
-        "homeScore": 0,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.41 },
-        "awayStats": { "tons": 4, "max": 1, "ld": 22, "hf": 58, "f9": "-", "avg": 56.36 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Cam Brownsell",
-        "awayPlayer": "Ste Bell",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 21, "hf": 52, "f9": "-", "avg": 51.90 },
-        "awayStats": { "tons": 7, "max": "-", "ld": 31, "hf": 55, "f9": "-", "avg": 50.03 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Brandon Hughes",
-        "awayPlayer": "Corey Wynne",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 23, "hf": 55, "f9": "-", "avg": 49.65 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 28, "hf": 20, "f9": "-", "avg": 48.53 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Adam Millns",
-        "awayPlayer": "Brandon Gamble",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 3, "max": "-", "ld": 43, "hf": 10, "f9": "-", "avg": 36.86 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 17, "hf": 94, "f9": "-", "avg": 45.11 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Tom Jenkins",
-        "awayPlayer": "Danny Kendrick",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": 27, "hf": 69, "f9": "-", "avg": 43.93 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 32, "hf": 20, "f9": "-", "avg": 42.67 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Jake Hamand",
-        "awayPlayer": "Karl Bannister",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": 32, "hf": 37, "f9": "-", "avg": 48.62 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 20, "hf": 8, "f9": "-", "avg": 51.72 }
-      }
-    ]
-  },
-  {
-    "id": "2026-07-08-pwmc-jolly-butcher",
-    "date": "08/07/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Jolly Butcher",
-    "homeScore": 7,
-    "awayScore": 0,
-    "gallonHomeScore": 2,
-    "gallonAwayScore": 0,
-    "gallon": {
-      "homePlayers": "Corey Wynne & Mark Colgan",
-      "awayPlayers": "Stuart Watson & Chanellie Mason",
-      "homeLegs": 2,
-      "awayLegs": 0,
-      "homeWinner": true,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Danny Kendrick",
-        "awayPlayer": "Liz Sweeney",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 34, "hf": 10, "f9": "-", "avg": 26.06 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 22.75 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Ste Bell",
-        "awayPlayer": "Chris McGon",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 18, "hf": 158, "f9": "-", "avg": 46.01 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 39.25 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Ali Crawford",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 8, "max": "-", "ld": 17, "hf": 75, "f9": "-", "avg": 64.58 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 36, "hf": 40, "f9": "-", "avg": 46.00 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Adam Harral",
-        "awayPlayer": "Arron Shanagher",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": "-", "max": "-", "ld": 43, "hf": 40, "f9": "-", "avg": 23.54 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 53, "hf": 4, "f9": "-", "avg": 22.95 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Gaz Sullivan",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 24, "hf": 60, "f9": "-", "avg": 52.93 },
-        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.19 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Stuart Watson",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 26, "hf": 64, "f9": "-", "avg": 57.00 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 40.20 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Chanellie Mason",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 24, "hf": 55, "f9": "-", "avg": 53.67 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 38.05 }
-      }
-    ]
-  },
-  {
-    "id": "2026-07-22-pwmc-st-johns",
-    "date": "22/07/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - League",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "St Johns",
-    "homeScore": 7,
-    "awayScore": 0,
-    "gallonHomeScore": 2,
-    "gallonAwayScore": 1,
-    "gallon": {
-      "homePlayers": "Jude Rowlands & Brandon Gamble",
-      "awayPlayers": "Sue Weston & Lee Stewart",
-      "homeLegs": 2,
-      "awayLegs": 1,
-      "homeWinner": true,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Darren Oldham",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 5, "max": "-", "ld": 19, "hf": 38, "f9": "-", "avg": 50.53 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 38, "hf": 31, "f9": "-", "avg": 36.28 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Callum Stewart",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 21, "hf": 84, "f9": "-", "avg": 60.12 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 34.21 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Ste Bell",
-        "awayPlayer": "Simon Hessing",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 26, "hf": 40, "f9": "-", "avg": 42.90 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 36.41 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Mark Lavoie",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 21, "hf": 72, "f9": "-", "avg": 60.02 },
-        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 53.57 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Ryan Mellor",
-        "awayPlayer": "Mike Pascall",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 26, "hf": 30, "f9": "-", "avg": 45.69 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 36, "hf": 40, "f9": "-", "avg": 41.65 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Jude Rowlands",
-        "awayPlayer": "Sue Weston",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 31, "hf": 28, "f9": "-", "avg": 36.36 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 35.41 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Lee Stewart",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 5, "max": "-", "ld": 22, "hf": 24, "f9": "-", "avg": 51.33 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.84 }
-      }
-    ]
-  },
-  {
-    "id": "2026-04-01-pwmc-royal-oak-cup",
-    "date": "01/04/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - Cup",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Royal Oak (Cheadle)",
-    "homeScore": 5,
-    "awayScore": 2,
-    "gallonHomeScore": "-",
-    "gallonAwayScore": "-",
-    "gallon": {
-      "homePlayers": "-",
-      "awayPlayers": "-",
-      "homeLegs": "-",
-      "awayLegs": "-",
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Adam Harral",
-        "awayPlayer": "Adam Millns",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": "-", "max": "-", "ld": 32, "hf": 74, "f9": "-", "avg": 37.39 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 35, "hf": 39, "f9": "-", "avg": 37.48 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Ethan Handley",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 17, "hf": 72, "f9": "-", "avg": 60.12 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 47.67 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Brandon Hughes",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 22, "hf": 54, "f9": "-", "avg": 53.07 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 37, "hf": 12, "f9": "-", "avg": 48.83 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Corey Wynne",
-        "awayPlayer": "Jake Hammand",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 23, "hf": 72, "f9": "-", "avg": 53.68 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 45.26 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Chris Bollard",
-        "awayPlayer": "Cameron Brownsell",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 2, "max": "-", "ld": 35, "hf": 16, "f9": "-", "avg": 41.64 },
-        "awayStats": { "tons": 2, "max": "-", "ld": 21, "hf": 42, "f9": "-", "avg": 44.82 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "Aarron Hewitt",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 1, "max": "-", "ld": 24, "hf": 58, "f9": "-", "avg": 56.36 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.60 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Tom Jenkins",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 7, "max": "-", "ld": 20, "hf": 70, "f9": "-", "avg": 63.51 },
-        "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 44.58 }
-      }
-    ]
-  },
-  {
-    "id": "2026-06-10-pwmc-cringlewood-a-cup",
-    "date": "10/06/2026",
-    "venue": "Partington WMC",
-    "matchType": "Match Report - Cup",
-    "homeTeam": "Partington WMC",
-    "awayTeam": "Cringlewood A",
-    "homeScore": 4,
-    "awayScore": 3,
-    "gallonHomeScore": "-",
-    "gallonAwayScore": "-",
-    "gallon": {
-      "homePlayers": "-",
-      "awayPlayers": "-",
-      "homeLegs": "-",
-      "awayLegs": "-",
-      "homeWinner": false,
-      "homeStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" },
-      "awayStats": { "tons": "-", "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": "-" }
-    },
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Mason Gamble",
-        "awayPlayer": "Mark H",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 5, "max": "-", "ld": 18, "hf": 58, "f9": "-", "avg": 72.73 },
-        "awayStats": { "tons": 1, "max": "-", "ld": "-", "hf": "-", "f9": "-", "avg": 41.79 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Corey Wynne",
-        "awayPlayer": "Rob L",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 20, "hf": 52, "f9": "-", "avg": 61.69 },
-        "awayStats": { "tons": 6, "max": "-", "ld": 20, "hf": 68, "f9": "-", "avg": 61.22 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Karl Bannister",
-        "awayPlayer": "Luke M",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 7, "max": "-", "ld": 24, "hf": 20, "f9": "-", "avg": 56.84 },
-        "awayStats": { "tons": 4, "max": "-", "ld": 25, "hf": 48, "f9": "-", "avg": 56.48 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Mark Colgan",
-        "awayPlayer": "Ellis M",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 5, "max": 1, "ld": 20, "hf": 16, "f9": "-", "avg": 71.77 },
-        "awayStats": { "tons": 6, "max": "-", "ld": 15, "hf": 88, "f9": "-", "avg": 75.49 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Ste Bell",
-        "awayPlayer": "John M",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 2, "max": "-", "ld": 27, "hf": 54, "f9": "-", "avg": 42.60 },
-        "awayStats": { "tons": "-", "max": "-", "ld": 38, "hf": 12, "f9": "-", "avg": 38.43 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Brandon Gamble",
-        "awayPlayer": "Alex M",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 6, "max": "-", "ld": 27, "hf": 16, "f9": "-", "avg": 53.34 },
-        "awayStats": { "tons": 5, "max": "-", "ld": 21, "hf": 80, "f9": "-", "avg": 55.46 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Rick Fox",
-        "awayPlayer": "JT",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 23, "hf": 64, "f9": "-", "avg": 54.41 },
-        "awayStats": { "tons": 1, "max": "-", "ld": 20, "hf": 56, "f9": "-", "avg": 52.57 }
-      }
-    ]
-  },
-  {
-    "id": "2026-07-30-timperley-cc-pwmc-cup",
-    "date": "30/07/2026",
-    "venue": "Timperley CC",
-    "matchType": "Match Report - Cup Game",
-    "homeTeam": "Timperley CC",
-    "awayTeam": "Partington WMC",
-    "homeScore": 5,
-    "awayScore": 2,
-    "gallonHomeScore": "-",
-    "gallonAwayScore": "-",
-    "gallon": null,
-    "games": [
-      {
-        "game": 1,
-        "homePlayer": "Andy Pearson",
-        "awayPlayer": "Karl Bannister",
-        "homeScore": 3,
-        "awayScore": 1,
-        "homeWinner": true,
-        "homeStats": { "tons": 4, "max": "-", "ld": 19, "hf": 40, "f9": 0.00, "avg": 66.42 },
-        "awayStats": { "tons": 3, "max": "-", "ld": 17, "hf": 32, "f9": 0.00, "avg": 60.71 }
-      },
-      {
-        "game": 2,
-        "homePlayer": "Gary Sullivan",
-        "awayPlayer": "Mark Colgan",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 5, "max": 1, "ld": 17, "hf": 40, "f9": 0.00, "avg": 65.35 },
-        "awayStats": { "tons": 2, "max": "-", "ld": "-", "hf": "-", "f9": 0.00, "avg": 57.00 }
-      },
-      {
-        "game": 3,
-        "homePlayer": "Brandon Lawley",
-        "awayPlayer": "Ryan Mellor",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 3, "max": "-", "ld": 18, "hf": 150, "f9": 0.00, "avg": 73.92 },
-        "awayStats": { "tons": 0, "max": "-", "ld": "-", "hf": "-", "f9": 0.00, "avg": 46.75 }
-      },
-      {
-        "game": 4,
-        "homePlayer": "Billy English",
-        "awayPlayer": "Mason Gamble",
-        "homeScore": 1,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 4, "max": "-", "ld": 26, "hf": 9, "f9": 0.00, "avg": 51.67 },
-        "awayStats": { "tons": 8, "max": "-", "ld": 19, "hf": 54, "f9": 0.00, "avg": 67.48 }
-      },
-      {
-        "game": 5,
-        "homePlayer": "Andy Brownhill",
-        "awayPlayer": "Brandon Gamble",
-        "homeScore": 3,
-        "awayScore": 2,
-        "homeWinner": true,
-        "homeStats": { "tons": 5, "max": "-", "ld": 18, "hf": 60, "f9": 0.00, "avg": 62.73 },
-        "awayStats": { "tons": 9, "max": "-", "ld": 21, "hf": 36, "f9": 0.00, "avg": 62.81 }
-      },
-      {
-        "game": 6,
-        "homePlayer": "Liam Green",
-        "awayPlayer": "Rick Fox",
-        "homeScore": 3,
-        "awayScore": 0,
-        "homeWinner": true,
-        "homeStats": { "tons": 6, "max": "-", "ld": 23, "hf": 20, "f9": 0.00, "avg": 62.62 },
-        "awayStats": { "tons": 4, "max": "-", "ld": "-", "hf": "-", "f9": 0.00, "avg": 53.35 }
-      },
-      {
-        "game": 7,
-        "homePlayer": "Sam McCallister",
-        "awayPlayer": "Steven Bell",
-        "homeScore": 2,
-        "awayScore": 3,
-        "homeWinner": false,
-        "homeStats": { "tons": 5, "max": "-", "ld": 23, "hf": 49, "f9": 0.00, "avg": 58.54 },
-        "awayStats": { "tons": 3, "max": 1, "ld": 21, "hf": 41, "f9": 0.00, "avg": 58.75 }
-      }
-    ]
-  }
-];
-window.MATCHES_DATA = MATCHES_DATA;
-
+const SEEDED_RESULTS = [];
 function matchDataToFixture(m){
   const toNum = (v, defaultVal = 0) => (v === "-" || v === null || v === undefined) ? defaultVal : (Number(v) || defaultVal);
   const toNullableNum = (v) => (v === "-" || v === null || v === undefined || Number.isNaN(Number(v))) ? null : Number(v);
@@ -5269,7 +7968,7 @@ function matchDataToFixture(m){
   return buildSeededFixture(m.id, meta, rows);
 }
 
-const SEED_VERSION = 11;
+const SEED_VERSION = 13;
 const KEY_SEED_VER = "chalk:seed_ver";
 
 (async function boot(){
