@@ -219,15 +219,20 @@ export function calculatePlayerStats(matchesData = []) {
   });
 }
 
+import { generatePlayerSeasonAnalysis } from "./aiAnalysisGenerator.js";
+
 export function getSquadStats(matchesData) {
   return calculatePlayerStats(matchesData);
 }
+
+export { generatePlayerSeasonAnalysis };
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     calculatePlayerStats,
     getSquadStats,
     canonicalPlayerName,
-    isSamePlayer
+    isSamePlayer,
+    generatePlayerSeasonAnalysis
   };
 }

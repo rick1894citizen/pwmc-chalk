@@ -6,6 +6,10 @@
 export function generateWeeklyReview(match) {
   if (!match) return null;
 
+  if (match.review) {
+    return match.review;
+  }
+
   const homeTeam = match.homeTeam || "Home";
   const awayTeam = match.awayTeam || "Away";
   const venue = match.venue || "";

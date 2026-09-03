@@ -552,10 +552,11 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 .profile-stat-box .v{font-family:var(--display);font-size:21px;color:#F2EFE4;font-variant-numeric:tabular-nums}
 .profile-stat-box .sub{font-size:10.5px;color:var(--chalk-dim);line-height:1.2}
 
-.profile-ai-card{background:linear-gradient(180deg, #18221B 0%, #111612 100%);border:1px solid #2B3B2F;border-left:4px solid #10B981;border-radius:8px;padding:14px 16px;margin-bottom:16px}
-.profile-ai-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
-.profile-ai-title{font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#34D399;display:flex;align-items:center;gap:6px}
-.profile-ai-body{font-size:13.5px;color:#EAE6DA;line-height:1.55;letter-spacing:0.01em}
+.profile-ai-card, .ai-analysis-card{background:linear-gradient(180deg, #18221B 0%, #111612 100%);border:1px solid #2B3B2F;border-left:4px solid #10B981;border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.profile-ai-header, .ai-analysis-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.profile-ai-title, .ai-analysis-header h3{font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#34D399;display:flex;align-items:center;gap:6px;margin:0}
+.sparkle-icon{font-size:14px;color:#34D399;display:inline-flex}
+.profile-ai-body, .analysis-text{font-size:0.95rem;color:#EAE6DA;line-height:1.6;letter-spacing:0.01em;margin:0;white-space:pre-line}
 
 .profile-match-stream{display:flex;flex-direction:column;gap:10px}
 .profile-match-card{background:var(--rep-card);border:1px solid var(--rep-line);border-radius:8px;padding:12px 14px}
@@ -1071,12 +1072,14 @@ select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,va
 [data-theme="light"] .profile-stat-box .v{
   color:#0F172A;
 }
-[data-theme="light"] .profile-ai-card{
+[data-theme="light"] .profile-ai-card,
+[data-theme="light"] .ai-analysis-card{
   background:linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);
   border-color:#BBF7D0;
   border-left:4px solid #10B981;
 }
-[data-theme="light"] .profile-ai-body{
+[data-theme="light"] .profile-ai-body,
+[data-theme="light"] .analysis-text{
   color:#14532D;
 }
 [data-theme="light"] .profile-match-card{
@@ -6232,6 +6235,240 @@ const MATCHES_DATA = [
         }
       }
     ]
+  },
+  {
+    "id": "2026-09-02-auld-chimp-pwmc",
+    "date": "02/09/2026",
+    "venue": "The Auld Chimp",
+    "matchType": "Match Report - League",
+    "homeTeam": "Auld Chimp",
+    "awayTeam": "Partington WMC",
+    "homeScore": 1,
+    "awayScore": 6,
+    "gallonHomeScore": 2,
+    "gallonAwayScore": 0,
+    "gallon": {
+      "homePlayers": "Darren Mitchell & Katie Bowling",
+      "awayPlayers": "Steven Bell & Lewis Abbott",
+      "homeLegs": 2,
+      "awayLegs": 0,
+      "homeWinner": true,
+      "homeStats": {
+        "tons": 2,
+        "max": "-",
+        "ld": 28,
+        "hf": 32,
+        "f9": 45.0,
+        "avg": 42.0
+      },
+      "awayStats": {
+        "tons": 1,
+        "max": "-",
+        "ld": "-",
+        "hf": "-",
+        "f9": 41.0,
+        "avg": 39.5
+      }
+    },
+    "games": [
+      {
+        "game": 1,
+        "homePlayer": "Sonny Kirkbride",
+        "awayPlayer": "Ryan Mellor",
+        "homeScore": 3,
+        "awayScore": 0,
+        "homeWinner": true,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 24,
+          "hf": 40,
+          "f9": 52.0,
+          "avg": 50.11
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 44.0,
+          "avg": 43.0
+        }
+      },
+      {
+        "game": 2,
+        "homePlayer": "Will Temple",
+        "awayPlayer": "Mason Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 42.0,
+          "avg": 45.5
+        },
+        "awayStats": {
+          "tons": 9,
+          "max": "-",
+          "ld": 16,
+          "hf": 115,
+          "f9": 92.5,
+          "avg": 88.41
+        }
+      },
+      {
+        "game": 3,
+        "homePlayer": "Luke Pickup",
+        "awayPlayer": "Brandon Gamble",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 50.0,
+          "avg": 54.0
+        },
+        "awayStats": {
+          "tons": 6,
+          "max": "-",
+          "ld": 16,
+          "hf": 40,
+          "f9": 80.0,
+          "avg": 72.73
+        }
+      },
+      {
+        "game": 4,
+        "homePlayer": "Richard Charlton",
+        "awayPlayer": "Mark Colgan",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 3,
+          "max": "-",
+          "ld": 28,
+          "hf": 32,
+          "f9": 52.0,
+          "avg": 51.2
+        },
+        "awayStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 26,
+          "hf": 49,
+          "f9": 60.0,
+          "avg": 55.51
+        }
+      },
+      {
+        "game": 5,
+        "homePlayer": "Sam Critchley",
+        "awayPlayer": "Chris Bollard",
+        "homeScore": 2,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 36,
+          "hf": 20,
+          "f9": 36.0,
+          "avg": 35.8
+        },
+        "awayStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": 32,
+          "hf": 91,
+          "f9": 39.0,
+          "avg": 38.16
+        }
+      },
+      {
+        "game": 6,
+        "homePlayer": "Katie Bowling",
+        "awayPlayer": "Rick Fox",
+        "homeScore": 1,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 2,
+          "max": "-",
+          "ld": 31,
+          "hf": 36,
+          "f9": 44.0,
+          "avg": 45.2
+        },
+        "awayStats": {
+          "tons": 8,
+          "max": "-",
+          "ld": 19,
+          "hf": 58,
+          "f9": 68.0,
+          "avg": 61.67
+        }
+      },
+      {
+        "game": 7,
+        "homePlayer": "Darren Mitchell",
+        "awayPlayer": "Steven Bell",
+        "homeScore": 0,
+        "awayScore": 3,
+        "homeWinner": false,
+        "homeStats": {
+          "tons": 0,
+          "max": "-",
+          "ld": "-",
+          "hf": "-",
+          "f9": 40.0,
+          "avg": 41.5
+        },
+        "awayStats": {
+          "tons": 1,
+          "max": "-",
+          "ld": 30,
+          "hf": 40,
+          "f9": 52.0,
+          "avg": 48.48
+        }
+      }
+    ],
+    "review": {
+      "headline": "Dominant Partington WMC Clinch 6–1 Away Triumph Over Auld Chimp",
+      "motm": {
+        "player": "Mason Gamble",
+        "name": "Mason Gamble",
+        "avg": 88.41,
+        "legsWon": 3
+      },
+      "highCheckout": {
+        "player": "Mason Gamble",
+        "checkout": 115
+      },
+      "crucialLeg": {
+        "player": "Mason Gamble",
+        "darts": 16
+      },
+      "teamHighlights": {
+        "tons": 27,
+        "max180s": 0,
+        "highCheckout": 115,
+        "legsWon": 18
+      },
+      "summaryBulletPoints": [
+        "Partington WMC secured an emphatic 6–1 away victory against Auld Chimp, taking 6 of 7 singles ties and winning 18 legs on the night.",
+        "Man of the Match honours go to Mason Gamble with an outstanding 88.41 3-dart average, 9x 100+ tons, a 16-dart leg, and a season-best 115 checkout.",
+        "Key milestones included Brandon Gamble's 72.73 sweep, Rick Fox's 8 tons and 61.67 average, and Mason Gamble's 115 checkout setting a new seasonal personal best.",
+        "Team totals on the night reached 27x 100+ tons, 0x 180s, and 18 legs won across dominant performances."
+      ]
+    }
   }
 ];
 
@@ -6424,6 +6661,10 @@ function calculatePlayerStats(matchesData = MATCHES_DATA) {
 
 function generateWeeklyReview(match) {
   if (!match) return null;
+
+  if (match.review) {
+    return match.review;
+  }
 
   const homeTeam = match.homeTeam || "Home";
   const awayTeam = match.awayTeam || "Away";
@@ -6652,22 +6893,154 @@ if (typeof window !== "undefined") {
   });
 }
 
-const SMD_PLAYER_ANALYSIS = {
-  "Mason Gamble": "Flawless campaign holding a 100% win rate across 19 matches with a division-topping 65.42 average. Paces the team in heavy scoring with 103 tons and 3 maximums, anchored by a best leg of 15 darts.",
-  "Karl Bannister": "Rock-solid reliability near the top of the order with 15 wins and 50 legs secured. Boasts consistent scoring depth with 70 tons and a match-winning 101 high checkout.",
-  "Mark Colgan": "Lethal conversion efficiency with an 88.2% win rate and a 57.71 average across 17 fixtures. Reliable under pressure on key doubles, highlighted by a standout 102 finish and multiple 180s.",
-  "Brandon Gamble": "Powerhouse scorer sitting second in team tons (87) with 14 wins. A dangerous closer who holds the team's second-highest checkout of the season with a clutch 117 checkout.",
-  "Rick Fox": "Elite leg-finishing threat sitting on 14 wins with a strong 54.79 average. Demonstrated top-tier closing pace with a season-best 16-dart leg, two maximum 180s, and high scoring in key singles legs.",
-  "Steven Bell": "The premier big-checkout specialist of the squad, highlighted by a season-best 158 finish. Backed up his 14 victories with heavy scoring, matching the team high of 3 maximum 180s.",
-  "Corey Wynne": "High-impact contributor boasting a 66.7% win rate and a crisp 54.21 average across 6 appearances. Steady setup player with 12 tons and a best leg of 20 darts.",
-  "Chris Bollard": "Key presence across 8 appearances contributing 3 wins and 15 legs to the team board. Solid doubles anchor with a season-best 57 checkout.",
-  "Ryan Mellor": "Dependable middle-order asset claiming 3 wins from 4 matches (75% win rate). Reliable in both singles and gallon pairings with a maximum 180 and a 25-dart leg to his name.",
-  "Danny Kendrick": "Clinical across limited outings with a 66.7% win rate from 3 fixtures. Strong tactical doubles player, proving decisive with a 20-dart leg in clutch league rubbers.",
-  "Lewis Abbott": "Versatile squad player contributing valuable legs in both singles and gallon formats, featuring 9 tons and a season-best 40 checkout.",
-  "Adam Harral": "Doubles and gallon specialist who delivered a standout 74 high finish and a vital 2-leg victory in key match situations.",
-  "Jude Rowlands": "Efficient squad player holding a 50% win rate, delivering 4 tons and reliable scoring across his two appearances.",
-  "Jimmy Burgess": "Combative performer in tight singles action, posting a 49.25 average and 2 tons with steady leg rhythm."
-};
+function generatePlayerSeasonAnalysis(playerStats) {
+  if (!playerStats || (!playerStats.played && !playerStats.p) || (playerStats.played === 0 && playerStats.p === 0)) {
+    return "Awaiting season debut. A comprehensive scout report will generate once match reports are logged.";
+  }
+
+  const {
+    name: rawName,
+    player: rawPlayer,
+    played: rawPlayed = 0,
+    p = 0,
+    won: rawWon = 0,
+    wins: rawWins = 0,
+    w = 0,
+    avg: rawAvg = "0.00",
+    avgStr,
+    winRate: rawWinRate,
+    winPct,
+    highestFinish: rawHF = 0,
+    hf = 0,
+    leastDarts: rawLD = null,
+    ld = null,
+    tons = 0,
+    max180s: raw180s = 0,
+    max180 = 0,
+    max = 0,
+    matches = []
+  } = playerStats;
+
+  const name = rawName || rawPlayer || "Player";
+  const played = rawPlayed || p || 0;
+  const won = rawWon || rawWins || w || 0;
+  const avg = typeof rawAvg === "number" ? rawAvg.toFixed(2) : (rawAvg || avgStr || "0.00");
+  const winRate = rawWinRate || (winPct !== undefined ? Number(winPct).toFixed(1) : (played > 0 ? ((won / played) * 100).toFixed(1) : "0.0"));
+  const highestFinish = Math.max(Number(rawHF) || 0, Number(hf) || 0);
+  const leastDarts = rawLD !== null && rawLD !== undefined ? rawLD : ld;
+  const max180s = Number(raw180s) || Number(max180) || Number(max) || 0;
+
+  const numAvg = parseFloat(avg);
+  const numWinRate = parseFloat(winRate);
+
+  // Sort matches descending by date to ensure the true latest fixture is selected
+  const sortedMatches = (matches || []).slice().sort((a, b) => {
+    const parseDate = (d) => {
+      if (!d) return 0;
+      if (typeof d === "string" && d.includes("/")) {
+        const parts = d.split("/");
+        return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime();
+      }
+      return new Date(d).getTime();
+    };
+    return parseDate(b.date) - parseDate(a.date);
+  });
+  const latest = sortedMatches.length > 0 ? sortedMatches[0] : (matches.length > 0 ? matches[0] : null);
+
+  // --- 1. PERSONALISED SEASON IDENTITY ---
+  let seasonStory = "";
+
+  if (name.includes("Mason Gamble")) {
+    seasonStory = `Operating on a completely different tier this campaign, Mason remains Partington's undisputed talisman with an immaculate 100% win record across ${played} appearances. Sitting on a monstrous ${avg} season average with ${tons} tons and ${max180s} maximums, he consistently demoralises opposition top boards with pace and relentless treble hitting.`;
+  } else if (name.includes("Mark Colgan")) {
+    seasonStory = `The bedrock of Partington's matchplay consistency, Mark's ${winRate}% win rate (${won} wins in ${played}) proves his status as one of the division's premier clutch closers. Blending a heavy ${avg} average with seasoned match grit, his ability to grind out deciders and hit signature ton-plus checkouts (peak ${highestFinish}) makes him near-bulletproof.`;
+  } else if (name.includes("Brandon Gamble")) {
+    seasonStory = `A relentless scoring powerhouse, Brandon provides devastating firepower on the singles card with ${tons} tons and a ${avg} average over ${played} outings. With a sharp ${winRate}% return and ice in the veins on outer-ring combinations (highlighted by a season-best ${highestFinish} out), he frequently blows matches open before opponents can settle.`;
+  } else if (name.includes("Rick Fox")) {
+    seasonStory = `A model of calm composure and stoic focus, Rick lets his darts do the talking on the oche. Operating with an imposing ${winRate}% win rate (${won}W-${played - won}L) and a commanding ${avg} season average, he is a high-volume scoring powerhouse. Piling up ${tons} tons and 2 maximums while staying completely unflappable under pressure, his disciplined grouping and sharp two-dart finishing (peaking at ${highestFinish}) make him an ultra-reliable banker in the Partington order.`;
+  } else if (name.includes("Steven Bell") || name.includes("Ste Bell")) {
+    seasonStory = `The heartbeat of squad spirit, Ste's campaign has produced some of the most sensational moments of the season—none more so than his spectacular ${highestFinish} mega-checkout. Boasting ${won} wins in ${played} matches with a sturdy ${avg} average, his tenacity on the bull and timely ton surges keep Partington firmly in control of match nights.`;
+  } else if (name.includes("Karl Bannister")) {
+    seasonStory = `Karl brings steady, methodical dominance to the order, locking down an elite ${winRate}% win rate and a ${avg} average across ${played} matches. With ${tons} tons in the bank and a classy ${highestFinish} ton-out, his rhythm and dart-for-dart composure wear down opponents with surgical precision.`;
+  } else if (name.includes("Chris Bollard")) {
+    seasonStory = `Chris embodies pure matchplay character, stepping into high-pressure spots and delivering crucial squad points. His grit on key doubles is backed by a clutch ${highestFinish} season-high finish, providing Partington with invaluable winning depth when games hang in the balance.`;
+  } else if (name.includes("Ryan Mellor")) {
+    seasonStory = `A natural rhythm thrower with high upside, Ryan maintains a positive singles return (${won} wins in ${played}) at a ${avg} clip. Capable of sudden bursts of heavy treble visits, he continues to be a sharp tactical option capable of punishing slack darts.`;
+  } else {
+    // Dynamic fall-back for other squad players (Corey, Danny, Lewis, Adam, Jude, etc.)
+    const trait = numAvg >= 55 ? "heavy-scoring authority" : numWinRate >= 70 ? "lethal outer-ring efficiency" : "dogged determination";
+    seasonStory = `Supplying essential squad strength with ${won} victories in ${played} fixtures, recording a ${avg} average. Playing with ${trait}, their ability to rise to high-pressure moments (peaking with a ${highestFinish} checkout) gives the side great versatility.`;
+  }
+
+  // --- 2. LATEST FIXTURE SPECIFIC BREAKDOWN ---
+  let latestMatchStory = "";
+
+  if (latest) {
+    const oppTeam = latest.opponentTeam || latest.oppTeam || (latest.fixture && (latest.fixture.homeTeam === "Partington WMC" ? latest.fixture.awayTeam : latest.fixture.homeTeam)) || "the opposition";
+    const oppPlayer = latest.opponentPlayer && latest.opponentPlayer !== "-" ? latest.opponentPlayer : "their opponent";
+    const score = latest.score || (latest.legsFor !== undefined && latest.legsAgainst !== undefined ? `${latest.legsFor} - ${latest.legsAgainst}` : "");
+    const wonMatch = latest.won || latest.result === "W" || latest.isWon;
+    const mStats = latest.stats || {};
+    const matchAvg = parseFloat(mStats.avg || latest.avg || 0) || 0;
+    const matchTons = parseInt(mStats.tons || 0, 10) || 0;
+    const matchHf = parseInt(mStats.hf || 0, 10) || 0;
+    const matchLd = parseInt(mStats.ld || 0, 10) || 0;
+    const matchF9 = parseFloat(mStats.f9 || 0) || 0;
+
+    if (wonMatch) {
+      let standoutMetric = "";
+      if (matchAvg >= 80) {
+        standoutMetric = `putting on a premier-class clinic with a staggering ${matchAvg.toFixed(2)} average, a ${matchLd}-dart leg, and a stunning ${matchHf} finish`;
+      } else if (matchAvg >= 70) {
+        standoutMetric = `dominating the board at a searing ${matchAvg.toFixed(2)} clip alongside ${matchTons} power tons`;
+      } else if (matchTons >= 7) {
+        standoutMetric = `pounding the treble bed for an extraordinary ${matchTons} tons and a clinical ${matchAvg.toFixed(2)} average`;
+      } else if (score === "3 - 0") {
+        standoutMetric = `delivering a ruthless 3–0 whitewash backed by a steady ${matchAvg.toFixed(2)} average`;
+      } else if (score === "3 - 2") {
+        standoutMetric = `digging deep in a 5-leg nerve-shredder to snatch the decider with ${matchTons > 0 ? matchTons + ' tons and ' : ''}composed outer-ring conversion`;
+      } else {
+        standoutMetric = `securing a commanding ${score} triumph with ${matchTons > 0 ? matchTons + ' tons and ' : ''}a ${matchAvg.toFixed(2)} average`;
+      }
+
+      // Dynamic takeaway based on the performance context:
+      let matchTakeaway = "";
+
+      if (matchAvg >= 80 || (matchHf >= 100 && matchAvg >= 65)) {
+        matchTakeaway = "A blistering individual clinic that dismantled the opposition and set the gold standard for the entire division.";
+      } else if (matchTons >= 6) {
+        matchTakeaway = "A relentlessly heavy scoring display where sustained treble pressure left their opponent with zero breathing room.";
+      } else if (score === "3 - 0") {
+        matchTakeaway = "A swift, ruthless sweep on away territory that sent a resounding statement to the rest of the league.";
+      } else if (score === "3 - 2") {
+        matchTakeaway = "Pure matchplay bottle on the outer ring, finding clutch doubles with the match on the line to grind out two massive points.";
+      } else if (matchAvg >= 60) {
+        matchTakeaway = "A composed, controlled performance that controlled the board tempo and kept Partington's title charge rolling.";
+      } else {
+        matchTakeaway = "Disciplined, clinical board management that took care of business and secured a vital away rubber.";
+      }
+
+      latestMatchStory = `Latest Outing: Stepped up at ${oppTeam} to defeat ${oppPlayer} (${score}), ${standoutMetric}. ${matchTakeaway}`;
+    } else {
+      latestMatchStory = `Latest Outing: Battled hard in a tough ${score} test against ${oppPlayer} (${oppTeam}). Despite the final scoreline, finding visits with ${matchTons > 0 ? matchTons + (matchTons > 1 ? ' ton-plus scores and ' : ' ton-plus score and ') : ''}a ${matchAvg.toFixed(2)} average showed glimpses of heavy scoring that will serve as fuel for an immediate bounce-back.`;
+    }
+  }
+
+  return latestMatchStory ? `${seasonStory}\n\n${latestMatchStory}` : seasonStory;
+}
+
+window.generatePlayerSeasonAnalysis = generatePlayerSeasonAnalysis;
+
+const SMD_PLAYER_ANALYSIS = new Proxy({}, {
+  get: function(target, prop) {
+    if (typeof prop === "string") {
+      const squad = getSquadStats(MATCHES_DATA);
+      const p = squad.find(x => isSamePlayer(x.player, prop));
+      if (p) return generatePlayerSeasonAnalysis(p);
+    }
+    return "Comprehensive match metrics recorded for the 2026 season.";
+  }
+});
 
 function getMetricTier(metric, val){
   if (metric === "winPct" || metric === "legsPct"){
@@ -6898,7 +7271,7 @@ function vSmdStats(){
         + '</div>';
 
       if (isExp){
-        const analysisText = SMD_PLAYER_ANALYSIS[p.player] || "Comprehensive match metrics recorded for the 2026 season.";
+        const analysisText = generatePlayerSeasonAnalysis(p);
         html += '<div class="smd-drawer">'
           + '<div class="smd-drawer-sect">'
           + '<div class="smd-ai-box">'
@@ -6954,7 +7327,7 @@ function vSmdStats(){
     filtered.forEach(p => {
       const ev = p.eval;
       const branding = getPlayerBranding(p.player);
-      const analysis = SMD_PLAYER_ANALYSIS[p.player] || "";
+      const analysis = generatePlayerSeasonAnalysis(p);
       const initials = p.player.split(" ").map(n => n[0]).join("");
 
       html += '<tr>'
@@ -7126,7 +7499,21 @@ function vPlayerProfile(){
     f9IsEstimate = true;
   }
 
-  const analysisText = SMD_PLAYER_ANALYSIS[p.player] || "Comprehensive match metrics recorded for the 2026 season.";
+  const analysisStats = {
+    ...p,
+    avg: computedAverage,
+    matches: matchLogs.map(m => ({
+      date: m.date,
+      opponentTeam: m.oppTeam,
+      opponentPlayer: (m.oppPlayers || []).join(" & "),
+      won: m.isWon,
+      result: m.isWon ? 'W' : 'L',
+      legsFor: m.myLegs,
+      legsAgainst: m.oppLegs,
+      stats: m.stats
+    }))
+  };
+  const analysisText = generatePlayerSeasonAnalysis(analysisStats);
   const initials = p.player.split(" ").map(n => n[0]).join("");
 
   let html = bar("Back to Stats", p.player, '<span class="smd-rank ' + rankCls + '" style="width:26px;height:26px;font-size:12px;display:inline-flex">#' + rank + '</span>');
@@ -7172,12 +7559,12 @@ function vPlayerProfile(){
 
   // Section 3: AI Season Performance Analysis
   html += '<div class="profile-sect-head">AI Season Performance Analysis</div>'
-    + '<div class="profile-ai-card">'
-    + '<div class="profile-ai-header">'
-    + '<div class="profile-ai-title"><span>&#10024;</span> AI Season Performance Analysis</div>'
-    + '<span class="smd-ai-tag">Official Scout Report</span>'
+    + '<div class="ai-analysis-card profile-ai-card">'
+    + '<div class="ai-analysis-header profile-ai-header">'
+    + '<div class="profile-ai-title"><span class="sparkle-icon">&#10024;</span> <h3>AI SEASON PERFORMANCE ANALYSIS</h3></div>'
+    + '<span class="badge smd-ai-tag">OFFICIAL SCOUT REPORT</span>'
     + '</div>'
-    + '<div class="profile-ai-body">' + esc(analysisText) + '</div>'
+    + '<p class="analysis-text profile-ai-body">' + esc(analysisText) + '</p>'
     + '</div>';
 
   // Section 4: Season Match-by-Match History Table / Card Stream
